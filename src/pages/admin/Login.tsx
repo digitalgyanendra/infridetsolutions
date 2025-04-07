@@ -1,42 +1,42 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const { signIn, isAdmin, isLoading, user } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loginInProgress, setLoginInProgress] = useState(false);
+
+  // Redirect to admin dashboard if already logged in as admin
+  useEffect(() => {
+    if (user && isAdmin) {
+      navigate("/admin");
+    }
+  }, [user, isAdmin, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setLoginInProgress(true);
     
-    // In a real app, this would validate with a backend API
-    setTimeout(() => {
-      setIsLoading(false);
-      
-      // For demo purposes, we'll accept any login
-      toast({
-        title: "Login Successful",
-        description: "Welcome to the admin dashboard",
-      });
-      
-      navigate("/admin");
-    }, 1500);
+    try {
+      await signIn(formData.email, formData.password, true);
+    } finally {
+      setLoginInProgress(false);
+    }
   };
 
   return (
@@ -133,9 +133,9 @@ const AdminLogin = () => {
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
-              disabled={isLoading}
+              disabled={isLoading || loginInProgress}
             >
-              {isLoading ? "Signing in..." : "Sign In to Admin"}
+              {loginInProgress ? "Signing in..." : "Sign In to Admin"}
             </Button>
           </form>
         </motion.div>

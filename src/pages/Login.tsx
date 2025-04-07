@@ -1,41 +1,48 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff, Lock, Mail, UserIcon, UserCog } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
-  const { toast } = useToast();
+  const navigate = useNavigate();
+  const { signIn, signUp, user, isLoading } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     userType: "user", // 'user' or 'consultant'
   });
+  const [mode, setMode] = useState<"login" | "register">("login");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [actionInProgress, setActionInProgress] = useState(false);
+
+  // Redirect to home if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setActionInProgress(true);
     
-    // Simulate login process
-    setTimeout(() => {
-      setIsLoading(false);
-      
-      toast({
-        title: "Login Successful",
-        description: `Welcome back! You are now logged in as a ${formData.userType}.`,
-      });
-      
-      // Redirect would happen here
-      // Navigate to appropriate dashboard based on user type
-    }, 1500);
+    try {
+      if (mode === "login") {
+        await signIn(formData.email, formData.password);
+      } else {
+        await signUp(formData.email, formData.password);
+      }
+    } finally {
+      setActionInProgress(false);
+    }
   };
 
   return (
@@ -57,7 +64,7 @@ const Login = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Sign In
+            {mode === "login" ? "Sign In" : "Create Account"}
           </motion.h2>
           <motion.p 
             className="mt-2 text-sm text-muted-foreground"
@@ -65,7 +72,9 @@ const Login = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Access your account to manage your digital growth journey
+            {mode === "login" 
+              ? "Access your account to manage your digital growth journey" 
+              : "Join us to start your digital growth journey"}
           </motion.p>
         </div>
         
@@ -76,32 +85,34 @@ const Login = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           {/* User Type Selection */}
-          <div className="flex justify-center mb-6 gap-4">
-            <button
-              type="button"
-              className={`flex flex-col items-center justify-center py-3 px-6 rounded-lg transition-all ${
-                formData.userType === "user"
-                  ? "bg-gradient-to-r from-orange-500/20 to-orange-600/20 border border-orange-500/30"
-                  : "bg-background/40 border border-border hover:bg-background/60"
-              }`}
-              onClick={() => setFormData((prev) => ({ ...prev, userType: "user" }))}
-            >
-              <UserIcon className={`h-6 w-6 mb-2 ${formData.userType === "user" ? "text-orange-500" : "text-muted-foreground"}`} />
-              <span className={formData.userType === "user" ? "text-white" : "text-muted-foreground"}>Client</span>
-            </button>
-            <button
-              type="button"
-              className={`flex flex-col items-center justify-center py-3 px-6 rounded-lg transition-all ${
-                formData.userType === "consultant"
-                  ? "bg-gradient-to-r from-deepBlue-500/20 to-deepBlue-600/20 border border-deepBlue-500/30"
-                  : "bg-background/40 border border-border hover:bg-background/60"
-              }`}
-              onClick={() => setFormData((prev) => ({ ...prev, userType: "consultant" }))}
-            >
-              <UserCog className={`h-6 w-6 mb-2 ${formData.userType === "consultant" ? "text-deepBlue-500" : "text-muted-foreground"}`} />
-              <span className={formData.userType === "consultant" ? "text-white" : "text-muted-foreground"}>Consultant</span>
-            </button>
-          </div>
+          {mode === "login" && (
+            <div className="flex justify-center mb-6 gap-4">
+              <button
+                type="button"
+                className={`flex flex-col items-center justify-center py-3 px-6 rounded-lg transition-all ${
+                  formData.userType === "user"
+                    ? "bg-gradient-to-r from-orange-500/20 to-orange-600/20 border border-orange-500/30"
+                    : "bg-background/40 border border-border hover:bg-background/60"
+                }`}
+                onClick={() => setFormData((prev) => ({ ...prev, userType: "user" }))}
+              >
+                <UserIcon className={`h-6 w-6 mb-2 ${formData.userType === "user" ? "text-orange-500" : "text-muted-foreground"}`} />
+                <span className={formData.userType === "user" ? "text-white" : "text-muted-foreground"}>Client</span>
+              </button>
+              <button
+                type="button"
+                className={`flex flex-col items-center justify-center py-3 px-6 rounded-lg transition-all ${
+                  formData.userType === "consultant"
+                    ? "bg-gradient-to-r from-deepBlue-500/20 to-deepBlue-600/20 border border-deepBlue-500/30"
+                    : "bg-background/40 border border-border hover:bg-background/60"
+                }`}
+                onClick={() => setFormData((prev) => ({ ...prev, userType: "consultant" }))}
+              >
+                <UserCog className={`h-6 w-6 mb-2 ${formData.userType === "consultant" ? "text-deepBlue-500" : "text-muted-foreground"}`} />
+                <span className={formData.userType === "consultant" ? "text-white" : "text-muted-foreground"}>Consultant</span>
+              </button>
+            </div>
+          )}
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -138,7 +149,7 @@ const Login = () => {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
+                  autoComplete={mode === "login" ? "current-password" : "new-password"}
                   required
                   value={formData.password}
                   onChange={handleChange}
@@ -159,43 +170,50 @@ const Login = () => {
               </div>
             </div>
             
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 bg-background/50 border border-border focus:ring-orange-500"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-muted-foreground">
-                  Remember me
-                </label>
+            {mode === "login" && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    className="h-4 w-4 bg-background/50 border border-border focus:ring-orange-500"
+                  />
+                  <label htmlFor="remember-me" className="ml-2 block text-sm text-muted-foreground">
+                    Remember me
+                  </label>
+                </div>
+                
+                <a href="#" className="text-sm text-orange-500 hover:text-orange-400">
+                  Forgot password?
+                </a>
               </div>
-              
-              <a href="#" className="text-sm text-orange-500 hover:text-orange-400">
-                Forgot password?
-              </a>
-            </div>
+            )}
             
             <Button
               type="submit"
               className={`w-full ${
-                formData.userType === "user"
+                formData.userType === "user" || mode === "register"
                   ? "bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
                   : "bg-gradient-to-r from-deepBlue-500 to-deepBlue-600 hover:from-deepBlue-600 hover:to-deepBlue-700"
               }`}
-              disabled={isLoading}
+              disabled={isLoading || actionInProgress}
             >
-              {isLoading ? "Signing in..." : "Sign In"}
+              {actionInProgress 
+                ? (mode === "login" ? "Signing in..." : "Creating account...") 
+                : (mode === "login" ? "Sign In" : "Create Account")}
             </Button>
           </form>
           
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
-              <Link to="/register" className="font-medium text-orange-500 hover:text-orange-400">
-                Register now
-              </Link>
+              {mode === "login" ? "Don't have an account? " : "Already have an account? "}
+              <button 
+                onClick={() => setMode(mode === "login" ? "register" : "login")}
+                className="font-medium text-orange-500 hover:text-orange-400"
+              >
+                {mode === "login" ? "Register now" : "Sign in"}
+              </button>
             </p>
           </div>
         </motion.div>
@@ -207,7 +225,7 @@ const Login = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           By signing in, you agree to our{" "}
-          <Link to="/policy" className="underline hover:text-white">
+          <Link to="/terms" className="underline hover:text-white">
             Terms of Service
           </Link>{" "}
           and{" "}

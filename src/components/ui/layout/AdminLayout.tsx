@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { 
   LayoutDashboard, 
@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -25,18 +26,28 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user, isAdmin, signOut } = useAuth();
+  
+  // Redirect non-admin users to login
+  useEffect(() => {
+    if (!user) {
+      navigate("/admin/login");
+    } else if (!isAdmin) {
+      toast({
+        title: "Access Denied",
+        description: "You don't have admin privileges.",
+        variant: "destructive",
+      });
+      navigate("/");
+    }
+  }, [user, isAdmin, navigate, toast]);
   
   const isActive = (path: string) => {
     return location.pathname === path;
   };
   
   const handleLogout = () => {
-    // In a real app, this would call an API to logout
-    toast({
-      title: "Logged out",
-      description: "You have been logged out successfully."
-    });
-    navigate("/admin/login");
+    signOut();
   };
   
   const navigationItems = [
@@ -46,6 +57,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     { name: "Users", path: "/admin/users", icon: Users },
     { name: "Settings", path: "/admin/settings", icon: Settings },
   ];
+
+  // If user is not authenticated or not an admin, don't render the layout
+  if (!user || !isAdmin) {
+    return null;
+  }
 
   return (
     <div className="h-screen flex flex-col bg-background">
@@ -71,7 +87,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <div className="flex items-center gap-4">
           <div className="dropdown relative">
             <button className="flex items-center text-white hover:text-primary">
-              <span className="mr-2">Admin User</span>
+              <span className="mr-2">{user.email}</span>
               <ChevronDown size={16} />
             </button>
             <div className="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-black border border-border rounded-md shadow-lg z-50">
