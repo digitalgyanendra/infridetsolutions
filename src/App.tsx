@@ -15,6 +15,12 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
+import Blog from "./pages/Blog";
+import Courses from "./pages/Courses";
+import Policy from "./pages/Policy";
+import Terms from "./pages/Terms";
+import FAQ from "./pages/FAQ";
+import Disclaimer from "./pages/Disclaimer";
 
 // Initialize QueryClient
 const queryClient = new QueryClient();
@@ -34,6 +40,12 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/policy" element={<Policy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
             {/* Additional routes would be added here */}
             <Route path="*" element={<NotFound />} />
           </Routes>

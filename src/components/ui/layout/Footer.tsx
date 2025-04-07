@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="container px-4 md:px-6 py-12 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <h3 className="text-xl font-bold gradient-text">DIGITAL NEXUS</h3>
+            <h3 className="text-xl font-bold gradient-text">INFRIDET SOLUTIONS PRIVATE LIMITED</h3>
             <p className="text-muted-foreground">
               Empowering digital creators and businesses with expert consultation and growth strategies.
             </p>
@@ -58,6 +58,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/courses" className="text-muted-foreground hover:text-primary transition-colors">
+                  Courses
+                </Link>
+              </li>
+              <li>
                 <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
                   Contact
                 </Link>
@@ -66,31 +71,26 @@ const Footer = () => {
           </div>
           
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">Services</h4>
+            <h4 className="text-lg font-semibold">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">
-                  YouTube Consulting
+                <Link to="/policy" className="text-muted-foreground hover:text-primary transition-colors">
+                  Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">
-                  SEO Optimization
+                <Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">
+                  Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">
-                  Brand Growth
+                <Link to="/disclaimer" className="text-muted-foreground hover:text-primary transition-colors">
+                  Disclaimer
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">
-                  Digital Marketing
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">
-                  Content Strategy
+                <Link to="/faq" className="text-muted-foreground hover:text-primary transition-colors">
+                  FAQ
                 </Link>
               </li>
             </ul>
@@ -119,7 +119,7 @@ const Footer = () => {
         
         <div className="border-t border-border/40 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} Infridet Solutions Pvt. Ltd. All rights reserved.
+            &copy; {new Date().getFullYear()} INFRIDET SOLUTIONS PRIVATE LIMITED. All rights reserved.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <Link to="/policy" className="text-muted-foreground hover:text-primary text-sm transition-colors">

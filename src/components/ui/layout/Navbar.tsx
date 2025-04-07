@@ -16,7 +16,7 @@ const Navbar = () => {
       <div className="container px-4 md:px-6 mx-auto flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <span className="font-bold text-2xl gradient-text">
-            DIGITAL NEXUS
+            INFRIDET SOLUTIONS
           </span>
         </Link>
         
@@ -36,6 +36,9 @@ const Navbar = () => {
           </Link>
           <Link to="/blog" className="text-sm hover:text-primary transition-colors">
             Blog
+          </Link>
+          <Link to="/courses" className="text-sm hover:text-primary transition-colors">
+            Courses
           </Link>
           <Link to="/contact" className="text-sm hover:text-primary transition-colors">
             Contact
@@ -106,6 +109,13 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Blog
+            </Link>
+            <Link 
+              to="/courses" 
+              className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Courses
             </Link>
             <Link 
               to="/contact" 
