@@ -22,6 +22,13 @@ import Terms from "./pages/Terms";
 import FAQ from "./pages/FAQ";
 import Disclaimer from "./pages/Disclaimer";
 
+// Admin Routes
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminLogin from "./pages/admin/Login";
+import AdminCourses from "./pages/admin/Courses";
+import AdminBlogs from "./pages/admin/Blogs";
+import AdminUsers from "./pages/admin/Users";
+
 // Initialize QueryClient
 const queryClient = new QueryClient();
 
@@ -46,6 +53,14 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/courses" element={<AdminCourses />} />
+            <Route path="/admin/blogs" element={<AdminBlogs />} />
+            <Route path="/admin/users" element={<AdminUsers />} />
+            
             {/* Additional routes would be added here */}
             <Route path="*" element={<NotFound />} />
           </Routes>
