@@ -10,7 +10,7 @@ import { toast } from "@/hooks/use-toast";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const { adminSignIn, isAdmin, isLoading, user } = useAuth();
+  const { adminDirectAccess, isAdmin, isLoading, user } = useAuth();
   const [email, setEmail] = useState("");
   const [loginInProgress, setLoginInProgress] = useState(false);
 
@@ -26,8 +26,8 @@ const AdminLogin = () => {
     setLoginInProgress(true);
     
     try {
-      // Use the new adminSignIn function
-      const success = await adminSignIn(email);
+      // Use direct admin access without magic links
+      const success = await adminDirectAccess(email);
       
       if (success) {
         // If successful, navigate to the admin dashboard
@@ -100,7 +100,7 @@ const AdminLogin = () => {
                 />
               </div>
               <p className="mt-2 text-xs text-muted-foreground">
-                After submitting, check your email for a login link.
+                Enter your admin email to get direct access to the dashboard
               </p>
             </div>
             
@@ -109,7 +109,7 @@ const AdminLogin = () => {
               className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
               disabled={isLoading || loginInProgress || !email}
             >
-              {loginInProgress ? "Sending Magic Link..." : "Sign In to Admin"}
+              {loginInProgress ? "Signing in..." : "Access Admin Dashboard"}
             </Button>
           </form>
         </motion.div>

@@ -15,6 +15,7 @@ interface AuthContextType {
   signOut: () => Promise<void>;
   checkAdminAccess: (email: string) => Promise<boolean>;
   adminSignIn: (email: string) => Promise<boolean>;
+  adminDirectAccess: (email: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -37,6 +38,58 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return !!data;
     } catch (error) {
       console.error("Error checking admin status:", error);
+      return false;
+    }
+  };
+
+  // Direct admin access without email verification
+  const adminDirectAccess = async (email: string): Promise<boolean> => {
+    try {
+      // First check if the email is in admin table
+      const isUserAdmin = await checkAdminAccess(email);
+      
+      if (!isUserAdmin) {
+        toast({
+          title: "Access Denied",
+          description: "This email does not have admin privileges.",
+          variant: "destructive",
+        });
+        return false;
+      }
+      
+      // Create a temporary mock user for direct admin access
+      const mockUser = {
+        id: 'admin-' + Date.now(),
+        email: email,
+        app_metadata: { provider: 'email' },
+        user_metadata: { is_admin: true }
+      };
+      
+      const mockSession = {
+        access_token: 'mock-token',
+        refresh_token: 'mock-refresh-token',
+        user: mockUser
+      } as any;
+      
+      // Set user and session states
+      setUser(mockUser as any);
+      setSession(mockSession);
+      setIsAdmin(true);
+      
+      toast({
+        title: "Admin Access Granted",
+        description: "You now have temporary admin access to the dashboard.",
+      });
+      
+      // Return success
+      return true;
+    } catch (error: any) {
+      console.error("Admin login error:", error);
+      toast({
+        title: "Login Failed",
+        description: error.message || "An error occurred during login.",
+        variant: "destructive",
+      });
       return false;
     }
   };
@@ -231,7 +284,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       signUp, 
       signOut, 
       checkAdminAccess,
-      adminSignIn 
+      adminSignIn,
+      adminDirectAccess
     }}>
       {children}
     </AuthContext.Provider>

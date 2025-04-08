@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { 
@@ -27,23 +28,13 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const { toast } = useToast();
   const { user, isAdmin, signOut } = useAuth();
   
-  // Redirect non-admin users to login
+  // Check for admin status without immediate redirect
   useEffect(() => {
-    // First check if auth is loading (handled in AuthContext)
-    if (!user) {
-      navigate("/admin/login");
-      return;
-    }
-    
+    // If we're not in isAdmin state, redirect to login
     if (!isAdmin) {
-      toast({
-        title: "Access Denied",
-        description: "You don't have admin privileges.",
-        variant: "destructive",
-      });
-      navigate("/");
+      navigate("/admin/login");
     }
-  }, [user, isAdmin, navigate, toast]);
+  }, [isAdmin, navigate, toast]);
   
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -61,9 +52,17 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     { name: "Settings", path: "/admin/settings", icon: Settings },
   ];
 
-  // If user is not authenticated or not an admin, don't render the layout
-  if (!user || !isAdmin) {
-    return null;
+  // If not an admin, show loading or fallback
+  if (!isAdmin) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-background">
+        <div className="text-center">
+          <h2 className="text-xl font-bold mb-4">Access Restricted</h2>
+          <p className="mb-6">Redirecting to login page...</p>
+          <Button onClick={() => navigate("/admin/login")}>Go to Login</Button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -90,7 +89,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <div className="flex items-center gap-4">
           <div className="dropdown relative group">
             <button className="flex items-center text-white hover:text-primary">
-              <span className="mr-2">{user.email}</span>
+              <span className="mr-2">{user?.email || "Admin User"}</span>
               <ChevronDown size={16} />
             </button>
             <div className="dropdown-menu hidden group-hover:block absolute right-0 mt-2 w-48 bg-black border border-border rounded-md shadow-lg z-50">
