@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,6 +14,7 @@ interface AuthContextType {
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   checkAdminAccess: (email: string) => Promise<boolean>;
+  adminSignIn: (email: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,13 +30,62 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const checkAdminAccess = async (email: string): Promise<boolean> => {
     try {
       const { data, error } = await supabase.rpc('is_admin', {
-        user_email: email || ''
+        user_email: email
       });
       
       if (error) throw error;
       return !!data;
     } catch (error) {
       console.error("Error checking admin status:", error);
+      return false;
+    }
+  };
+
+  // Special function for admin login that doesn't require a password
+  const adminSignIn = async (email: string): Promise<boolean> => {
+    try {
+      // First check if the email is in admin table
+      const isUserAdmin = await checkAdminAccess(email);
+      
+      if (!isUserAdmin) {
+        toast({
+          title: "Access Denied",
+          description: "This email does not have admin privileges.",
+          variant: "destructive",
+        });
+        return false;
+      }
+      
+      // For local development, create a session for this admin without password
+      // In a real production app, you would use a more secure approach
+      const { data, error } = await supabase.auth.signInWithOtp({
+        email: email,
+        options: {
+          shouldCreateUser: true
+        }
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
+      // Set admin flag directly since we already verified admin status
+      setIsAdmin(true);
+      
+      toast({
+        title: "Admin Access Granted",
+        description: "You are now logged in as admin. Check your email for the OTP link.",
+      });
+      
+      // Return success
+      return true;
+    } catch (error: any) {
+      console.error("Admin login error:", error);
+      toast({
+        title: "Login Failed",
+        description: error.message || "An error occurred during login.",
+        variant: "destructive",
+      });
       return false;
     }
   };
@@ -77,6 +128,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = async (email: string, password: string, isAdminLogin = false) => {
     try {
       setIsLoading(true);
+      
+      // For admin login, first check if the user has admin access
+      if (isAdminLogin) {
+        const isUserAdmin = await checkAdminAccess(email);
+        
+        if (!isUserAdmin) {
+          toast({
+            title: "Access Denied",
+            description: "You don't have admin privileges.",
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -86,19 +152,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       // For admin login, check if the user has admin access
       if (isAdminLogin) {
-        const isUserAdmin = await checkAdminAccess(email);
-        
-        if (!isUserAdmin) {
-          // If not admin, sign out and show error
-          await supabase.auth.signOut();
-          toast({
-            title: "Access Denied",
-            description: "You don't have admin privileges.",
-            variant: "destructive",
-          });
-          return;
-        }
-        
         toast({
           title: "Admin Login Successful",
           description: "Welcome to the admin dashboard.",
@@ -169,7 +222,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, isAdmin, isLoading, signIn, signUp, signOut, checkAdminAccess }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      session, 
+      isAdmin, 
+      isLoading, 
+      signIn, 
+      signUp, 
+      signOut, 
+      checkAdminAccess,
+      adminSignIn 
+    }}>
       {children}
     </AuthContext.Provider>
   );

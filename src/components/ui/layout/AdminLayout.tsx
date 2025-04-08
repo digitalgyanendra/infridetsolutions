@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { 
@@ -13,7 +12,7 @@ import {
   ChevronDown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface AdminLayoutProps {
@@ -30,6 +29,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   
   // Redirect non-admin users to login
   useEffect(() => {
+    // First check if auth is loading (handled in AuthContext)
     if (!user) {
       navigate("/admin/login");
       return;
@@ -88,12 +88,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           </Link>
         </div>
         <div className="flex items-center gap-4">
-          <div className="dropdown relative">
+          <div className="dropdown relative group">
             <button className="flex items-center text-white hover:text-primary">
               <span className="mr-2">{user.email}</span>
               <ChevronDown size={16} />
             </button>
-            <div className="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-black border border-border rounded-md shadow-lg z-50">
+            <div className="dropdown-menu hidden group-hover:block absolute right-0 mt-2 w-48 bg-black border border-border rounded-md shadow-lg z-50">
               <Link to="/admin/profile" className="block px-4 py-2 text-white hover:bg-muted">
                 Profile
               </Link>
