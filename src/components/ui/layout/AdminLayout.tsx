@@ -32,7 +32,10 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   useEffect(() => {
     if (!user) {
       navigate("/admin/login");
-    } else if (!isAdmin) {
+      return;
+    }
+    
+    if (!isAdmin) {
       toast({
         title: "Access Denied",
         description: "You don't have admin privileges.",

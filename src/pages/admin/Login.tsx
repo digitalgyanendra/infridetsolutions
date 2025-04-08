@@ -3,17 +3,15 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const { signIn, isAdmin, isLoading, user } = useAuth();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [showPassword, setShowPassword] = useState(false);
+  const { signIn, isAdmin, isLoading, user, checkAdminAccess } = useAuth();
+  const [email, setEmail] = useState("");
   const [loginInProgress, setLoginInProgress] = useState(false);
 
   // Redirect to admin dashboard if already logged in as admin
@@ -23,17 +21,28 @@ const AdminLogin = () => {
     }
   }, [user, isAdmin, navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginInProgress(true);
     
     try {
-      await signIn(formData.email, formData.password, true);
+      // First check if the email has admin access
+      const isUserAdmin = await checkAdminAccess(email);
+      
+      if (!isUserAdmin) {
+        toast({
+          title: "Access Denied",
+          description: "This email does not have admin privileges.",
+          variant: "destructive",
+        });
+        setLoginInProgress(false);
+        return;
+      }
+      
+      // If admin, use a temporary password (this will be auto-generated in a real app)
+      await signIn(email, "temp-password-123", true);
+    } catch (error) {
+      console.error("Login error:", error);
     } finally {
       setLoginInProgress(false);
     }
@@ -64,7 +73,7 @@ const AdminLogin = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Access your admin dashboard to manage content
+            Enter your admin email to access the dashboard
           </motion.p>
         </div>
         
@@ -83,57 +92,22 @@ const AdminLogin = () => {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Mail className="h-5 w-5 text-muted-foreground" />
                 </div>
-                <input
+                <Input
                   id="email"
-                  name="email"
                   type="email"
-                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="pl-10 w-full bg-background/50 border border-border rounded-md py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                  placeholder="admin@infridetsolutions.com"
+                  className="pl-10 w-full"
+                  placeholder="admin@example.com"
                 />
-              </div>
-            </div>
-            
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="pl-10 w-full bg-background/50 border border-border rounded-md py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                  placeholder="••••••••"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-muted-foreground" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-muted-foreground" />
-                  )}
-                </button>
               </div>
             </div>
             
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
-              disabled={isLoading || loginInProgress}
+              disabled={isLoading || loginInProgress || !email}
             >
               {loginInProgress ? "Signing in..." : "Sign In to Admin"}
             </Button>
