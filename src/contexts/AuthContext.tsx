@@ -36,11 +36,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           setTimeout(async () => {
             try {
               const { data, error } = await supabase.rpc('is_admin', {
-                user_email: session.user.email
+                user_email: session.user.email || ''
               });
               
               if (error) throw error;
-              setIsAdmin(data);
+              setIsAdmin(!!data);
             } catch (error) {
               console.error("Error checking admin status:", error);
               setIsAdmin(false);
@@ -60,11 +60,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (session?.user) {
         try {
           const { data, error } = await supabase.rpc('is_admin', {
-            user_email: session.user.email
+            user_email: session.user.email || ''
           });
           
           if (error) throw error;
-          setIsAdmin(data);
+          setIsAdmin(!!data);
         } catch (error) {
           console.error("Error checking admin status:", error);
           setIsAdmin(false);
@@ -90,7 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Check if user is admin when admin login is attempted
       if (isAdminLogin) {
         const { data: isAdminData, error: isAdminError } = await supabase.rpc('is_admin', {
-          user_email: email
+          user_email: email || ''
         });
         
         if (isAdminError) throw isAdminError;
