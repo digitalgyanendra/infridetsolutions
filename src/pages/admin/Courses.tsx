@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLayout from "@/components/ui/layout/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { 
@@ -32,9 +32,22 @@ import {
   Save
 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+
+// Define proper type for courses
+interface Course {
+  id: number;
+  title: string;
+  description: string;
+  price: string;
+  students: number;
+  lessons: number;
+  imageUrl: string;
+  status: "Published" | "Draft";
+}
 
 // Sample course data - in a real app, this would come from an API
-const initialCourses = [
+const initialCourses: Course[] = [
   {
     id: 1,
     title: "AI Money Mastery",
@@ -105,10 +118,11 @@ interface CourseFormData {
   lessons: number;
   imageUrl: string;
   status: "Published" | "Draft";
+  students?: number;
 }
 
 const AdminCourses = () => {
-  const [courses, setCourses] = useState(initialCourses);
+  const [courses, setCourses] = useState<Course[]>(initialCourses);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [courseToDelete, setCourseToDelete] = useState<number | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -123,24 +137,63 @@ const AdminCourses = () => {
   });
   const { toast } = useToast();
 
+  // Fetch courses from Supabase (in a real app)
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        // In a real implementation, this would fetch from Supabase
+        // const { data, error } = await supabase.from('courses').select('*');
+        // if (error) throw error;
+        // if (data) setCourses(data);
+        
+        // For now, we'll use the initial data
+        console.log("Courses would be fetched from Supabase here");
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load courses. Please try again.",
+          variant: "destructive"
+        });
+      }
+    };
+    
+    fetchCourses();
+  }, [toast]);
+
   const handleDeleteCourse = (id: number) => {
     setCourseToDelete(id);
     setIsDeleteDialogOpen(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (courseToDelete) {
-      setCourses(courses.filter(course => course.id !== courseToDelete));
-      toast({
-        title: "Course deleted",
-        description: "The course has been deleted successfully."
-      });
-      setIsDeleteDialogOpen(false);
-      setCourseToDelete(null);
+      try {
+        // In a real implementation, this would delete from Supabase
+        // const { error } = await supabase.from('courses').delete().eq('id', courseToDelete);
+        // if (error) throw error;
+        
+        // For now, we'll just update the state
+        setCourses(courses.filter(course => course.id !== courseToDelete));
+        toast({
+          title: "Course deleted",
+          description: "The course has been deleted successfully."
+        });
+      } catch (error) {
+        console.error("Error deleting course:", error);
+        toast({
+          title: "Error",
+          description: "Failed to delete course. Please try again.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsDeleteDialogOpen(false);
+        setCourseToDelete(null);
+      }
     }
   };
 
-  const handleEditCourse = (course: any) => {
+  const handleEditCourse = (course: Course) => {
     setCurrentCourse(course);
     setIsEditDialogOpen(true);
   };
@@ -157,32 +210,78 @@ const AdminCourses = () => {
     setIsCreateDialogOpen(true);
   };
 
-  const handleSaveCourse = () => {
-    if (currentCourse.id) {
-      // Update existing course
-      setCourses(prevCourses => 
-        prevCourses.map(course => 
-          course.id === currentCourse.id ? {...currentCourse} : course
-        )
-      );
+  const handleSaveCourse = async () => {
+    try {
+      if (currentCourse.id) {
+        // Update existing course
+        // In a real implementation, this would update in Supabase
+        // const { error } = await supabase.from('courses').update({
+        //   title: currentCourse.title,
+        //   description: currentCourse.description,
+        //   price: currentCourse.price,
+        //   lessons: currentCourse.lessons,
+        //   imageUrl: currentCourse.imageUrl,
+        //   status: currentCourse.status
+        // }).eq('id', currentCourse.id);
+        // if (error) throw error;
+        
+        // For now, we'll just update the state
+        setCourses(prevCourses => 
+          prevCourses.map(course => 
+            course.id === currentCourse.id ? {
+              ...course,
+              title: currentCourse.title,
+              description: currentCourse.description,
+              price: currentCourse.price,
+              lessons: currentCourse.lessons,
+              imageUrl: currentCourse.imageUrl,
+              status: currentCourse.status
+            } : course
+          )
+        );
+        
+        toast({
+          title: "Course updated",
+          description: "The course has been updated successfully."
+        });
+        setIsEditDialogOpen(false);
+      } else {
+        // Create new course
+        // In a real implementation, this would insert into Supabase
+        // const { data, error } = await supabase.from('courses').insert({
+        //   title: currentCourse.title,
+        //   description: currentCourse.description,
+        //   price: currentCourse.price,
+        //   lessons: currentCourse.lessons,
+        //   imageUrl: currentCourse.imageUrl,
+        //   status: currentCourse.status,
+        //   students: 0
+        // }).select();
+        // if (error) throw error;
+        
+        // For now, we'll just update the state
+        const newCourse: Course = {
+          ...currentCourse,
+          id: Math.max(...courses.map(c => c.id)) + 1,
+          students: 0,
+          status: currentCourse.status
+        };
+        
+        setCourses(prevCourses => [...prevCourses, newCourse]);
+        
+        toast({
+          title: "Course created",
+          description: "The new course has been created successfully."
+        });
+        setIsCreateDialogOpen(false);
+      }
+    } catch (error) {
+      console.error("Error saving course:", error);
       toast({
-        title: "Course updated",
-        description: "The course has been updated successfully."
+        title: "Error",
+        description: "Failed to save course. Please try again.",
+        variant: "destructive"
       });
-      setIsEditDialogOpen(false);
-    } else {
-      // Create new course
-      const newCourse = {
-        ...currentCourse,
-        id: Math.max(...courses.map(c => c.id)) + 1,
-        students: 0
-      };
-      setCourses(prevCourses => [...prevCourses, newCourse]);
-      toast({
-        title: "Course created",
-        description: "The new course has been created successfully."
-      });
-      setIsCreateDialogOpen(false);
     }
   };
 
@@ -190,7 +289,7 @@ const AdminCourses = () => {
     const { name, value } = e.target;
     setCurrentCourse(prev => ({
       ...prev,
-      [name]: value
+      [name]: name === "lessons" ? parseInt(value) : value
     }));
   };
 

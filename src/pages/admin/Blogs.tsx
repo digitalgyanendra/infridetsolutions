@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLayout from "@/components/ui/layout/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { 
@@ -33,9 +32,22 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
+
+// Define proper type for blogs
+interface Blog {
+  id: number;
+  title: string;
+  excerpt: string;
+  author: string;
+  date: string;
+  status: "Published" | "Draft";
+  category: string;
+  views: number;
+}
 
 // Sample blog data - in a real app, this would come from an API
-const initialBlogs = [
+const initialBlogs: Blog[] = [
   {
     id: 1,
     title: "10 Ways AI is Transforming Digital Marketing",
@@ -96,10 +108,11 @@ interface BlogFormData {
   date: string;
   status: "Published" | "Draft";
   category: string;
+  views?: number;
 }
 
 const AdminBlogs = () => {
-  const [blogs, setBlogs] = useState(initialBlogs);
+  const [blogs, setBlogs] = useState<Blog[]>(initialBlogs);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [blogToDelete, setBlogToDelete] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -115,24 +128,63 @@ const AdminBlogs = () => {
   });
   const { toast } = useToast();
 
+  // Fetch blogs from Supabase (in a real app)
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        // In a real implementation, this would fetch from Supabase
+        // const { data, error } = await supabase.from('blogs').select('*');
+        // if (error) throw error;
+        // if (data) setBlogs(data);
+        
+        // For now, we'll use the initial data
+        console.log("Blogs would be fetched from Supabase here");
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load blogs. Please try again.",
+          variant: "destructive"
+        });
+      }
+    };
+    
+    fetchBlogs();
+  }, [toast]);
+
   const handleDeleteBlog = (id: number) => {
     setBlogToDelete(id);
     setIsDeleteDialogOpen(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (blogToDelete) {
-      setBlogs(blogs.filter(blog => blog.id !== blogToDelete));
-      toast({
-        title: "Blog deleted",
-        description: "The blog post has been deleted successfully."
-      });
-      setIsDeleteDialogOpen(false);
-      setBlogToDelete(null);
+      try {
+        // In a real implementation, this would delete from Supabase
+        // const { error } = await supabase.from('blogs').delete().eq('id', blogToDelete);
+        // if (error) throw error;
+        
+        // For now, we'll just update the state
+        setBlogs(blogs.filter(blog => blog.id !== blogToDelete));
+        toast({
+          title: "Blog deleted",
+          description: "The blog post has been deleted successfully."
+        });
+      } catch (error) {
+        console.error("Error deleting blog:", error);
+        toast({
+          title: "Error",
+          description: "Failed to delete blog. Please try again.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsDeleteDialogOpen(false);
+        setBlogToDelete(null);
+      }
     }
   };
 
-  const handleEditBlog = (blog: any) => {
+  const handleEditBlog = (blog: Blog) => {
     setCurrentBlog(blog);
     setIsEditDialogOpen(true);
   };
@@ -149,32 +201,78 @@ const AdminBlogs = () => {
     setIsCreateDialogOpen(true);
   };
 
-  const handleSaveBlog = () => {
-    if (currentBlog.id) {
-      // Update existing blog
-      setBlogs(prevBlogs => 
-        prevBlogs.map(blog => 
-          blog.id === currentBlog.id ? {...currentBlog, views: blog.views} : blog
-        )
-      );
+  const handleSaveBlog = async () => {
+    try {
+      if (currentBlog.id) {
+        // Update existing blog
+        // In a real implementation, this would update in Supabase
+        // const { error } = await supabase.from('blogs').update({
+        //   title: currentBlog.title,
+        //   excerpt: currentBlog.excerpt,
+        //   author: currentBlog.author,
+        //   date: currentBlog.date,
+        //   status: currentBlog.status,
+        //   category: currentBlog.category
+        // }).eq('id', currentBlog.id);
+        // if (error) throw error;
+        
+        // For now, we'll just update the state
+        setBlogs(prevBlogs => 
+          prevBlogs.map(blog => 
+            blog.id === currentBlog.id ? {
+              ...blog,
+              title: currentBlog.title,
+              excerpt: currentBlog.excerpt,
+              author: currentBlog.author,
+              date: currentBlog.date,
+              status: currentBlog.status,
+              category: currentBlog.category
+            } : blog
+          )
+        );
+        
+        toast({
+          title: "Blog updated",
+          description: "The blog post has been updated successfully."
+        });
+        setIsEditDialogOpen(false);
+      } else {
+        // Create new blog
+        // In a real implementation, this would insert into Supabase
+        // const { data, error } = await supabase.from('blogs').insert({
+        //   title: currentBlog.title,
+        //   excerpt: currentBlog.excerpt,
+        //   author: currentBlog.author,
+        //   date: currentBlog.date,
+        //   status: currentBlog.status,
+        //   category: currentBlog.category,
+        //   views: 0
+        // }).select();
+        // if (error) throw error;
+        
+        // For now, we'll just update the state
+        const newBlog: Blog = {
+          ...currentBlog,
+          id: Math.max(...blogs.map(b => b.id)) + 1,
+          views: 0,
+          status: currentBlog.status
+        };
+        
+        setBlogs(prevBlogs => [...prevBlogs, newBlog]);
+        
+        toast({
+          title: "Blog created",
+          description: "The new blog post has been created successfully."
+        });
+        setIsCreateDialogOpen(false);
+      }
+    } catch (error) {
+      console.error("Error saving blog:", error);
       toast({
-        title: "Blog updated",
-        description: "The blog post has been updated successfully."
+        title: "Error",
+        description: "Failed to save blog. Please try again.",
+        variant: "destructive"
       });
-      setIsEditDialogOpen(false);
-    } else {
-      // Create new blog
-      const newBlog = {
-        ...currentBlog,
-        id: Math.max(...blogs.map(b => b.id)) + 1,
-        views: currentBlog.status === "Published" ? 0 : 0
-      };
-      setBlogs(prevBlogs => [...prevBlogs, newBlog]);
-      toast({
-        title: "Blog created",
-        description: "The new blog post has been created successfully."
-      });
-      setIsCreateDialogOpen(false);
     }
   };
 
@@ -309,22 +407,19 @@ const AdminBlogs = () => {
 
       {/* Delete confirmation dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Are you sure you want to delete this blog post?</DialogTitle>
+            <DialogTitle>Are you sure?</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This blog post will be permanently removed.
+              This action cannot be undone. This will permanently delete the blog post from our servers.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+            <Button variant="secondary" onClick={() => setIsDeleteDialogOpen(false)}>
               Cancel
             </Button>
-            <Button 
-              variant="destructive" 
-              onClick={confirmDelete}
-            >
-              Delete Blog Post
+            <Button variant="destructive" onClick={confirmDelete}>
+              Delete
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -332,11 +427,11 @@ const AdminBlogs = () => {
 
       {/* Edit blog dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
             <DialogTitle>Edit Blog Post</DialogTitle>
             <DialogDescription>
-              Make changes to the blog post details below.
+              Make changes to your blog post here. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -344,24 +439,24 @@ const AdminBlogs = () => {
               <Label htmlFor="title" className="text-right">
                 Title
               </Label>
-              <Input
-                id="title"
+              <Input 
+                id="title" 
                 name="title"
-                value={currentBlog.title}
+                defaultValue={currentBlog.title}
                 onChange={handleInputChange}
-                className="col-span-3"
+                className="col-span-3" 
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="excerpt" className="text-right">
                 Excerpt
               </Label>
-              <Textarea
-                id="excerpt"
+              <Textarea 
+                id="excerpt" 
                 name="excerpt"
-                value={currentBlog.excerpt}
+                defaultValue={currentBlog.excerpt}
                 onChange={handleInputChange}
-                className="col-span-3"
+                className="col-span-3" 
                 rows={3}
               />
             </div>
@@ -369,49 +464,49 @@ const AdminBlogs = () => {
               <Label htmlFor="author" className="text-right">
                 Author
               </Label>
-              <Input
-                id="author"
+              <Input 
+                id="author" 
                 name="author"
-                value={currentBlog.author}
+                defaultValue={currentBlog.author}
                 onChange={handleInputChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="category" className="text-right">
-                Category
-              </Label>
-              <Input
-                id="category"
-                name="category"
-                value={currentBlog.category}
-                onChange={handleInputChange}
-                className="col-span-3"
+                className="col-span-3" 
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="date" className="text-right">
                 Date
               </Label>
-              <Input
-                id="date"
-                name="date"
+              <Input 
                 type="date"
-                value={currentBlog.date}
+                id="date" 
+                name="date"
+                defaultValue={currentBlog.date}
                 onChange={handleInputChange}
-                className="col-span-3"
+                className="col-span-3" 
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="category" className="text-right">
+                Category
+              </Label>
+              <Input 
+                id="category" 
+                name="category"
+                defaultValue={currentBlog.category}
+                onChange={handleInputChange}
+                className="col-span-3" 
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="status" className="text-right">
                 Status
               </Label>
-              <select
-                id="status"
+              <select 
+                id="status" 
                 name="status"
-                value={currentBlog.status}
+                defaultValue={currentBlog.status}
                 onChange={handleInputChange}
-                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="col-span-3 bg-background border border-border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
               >
                 <option value="Published">Published</option>
                 <option value="Draft">Draft</option>
@@ -419,15 +514,12 @@ const AdminBlogs = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+            <Button variant="secondary" onClick={() => setIsEditDialogOpen(false)}>
               Cancel
             </Button>
-            <Button 
-              className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
-              onClick={handleSaveBlog}
-            >
+            <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700" onClick={handleSaveBlog}>
               <Save size={16} className="mr-2" />
-              Save Changes
+              Save changes
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -435,7 +527,7 @@ const AdminBlogs = () => {
 
       {/* Create new blog dialog */}
       <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
             <DialogTitle>Create New Blog Post</DialogTitle>
             <DialogDescription>
@@ -447,26 +539,24 @@ const AdminBlogs = () => {
               <Label htmlFor="title" className="text-right">
                 Title
               </Label>
-              <Input
-                id="title"
+              <Input 
+                id="title" 
                 name="title"
                 value={currentBlog.title}
                 onChange={handleInputChange}
-                className="col-span-3"
-                placeholder="Blog Post Title"
+                className="col-span-3" 
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="excerpt" className="text-right">
                 Excerpt
               </Label>
-              <Textarea
-                id="excerpt"
+              <Textarea 
+                id="excerpt" 
                 name="excerpt"
                 value={currentBlog.excerpt}
                 onChange={handleInputChange}
-                className="col-span-3"
-                placeholder="Brief summary of the blog post"
+                className="col-span-3" 
                 rows={3}
               />
             </div>
@@ -474,51 +564,49 @@ const AdminBlogs = () => {
               <Label htmlFor="author" className="text-right">
                 Author
               </Label>
-              <Input
-                id="author"
+              <Input 
+                id="author" 
                 name="author"
                 value={currentBlog.author}
                 onChange={handleInputChange}
-                className="col-span-3"
-                placeholder="Author Name"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="category" className="text-right">
-                Category
-              </Label>
-              <Input
-                id="category"
-                name="category"
-                value={currentBlog.category}
-                onChange={handleInputChange}
-                className="col-span-3"
-                placeholder="Blog Category"
+                className="col-span-3" 
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="date" className="text-right">
                 Date
               </Label>
-              <Input
-                id="date"
-                name="date"
+              <Input 
                 type="date"
+                id="date" 
+                name="date"
                 value={currentBlog.date}
                 onChange={handleInputChange}
-                className="col-span-3"
+                className="col-span-3" 
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="category" className="text-right">
+                Category
+              </Label>
+              <Input 
+                id="category" 
+                name="category"
+                value={currentBlog.category}
+                onChange={handleInputChange}
+                className="col-span-3" 
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="status" className="text-right">
                 Status
               </Label>
-              <select
-                id="status"
+              <select 
+                id="status" 
                 name="status"
                 value={currentBlog.status}
                 onChange={handleInputChange}
-                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="col-span-3 bg-background border border-border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
               >
                 <option value="Published">Published</option>
                 <option value="Draft">Draft</option>
@@ -526,15 +614,15 @@ const AdminBlogs = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+            <Button variant="secondary" onClick={() => setIsCreateDialogOpen(false)}>
               Cancel
             </Button>
             <Button 
               className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
               onClick={handleSaveBlog}
             >
-              <Save size={16} className="mr-2" />
-              Create Blog Post
+              <PlusCircle size={16} className="mr-2" />
+              Create Post
             </Button>
           </DialogFooter>
         </DialogContent>
