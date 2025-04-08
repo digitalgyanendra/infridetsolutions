@@ -18,6 +18,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { 
   PlusCircle, 
   Edit, 
@@ -25,7 +28,8 @@ import {
   Eye, 
   BarChart, 
   Users, 
-  BookOpen 
+  BookOpen,
+  Save
 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -93,10 +97,30 @@ const initialCourses = [
   }
 ];
 
+interface CourseFormData {
+  id?: number;
+  title: string;
+  description: string;
+  price: string;
+  lessons: number;
+  imageUrl: string;
+  status: "Published" | "Draft";
+}
+
 const AdminCourses = () => {
   const [courses, setCourses] = useState(initialCourses);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [courseToDelete, setCourseToDelete] = useState<number | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [currentCourse, setCurrentCourse] = useState<CourseFormData>({
+    title: "",
+    description: "",
+    price: "",
+    lessons: 0,
+    imageUrl: "",
+    status: "Draft"
+  });
   const { toast } = useToast();
 
   const handleDeleteCourse = (id: number) => {
@@ -116,6 +140,60 @@ const AdminCourses = () => {
     }
   };
 
+  const handleEditCourse = (course: any) => {
+    setCurrentCourse(course);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleCreateNewCourse = () => {
+    setCurrentCourse({
+      title: "",
+      description: "",
+      price: "",
+      lessons: 0,
+      imageUrl: "https://placehold.co/600x400/gray/white?text=New+Course",
+      status: "Draft"
+    });
+    setIsCreateDialogOpen(true);
+  };
+
+  const handleSaveCourse = () => {
+    if (currentCourse.id) {
+      // Update existing course
+      setCourses(prevCourses => 
+        prevCourses.map(course => 
+          course.id === currentCourse.id ? {...currentCourse} : course
+        )
+      );
+      toast({
+        title: "Course updated",
+        description: "The course has been updated successfully."
+      });
+      setIsEditDialogOpen(false);
+    } else {
+      // Create new course
+      const newCourse = {
+        ...currentCourse,
+        id: Math.max(...courses.map(c => c.id)) + 1,
+        students: 0
+      };
+      setCourses(prevCourses => [...prevCourses, newCourse]);
+      toast({
+        title: "Course created",
+        description: "The new course has been created successfully."
+      });
+      setIsCreateDialogOpen(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setCurrentCourse(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -126,7 +204,10 @@ const AdminCourses = () => {
               Create, edit, and manage your online courses
             </p>
           </div>
-          <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
+          <Button 
+            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+            onClick={handleCreateNewCourse}
+          >
             <PlusCircle size={18} className="mr-2" />
             Create New Course
           </Button>
@@ -165,7 +246,11 @@ const AdminCourses = () => {
                 </div>
               </CardContent>
               <CardFooter className="flex gap-2 flex-wrap">
-                <Button variant="outline" size="sm">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => handleEditCourse(course)}
+                >
                   <Edit size={14} className="mr-1" />
                   Edit
                 </Button>
@@ -210,6 +295,217 @@ const AdminCourses = () => {
               onClick={confirmDelete}
             >
               Delete Course
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit course dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Edit Course</DialogTitle>
+            <DialogDescription>
+              Make changes to the course details below.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="title" className="text-right">
+                Title
+              </Label>
+              <Input
+                id="title"
+                name="title"
+                value={currentCourse.title}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="description" className="text-right">
+                Description
+              </Label>
+              <Textarea
+                id="description"
+                name="description"
+                value={currentCourse.description}
+                onChange={handleInputChange}
+                className="col-span-3"
+                rows={3}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="price" className="text-right">
+                Price
+              </Label>
+              <Input
+                id="price"
+                name="price"
+                value={currentCourse.price}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="lessons" className="text-right">
+                Lessons
+              </Label>
+              <Input
+                id="lessons"
+                name="lessons"
+                type="number"
+                value={currentCourse.lessons}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="imageUrl" className="text-right">
+                Image URL
+              </Label>
+              <Input
+                id="imageUrl"
+                name="imageUrl"
+                value={currentCourse.imageUrl}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="status" className="text-right">
+                Status
+              </Label>
+              <select
+                id="status"
+                name="status"
+                value={currentCourse.status}
+                onChange={handleInputChange}
+                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="Published">Published</option>
+                <option value="Draft">Draft</option>
+              </select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button 
+              className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+              onClick={handleSaveCourse}
+            >
+              <Save size={16} className="mr-2" />
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Create new course dialog */}
+      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Create New Course</DialogTitle>
+            <DialogDescription>
+              Fill in the details for your new course.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="title" className="text-right">
+                Title
+              </Label>
+              <Input
+                id="title"
+                name="title"
+                value={currentCourse.title}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="Course Title"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="description" className="text-right">
+                Description
+              </Label>
+              <Textarea
+                id="description"
+                name="description"
+                value={currentCourse.description}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="Course Description"
+                rows={3}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="price" className="text-right">
+                Price
+              </Label>
+              <Input
+                id="price"
+                name="price"
+                value={currentCourse.price}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="₹9,999"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="lessons" className="text-right">
+                Lessons
+              </Label>
+              <Input
+                id="lessons"
+                name="lessons"
+                type="number"
+                value={currentCourse.lessons}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="10"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="imageUrl" className="text-right">
+                Image URL
+              </Label>
+              <Input
+                id="imageUrl"
+                name="imageUrl"
+                value={currentCourse.imageUrl}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="https://example.com/image.jpg"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="status" className="text-right">
+                Status
+              </Label>
+              <select
+                id="status"
+                name="status"
+                value={currentCourse.status}
+                onChange={handleInputChange}
+                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="Published">Published</option>
+                <option value="Draft">Draft</option>
+              </select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button 
+              className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+              onClick={handleSaveCourse}
+            >
+              <Save size={16} className="mr-2" />
+              Create Course
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -25,8 +25,12 @@ import {
   Eye, 
   FileText, 
   Calendar, 
-  Search 
+  Search,
+  Save 
 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
 
@@ -84,11 +88,31 @@ const initialBlogs = [
   }
 ];
 
+interface BlogFormData {
+  id?: number;
+  title: string;
+  excerpt: string;
+  author: string;
+  date: string;
+  status: "Published" | "Draft";
+  category: string;
+}
+
 const AdminBlogs = () => {
   const [blogs, setBlogs] = useState(initialBlogs);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [blogToDelete, setBlogToDelete] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [currentBlog, setCurrentBlog] = useState<BlogFormData>({
+    title: "",
+    excerpt: "",
+    author: "",
+    date: new Date().toISOString().split('T')[0],
+    status: "Draft",
+    category: ""
+  });
   const { toast } = useToast();
 
   const handleDeleteBlog = (id: number) => {
@@ -106,6 +130,60 @@ const AdminBlogs = () => {
       setIsDeleteDialogOpen(false);
       setBlogToDelete(null);
     }
+  };
+
+  const handleEditBlog = (blog: any) => {
+    setCurrentBlog(blog);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleCreateNewBlog = () => {
+    setCurrentBlog({
+      title: "",
+      excerpt: "",
+      author: "Rahul Sharma", // Default author
+      date: new Date().toISOString().split('T')[0],
+      status: "Draft",
+      category: ""
+    });
+    setIsCreateDialogOpen(true);
+  };
+
+  const handleSaveBlog = () => {
+    if (currentBlog.id) {
+      // Update existing blog
+      setBlogs(prevBlogs => 
+        prevBlogs.map(blog => 
+          blog.id === currentBlog.id ? {...currentBlog, views: blog.views} : blog
+        )
+      );
+      toast({
+        title: "Blog updated",
+        description: "The blog post has been updated successfully."
+      });
+      setIsEditDialogOpen(false);
+    } else {
+      // Create new blog
+      const newBlog = {
+        ...currentBlog,
+        id: Math.max(...blogs.map(b => b.id)) + 1,
+        views: currentBlog.status === "Published" ? 0 : 0
+      };
+      setBlogs(prevBlogs => [...prevBlogs, newBlog]);
+      toast({
+        title: "Blog created",
+        description: "The new blog post has been created successfully."
+      });
+      setIsCreateDialogOpen(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setCurrentBlog(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const filteredBlogs = blogs.filter(blog => 
@@ -129,7 +207,10 @@ const AdminBlogs = () => {
               Create, edit, and publish blog content
             </p>
           </div>
-          <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
+          <Button 
+            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+            onClick={handleCreateNewBlog}
+          >
             <PlusCircle size={18} className="mr-2" />
             Create New Post
           </Button>
@@ -191,7 +272,11 @@ const AdminBlogs = () => {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleEditBlog(blog)}
+                      >
                         <Edit size={14} />
                       </Button>
                       <Button variant="outline" size="sm">
@@ -240,6 +325,216 @@ const AdminBlogs = () => {
               onClick={confirmDelete}
             >
               Delete Blog Post
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit blog dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Edit Blog Post</DialogTitle>
+            <DialogDescription>
+              Make changes to the blog post details below.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="title" className="text-right">
+                Title
+              </Label>
+              <Input
+                id="title"
+                name="title"
+                value={currentBlog.title}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="excerpt" className="text-right">
+                Excerpt
+              </Label>
+              <Textarea
+                id="excerpt"
+                name="excerpt"
+                value={currentBlog.excerpt}
+                onChange={handleInputChange}
+                className="col-span-3"
+                rows={3}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="author" className="text-right">
+                Author
+              </Label>
+              <Input
+                id="author"
+                name="author"
+                value={currentBlog.author}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="category" className="text-right">
+                Category
+              </Label>
+              <Input
+                id="category"
+                name="category"
+                value={currentBlog.category}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="date" className="text-right">
+                Date
+              </Label>
+              <Input
+                id="date"
+                name="date"
+                type="date"
+                value={currentBlog.date}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="status" className="text-right">
+                Status
+              </Label>
+              <select
+                id="status"
+                name="status"
+                value={currentBlog.status}
+                onChange={handleInputChange}
+                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="Published">Published</option>
+                <option value="Draft">Draft</option>
+              </select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button 
+              className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+              onClick={handleSaveBlog}
+            >
+              <Save size={16} className="mr-2" />
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Create new blog dialog */}
+      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Create New Blog Post</DialogTitle>
+            <DialogDescription>
+              Fill in the details for your new blog post.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="title" className="text-right">
+                Title
+              </Label>
+              <Input
+                id="title"
+                name="title"
+                value={currentBlog.title}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="Blog Post Title"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="excerpt" className="text-right">
+                Excerpt
+              </Label>
+              <Textarea
+                id="excerpt"
+                name="excerpt"
+                value={currentBlog.excerpt}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="Brief summary of the blog post"
+                rows={3}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="author" className="text-right">
+                Author
+              </Label>
+              <Input
+                id="author"
+                name="author"
+                value={currentBlog.author}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="Author Name"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="category" className="text-right">
+                Category
+              </Label>
+              <Input
+                id="category"
+                name="category"
+                value={currentBlog.category}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="Blog Category"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="date" className="text-right">
+                Date
+              </Label>
+              <Input
+                id="date"
+                name="date"
+                type="date"
+                value={currentBlog.date}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="status" className="text-right">
+                Status
+              </Label>
+              <select
+                id="status"
+                name="status"
+                value={currentBlog.status}
+                onChange={handleInputChange}
+                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="Published">Published</option>
+                <option value="Draft">Draft</option>
+              </select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button 
+              className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+              onClick={handleSaveBlog}
+            >
+              <Save size={16} className="mr-2" />
+              Create Blog Post
             </Button>
           </DialogFooter>
         </DialogContent>
