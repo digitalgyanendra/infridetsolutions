@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import AdminLayout from "@/components/ui/layout/AdminLayout";
 import { Button } from "@/components/ui/button";
@@ -247,24 +246,16 @@ const AdminCourses = () => {
         setIsEditDialogOpen(false);
       } else {
         // Create new course
-        // In a real implementation, this would insert into Supabase
-        // const { data, error } = await supabase.from('courses').insert({
-        //   title: currentCourse.title,
-        //   description: currentCourse.description,
-        //   price: currentCourse.price,
-        //   lessons: currentCourse.lessons,
-        //   imageUrl: currentCourse.imageUrl,
-        //   status: currentCourse.status,
-        //   students: 0
-        // }).select();
-        // if (error) throw error;
-        
-        // For now, we'll just update the state
+        // Fix the type issue by ensuring all required properties are included
         const newCourse: Course = {
-          ...currentCourse,
           id: Math.max(...courses.map(c => c.id)) + 1,
-          students: 0,
-          status: currentCourse.status
+          title: currentCourse.title,
+          description: currentCourse.description,
+          price: currentCourse.price,
+          lessons: currentCourse.lessons,
+          imageUrl: currentCourse.imageUrl,
+          status: currentCourse.status,
+          students: 0 // Ensure students is always set
         };
         
         setCourses(prevCourses => [...prevCourses, newCourse]);

@@ -193,7 +193,7 @@ const AdminBlogs = () => {
     setCurrentBlog({
       title: "",
       excerpt: "",
-      author: "Rahul Sharma", // Default author
+      author: "",
       date: new Date().toISOString().split('T')[0],
       status: "Draft",
       category: ""
@@ -238,24 +238,16 @@ const AdminBlogs = () => {
         setIsEditDialogOpen(false);
       } else {
         // Create new blog
-        // In a real implementation, this would insert into Supabase
-        // const { data, error } = await supabase.from('blogs').insert({
-        //   title: currentBlog.title,
-        //   excerpt: currentBlog.excerpt,
-        //   author: currentBlog.author,
-        //   date: currentBlog.date,
-        //   status: currentBlog.status,
-        //   category: currentBlog.category,
-        //   views: 0
-        // }).select();
-        // if (error) throw error;
-        
-        // For now, we'll just update the state
+        // Fix the type issue by ensuring all required properties are included
         const newBlog: Blog = {
-          ...currentBlog,
           id: Math.max(...blogs.map(b => b.id)) + 1,
-          views: 0,
-          status: currentBlog.status
+          title: currentBlog.title,
+          excerpt: currentBlog.excerpt,
+          author: currentBlog.author,
+          date: currentBlog.date,
+          status: currentBlog.status,
+          category: currentBlog.category,
+          views: 0 // Ensure views is always set
         };
         
         setBlogs(prevBlogs => [...prevBlogs, newBlog]);
