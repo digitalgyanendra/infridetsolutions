@@ -15,8 +15,8 @@ import {
   LineChart,
   Layers,
   Play,
-  TrendingUpIcon,
-  Star
+  Star,
+  ExternalLink
 } from "lucide-react";
 
 interface PortfolioItemProps {
@@ -30,6 +30,7 @@ interface PortfolioItemProps {
   icon: React.ReactNode;
   delay: number;
   url?: string;
+  subChannels?: Array<{name: string, url: string}>;
 }
 
 const PortfolioItem: React.FC<PortfolioItemProps> = ({ 
@@ -42,7 +43,8 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
   achievements, 
   icon, 
   delay,
-  url
+  url,
+  subChannels
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -143,10 +145,31 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
                   <div className="mb-4">
                     <a href={url} target="_blank" rel="noopener noreferrer" className="text-deepBlue-500 flex items-center hover:underline">
                       <Youtube size={18} className="mr-2" />
-                      Visit Channel
+                      Main Channel
                     </a>
                   </div>
                 )}
+                
+                {subChannels && subChannels.length > 0 && (
+                  <div className="mb-6">
+                    <h5 className="text-md font-semibold mb-2">Related Channels:</h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {subChannels.map((channel, idx) => (
+                        <a 
+                          key={idx}
+                          href={channel.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-sm text-deepBlue-400 flex items-center hover:underline"
+                        >
+                          <ExternalLink size={14} className="mr-2" />
+                          {channel.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
                 <div className="h-48 bg-gradient-to-br from-gray-900 to-black rounded-lg flex items-center justify-center mb-4">
                   <div className="text-center">
                     <p className="text-muted-foreground">Growth Chart Visualization</p>
@@ -208,7 +231,14 @@ const Portfolio = () => {
       ],
       icon: <Youtube size={24} className="text-orange-500" />,
       filter: "youtube",
-      url: "https://www.youtube.com/@JoshTalksHindi"
+      url: "https://www.youtube.com/@JoshTalksHindi",
+      subChannels: [
+        { name: "Josh Talks JEE", url: "https://youtube.com/@joshtalksjee" },
+        { name: "Josh Talks NEET", url: "https://youtube.com/@joshtalksneet1" },
+        { name: "Josh Talks Aasha", url: "https://youtube.com/@joshtalksaasha" },
+        { name: "Josh Talks UPSC", url: "https://youtube.com/@joshtalksupschindi" },
+        { name: "Josh Talks Bihar", url: "https://youtube.com/@joshtalksbihar" }
+      ]
     },
     {
       title: "Beauty Jha - Teaching Channel",
@@ -245,6 +275,40 @@ const Portfolio = () => {
       url: "https://youtube.com/@umerahmad-mbbs"
     },
     {
+      title: "Vinayak Gupta IIT Delhi",
+      category: "Educational Content",
+      image: "education-channel.jpg",
+      before: "Low Engagement",
+      after: "Strong Following",
+      description: "Optimized Vinayak Gupta's educational channel focusing on IIT preparation, implementing strategies to increase visibility and student engagement across platforms.",
+      achievements: [
+        "Developed targeted content strategy for engineering aspirants",
+        "Created comprehensive study series that increased subscribers by 85%",
+        "Optimized videos for search and recommendation algorithms",
+        "Established consistent posting schedule increasing audience retention"
+      ],
+      icon: <Star size={24} className="text-deepBlue-500" />,
+      filter: "education",
+      url: "https://youtube.com/@vinayakguptaiitdelhi"
+    },
+    {
+      title: "Suresh Patel MBBS",
+      category: "Medical Education",
+      image: "medical-education-2.jpg",
+      before: "Niche Following",
+      after: "Sector Authority",
+      description: "Created content strategy for Suresh Patel's medical education channel, focusing on MBBS curriculum and specialized medical topics to establish authority in the field.",
+      achievements: [
+        "Developed topic clusters increasing search visibility by 120%",
+        "Created exam-focused content series with high engagement rates",
+        "Implemented community-building strategies through Q&A sessions",
+        "Optimized thumbnails and titles increasing click-through rates"
+      ],
+      icon: <Layers size={24} className="text-orange-500" />,
+      filter: "education",
+      url: "https://youtube.com/@sureshpatel-mbbs"
+    },
+    {
       title: "Deepak Dahiya",
       category: "Channel Growth",
       image: "motivation-channel.jpg",
@@ -260,6 +324,23 @@ const Portfolio = () => {
       icon: <TrendingUp size={24} className="text-deepBlue-500" />,
       filter: "motivation",
       url: "https://youtube.com/@DeepakDahiya"
+    },
+    {
+      title: "Sidimania Infotainment",
+      category: "Infotainment Content",
+      image: "sidimania.jpg",
+      before: "Inconsistent Growth",
+      after: "Steady Expansion",
+      description: "Revitalized Sidimania Infotainment's channel through strategic content planning, topic research, and optimization to capture a wider audience while maintaining the channel's unique voice.",
+      achievements: [
+        "Developed content strategy balancing information and entertainment",
+        "Created topic clusters increasing discoverability across YouTube",
+        "Optimized content for both search and recommendation algorithms",
+        "Implemented audience retention strategies increasing watch time"
+      ],
+      icon: <TrendingUp size={24} className="text-deepBlue-500" />,
+      filter: "entertainment",
+      url: "https://youtube.com/@sidimaniainfotainment"
     },
     {
       title: "Karma Inspired",
@@ -279,6 +360,23 @@ const Portfolio = () => {
       url: "https://youtube.com/@karmainspired"
     },
     {
+      title: "The Global Thinking",
+      category: "Educational Content",
+      image: "global-thinking.jpg",
+      before: "Minimal Reach",
+      after: "Growing Authority",
+      description: "Developed content strategy for The Global Thinking, focusing on educational and thought-provoking content that appeals to intellectually curious audiences seeking deeper insights.",
+      achievements: [
+        "Created education-focused content format with strong retention metrics",
+        "Developed topic research methodology identifying high-potential subjects",
+        "Optimized video structure for maximum retention and engagement",
+        "Implemented community-building strategies to foster loyal audience"
+      ],
+      icon: <BarChart3 size={24} className="text-deepBlue-500" />,
+      filter: "education",
+      url: "https://www.youtube.com/@TheGlobalThinking"
+    },
+    {
       title: "SuperIndia Hindi",
       category: "Movie Reviews",
       image: "movie-reviews.jpg",
@@ -295,6 +393,31 @@ const Portfolio = () => {
       filter: "entertainment",
       url: "https://youtube.com/@superindiahindi"
     },
+    {
+      title: "Business Channels Portfolio",
+      category: "Business Content",
+      image: "business-channels.jpg",
+      before: "Scattered Strategy",
+      after: "Unified Growth",
+      description: "Managed multiple business-focused channels including Business Kranti, Kartik Dhiman, Digital Shahbaz, and Dr. Mukul Agrawal, implementing cohesive strategies tailored to each channel's audience.",
+      achievements: [
+        "Developed specialized content strategies for each business niche",
+        "Created content formats optimized for business education",
+        "Implemented cross-promotion strategies where appropriate",
+        "Established each channel as an authority in their specific domain"
+      ],
+      icon: <TrendingUp size={24} className="text-orange-500" />,
+      filter: "business",
+      url: "#",
+      subChannels: [
+        { name: "Business Kranti", url: "https://www.youtube.com/@business_kranti" },
+        { name: "Kartik Dhiman - Business Coach", url: "https://www.youtube.com/@kartikdhiman-businesscoach5517" },
+        { name: "Digital Shahbaz", url: "https://www.youtube.com/@DigitalShahbaz" },
+        { name: "Dr. Mukul Agrawal - Stock Market", url: "https://www.youtube.com/@mukulagrawal" },
+        { name: "Amit Mishra", url: "https://www.youtube.com/@amitmishra_" },
+        { name: "Satish K Videos", url: "https://www.youtube.com/@SatishKVideos" }
+      ]
+    }
   ];
 
   const filteredItems = activeFilter === "all" 
@@ -342,6 +465,7 @@ const Portfolio = () => {
               { id: "education", label: "Educational" },
               { id: "motivation", label: "Motivational" },
               { id: "entertainment", label: "Entertainment" },
+              { id: "business", label: "Business" }
             ].map((filter) => (
               <Button
                 key={filter.id}
@@ -372,6 +496,7 @@ const Portfolio = () => {
                 icon={item.icon}
                 delay={0.1 * index}
                 url={item.url}
+                subChannels={item.subChannels}
               />
             ))}
           </div>
@@ -400,12 +525,12 @@ const Portfolio = () => {
             {[
               {
                 icon: <Youtube size={28} className="text-orange-500" />,
-                value: "53M+",
+                value: "35M+",
                 label: "Subscribers Generated",
               },
               {
                 icon: <Play size={28} className="text-deepBlue-500" />,
-                value: "6.9B+",
+                value: "2.5B+",
                 label: "Views Delivered",
               },
               {
@@ -438,32 +563,43 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Commitment Section */}
       <section className="py-16 bg-gradient-to-b from-black/95 to-background">
         <div className="container px-4 md:px-6">
-          <div className="glass-card max-w-4xl mx-auto p-8 md:p-12 text-center">
-            <motion.h2 
-              className="text-3xl font-bold gradient-text mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              Ready to Be Our Next Success Story?
-            </motion.h2>
+          <motion.div 
+            className="glass-card max-w-4xl mx-auto p-8 md:p-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold gradient-text mb-6 text-center">Our Commitments</h2>
             
-            <motion.p 
-              className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              Join the ranks of our successful clients and increase your Views by 3-5x on average within 3-6 months.
-            </motion.p>
+            <div className="space-y-6 text-muted-foreground">
+              <p>
+                We've generated over <span className="text-orange-500 font-bold">35 Million Subscribers</span>, over <span className="text-deepBlue-500 font-bold">2.5+ Billion Views</span>, and billions of impressions on YouTube while working with brands like Josh Talks, Physics Wallah, Seekho, Vmart, Big Bazar, Kuku FM, Pocket FM, and SuperIndia.
+              </p>
+              
+              <div className="pl-4 border-l-2 border-orange-500/50">
+                <h3 className="text-xl font-bold text-white mb-2">In 2024, we've launched two main offers:</h3>
+                
+                <ol className="list-decimal pl-6 space-y-4 mt-4">
+                  <li>
+                    We'll help you set up your YouTube channel for long-term growth.
+                  </li>
+                  <li>
+                    We'll help you create a content strategy that drives engagement and revenue.
+                  </li>
+                </ol>
+              </div>
+              
+              <p className="font-bold text-center text-lg">
+                All this while increasing your Views by <span className="gradient-text">3x-5x</span> on average within 3-6 Months.
+              </p>
+            </div>
             
             <motion.div 
-              className="flex flex-col sm:flex-row justify-center gap-4"
+              className="flex flex-col sm:flex-row justify-center gap-4 mt-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
@@ -487,7 +623,7 @@ const Portfolio = () => {
                 </Button>
               </Link>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </Layout>
