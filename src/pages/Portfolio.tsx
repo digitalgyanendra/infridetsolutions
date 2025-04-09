@@ -66,6 +66,7 @@ const Portfolio = () => {
 
   return (
     <Layout>
+      {/* Hero Section */}
       <motion.section 
         className="py-20 bg-black hero-bg"
         initial={{ opacity: 0 }}
@@ -93,6 +94,26 @@ const Portfolio = () => {
         </div>
       </motion.section>
 
+      {/* Worked With Section */}
+      <motion.section 
+        className="py-16 bg-black"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="container px-4 md:px-6 mx-auto">
+          <div className="flex justify-center">
+            <img 
+              src="/lovable-uploads/cd0319be-f058-4879-b419-92935b1d069c.png" 
+              alt="Creators we've worked with" 
+              className="w-full max-w-5xl rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Major Partnerships Section */}
       <motion.section 
         className="py-20 bg-gradient-to-b from-black to-muted"
         initial={{ opacity: 0 }}
@@ -143,6 +164,7 @@ const Portfolio = () => {
         </div>
       </motion.section>
 
+      {/* Channels We Manage Section */}
       <motion.section 
         className="py-20 bg-muted"
         initial={{ opacity: 0 }}
@@ -184,6 +206,7 @@ const Portfolio = () => {
         </div>
       </motion.section>
 
+      {/* Our Commitments Section */}
       <motion.section 
         className="py-20 bg-gradient-to-b from-muted to-black"
         initial={{ opacity: 0 }}
