@@ -85,6 +85,36 @@ const Index = () => {
       name: "OYO", 
       highlight: false,
       imgSrc: "/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png" 
+    },
+    { 
+      name: "Physics Wallah", 
+      highlight: true,
+      imgSrc: "" 
+    },
+    { 
+      name: "Seekho", 
+      highlight: false,
+      imgSrc: "" 
+    },
+    { 
+      name: "Big Bazaar", 
+      highlight: true,
+      imgSrc: "" 
+    },
+    { 
+      name: "Kuku FM", 
+      highlight: false,
+      imgSrc: "" 
+    },
+    { 
+      name: "Pocket FM", 
+      highlight: true,
+      imgSrc: "" 
+    },
+    { 
+      name: "SuperIndia", 
+      highlight: false,
+      imgSrc: "" 
     }
   ];
 
@@ -101,8 +131,9 @@ const Index = () => {
       >
         <div className="container px-4 md:px-6">
           <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-2">Trusted by Brands Worldwide</h2>
             <p className="text-muted-foreground text-sm uppercase tracking-wider font-medium">
-              Trusted by brands worldwide
+              Partnering with industry leaders to drive growth
             </p>
           </div>
           
