@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -12,7 +13,10 @@ import {
   Search,
   Users,
   LineChart,
-  Layers
+  Layers,
+  Play,
+  TrendingUpIcon,
+  Star
 } from "lucide-react";
 
 interface PortfolioItemProps {
@@ -25,6 +29,7 @@ interface PortfolioItemProps {
   achievements: string[];
   icon: React.ReactNode;
   delay: number;
+  url?: string;
 }
 
 const PortfolioItem: React.FC<PortfolioItemProps> = ({ 
@@ -36,7 +41,8 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
   description, 
   achievements, 
   icon, 
-  delay 
+  delay,
+  url
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -133,6 +139,14 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({
               <div className="mb-6">
                 <h4 className="text-lg font-semibold mb-3">Challenge & Solution</h4>
                 <p className="text-muted-foreground mb-4">{description}</p>
+                {url && (
+                  <div className="mb-4">
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-deepBlue-500 flex items-center hover:underline">
+                      <Youtube size={18} className="mr-2" />
+                      Visit Channel
+                    </a>
+                  </div>
+                )}
                 <div className="h-48 bg-gradient-to-br from-gray-900 to-black rounded-lg flex items-center justify-center mb-4">
                   <div className="text-center">
                     <p className="text-muted-foreground">Growth Chart Visualization</p>
@@ -180,100 +194,106 @@ const Portfolio = () => {
 
   const portfolioItems = [
     {
-      title: "Tech Launch YouTube Growth",
-      category: "YouTube Consulting",
-      image: "youtube-growth.jpg",
-      before: "1K Subs",
-      after: "100K Subs",
-      description: "Helped a tech startup increase their YouTube presence from 1,000 subscribers to over 100,000 in just 6 months through strategic content planning, SEO optimization, and community engagement tactics.",
+      title: "Josh Talks",
+      category: "Strategic Channel Management",
+      image: "josh-talks.jpg",
+      before: "1M Subs",
+      after: "15M+ Subs",
+      description: "Managed and grew the entire Josh Talks network to become one of India's most influential digital media platforms. Implemented comprehensive content strategies across multiple channels targeting different audiences and niches.",
       achievements: [
-        "Increased video views by 800% through improved thumbnails and titles",
-        "Reduced viewer drop-off by 40% with optimized content structure",
-        "Improved click-through rate from 2% to 8.5% with better CTAs",
-        "Developed content calendar that tripled monthly output without sacrificing quality"
+        "Grew main channel to 15M+ subscribers with billions of views",
+        "Successfully launched and scaled 5+ niche channels (JEE, NEET, Aasha, UPSC, Bihar)",
+        "Optimized content strategy increasing viewer retention by 40%",
+        "Developed cross-promotion strategy between channels maximizing audience growth"
       ],
       icon: <Youtube size={24} className="text-orange-500" />,
-      filter: "youtube"
+      filter: "youtube",
+      url: "https://www.youtube.com/@JoshTalksHindi"
     },
     {
-      title: "E-Commerce SEO Overhaul",
-      category: "SEO Optimization",
-      image: "seo-case-study.jpg",
-      before: "Page 5",
-      after: "Page 1",
-      description: "Transformed an e-commerce store's search rankings, moving their main product pages from the fifth page to the first page of search results, resulting in a 200% increase in organic traffic and 150% boost in sales.",
+      title: "Beauty Jha - Teaching Channel",
+      category: "Educational Content",
+      image: "teaching-channel.jpg",
+      before: "New Channel",
+      after: "Thriving Community",
+      description: "Developed and executed content strategy for Beauty Jha's educational channel, focusing on high-quality instructional content that resonates with students seeking academic excellence.",
       achievements: [
-        "Improved site loading speed by 65% through technical optimizations",
-        "Created a comprehensive keyword strategy targeting high-intent terms",
-        "Implemented structured data markup resulting in rich snippets",
-        "Built a quality backlink profile with 120+ relevant sites"
+        "Created content calendar optimized for student engagement cycles",
+        "Implemented thumbnail and title strategy increasing CTR by 120%",
+        "Established community engagement protocols boosting comments by 85%",
+        "Optimized video structure to maximize watch time and retention"
       ],
-      icon: <Search size={24} className="text-deepBlue-500" />,
-      filter: "seo"
+      icon: <Star size={24} className="text-deepBlue-500" />,
+      filter: "education",
+      url: "https://youtube.com/@beauty_jha"
     },
     {
-      title: "Fashion Brand Identity",
-      category: "Brand Growth",
-      image: "brand-case-study.jpg",
-      before: "2K Followers",
-      after: "250K Followers",
-      description: "Developed a comprehensive brand strategy for a fashion startup, resulting in explosive social media growth, increased brand recognition, and a 300% increase in sales within the first year.",
+      title: "Umer Ahmad MBBS",
+      category: "Medical Education",
+      image: "medical-education.jpg",
+      before: "Limited Reach",
+      after: "Industry Authority",
+      description: "Transformed Umer Ahmad's medical education channel into a trusted resource for MBBS students and aspiring medical professionals, with strategic content planning and optimization.",
       achievements: [
-        "Created distinctive visual identity that resonated with target audience",
-        "Developed influencer partnership strategy resulting in 120+ collaborations",
-        "Implemented omni-channel approach increasing customer retention by 45%",
-        "Launched viral hashtag campaign generating 2M+ impressions"
+        "Positioned channel as a premier resource for medical education",
+        "Created specialized content series targeting high-demand topics",
+        "Developed SEO strategy increasing discoverability by 65%",
+        "Implemented engagement tactics boosting community interaction"
       ],
       icon: <Layers size={24} className="text-orange-500" />,
-      filter: "brand"
+      filter: "education",
+      url: "https://youtube.com/@umerahmad-mbbs"
     },
     {
-      title: "SaaS Marketing Acceleration",
-      category: "Digital Marketing",
-      image: "saas-case-study.jpg",
-      before: "50 Leads/mo",
-      after: "500 Leads/mo",
-      description: "Implemented a multi-channel digital marketing strategy for a SaaS company, resulting in a 10x increase in qualified leads and 3x improvement in conversion rates within 3 months.",
+      title: "Deepak Dahiya",
+      category: "Channel Growth",
+      image: "motivation-channel.jpg",
+      before: "150K Subs",
+      after: "3.5M+ Subs",
+      description: "Scaled Deepak Dahiya's channel from 150K to over 3.5 million subscribers through strategic content planning, audience analysis, and optimization techniques that dramatically increased reach and engagement.",
       achievements: [
-        "Redesigned landing pages increasing conversion by 120%",
-        "Created targeted ad campaigns with 8.2% CTR (industry avg: 3.1%)",
-        "Developed automated email nurture sequence with 65% open rate",
-        "Optimized customer journey reducing CAC by 35%"
+        "Achieved 2300% subscriber growth in less than 2 years",
+        "Implemented viral content strategy generating millions of views per video",
+        "Created distinctive brand identity increasing recognition",
+        "Optimized posting schedule increasing algorithm favorability"
       ],
       icon: <TrendingUp size={24} className="text-deepBlue-500" />,
-      filter: "marketing"
+      filter: "motivation",
+      url: "https://youtube.com/@DeepakDahiya"
     },
     {
-      title: "Podcast Launch & Growth",
-      category: "Content Strategy",
-      image: "podcast-case-study.jpg",
-      before: "0 Downloads",
-      after: "10K/Episode",
-      description: "Launched and scaled a business podcast from zero to over 10,000 downloads per episode in less than 6 months, establishing the client as a thought leader in their industry.",
+      title: "Karma Inspired",
+      category: "Motivational Content",
+      image: "karma-inspired.jpg",
+      before: "Small Audience",
+      after: "Viral Growth",
+      description: "Developed and executed a comprehensive content strategy for Karma Inspired, focusing on inspirational storytelling and motivational content that resonates with viewers seeking personal growth.",
       achievements: [
-        "Secured top 20 ranking in Apple Podcasts business category",
-        "Developed guest outreach strategy resulting in high-profile interviews",
-        "Created cross-promotion strategy with complementary podcasts",
-        "Implemented repurposing workflow to maximize content value across platforms"
+        "Created viral storytelling formula resulting in multiple 1M+ view videos",
+        "Designed thumbnail system with 300% higher CTR than industry average",
+        "Implemented audience retention strategies increasing watch time by 45%",
+        "Developed community building tactics increasing subscriber loyalty"
       ],
       icon: <BarChart3 size={24} className="text-orange-500" />,
-      filter: "content"
+      filter: "motivation",
+      url: "https://youtube.com/@karmainspired"
     },
     {
-      title: "Community Building Success",
-      category: "Community Strategy",
-      image: "community-case-study.jpg",
-      before: "Inactive",
-      after: "10K Members",
-      description: "Transformed a dormant online community into a thriving ecosystem with over 10,000 active members, creating a valuable asset for the business and driving customer loyalty and retention.",
+      title: "SuperIndia Hindi",
+      category: "Movie Reviews",
+      image: "movie-reviews.jpg",
+      before: "Niche Channel",
+      after: "Entertainment Hub",
+      description: "Transformed SuperIndia Hindi into a premier destination for movie reviews and entertainment content, implementing strategies that expanded audience reach while maintaining high engagement.",
       achievements: [
-        "Developed engagement framework increasing daily active users by 400%",
-        "Created ambassador program with 50+ community leaders",
-        "Implemented content calendar driving consistent engagement",
-        "Launched member spotlight series increasing retention by 35%"
+        "Created trending-topic framework capturing search traffic",
+        "Developed rapid-response system for new movie releases",
+        "Implemented influencer collaboration strategy expanding reach",
+        "Created binge-worthy series formats increasing session time"
       ],
       icon: <Users size={24} className="text-deepBlue-500" />,
-      filter: "community"
+      filter: "entertainment",
+      url: "https://youtube.com/@superindiahindi"
     },
   ];
 
@@ -301,7 +321,7 @@ const Portfolio = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Real results achieved for our clients through strategic digital consulting.
+              Real results achieved through strategic YouTube consulting and channel management.
             </motion.p>
           </div>
         </div>
@@ -318,12 +338,10 @@ const Portfolio = () => {
           >
             {[
               { id: "all", label: "All Projects" },
-              { id: "youtube", label: "YouTube" },
-              { id: "seo", label: "SEO" },
-              { id: "brand", label: "Brand Growth" },
-              { id: "marketing", label: "Marketing" },
-              { id: "content", label: "Content" },
-              { id: "community", label: "Community" },
+              { id: "youtube", label: "YouTube Networks" },
+              { id: "education", label: "Educational" },
+              { id: "motivation", label: "Motivational" },
+              { id: "entertainment", label: "Entertainment" },
             ].map((filter) => (
               <Button
                 key={filter.id}
@@ -353,6 +371,7 @@ const Portfolio = () => {
                 achievements={item.achievements}
                 icon={item.icon}
                 delay={0.1 * index}
+                url={item.url}
               />
             ))}
           </div>
@@ -380,24 +399,24 @@ const Portfolio = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                icon: <TrendingUp size={28} className="text-orange-500" />,
-                value: "500+",
-                label: "Projects Completed",
+                icon: <Youtube size={28} className="text-orange-500" />,
+                value: "53M+",
+                label: "Subscribers Generated",
               },
               {
-                icon: <Trophy size={28} className="text-deepBlue-500" />,
-                value: "97%",
-                label: "Client Satisfaction",
+                icon: <Play size={28} className="text-deepBlue-500" />,
+                value: "6.9B+",
+                label: "Views Delivered",
               },
               {
                 icon: <LineChart size={28} className="text-orange-500" />,
-                value: "250%",
+                value: "3-5x",
                 label: "Average Growth Rate",
               },
               {
                 icon: <BarChart3 size={28} className="text-deepBlue-500" />,
-                value: "₹15M+",
-                label: "Revenue Generated",
+                value: "100+",
+                label: "Channels Optimized",
               },
             ].map((stat, index) => (
               <motion.div 
@@ -440,7 +459,7 @@ const Portfolio = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Join the ranks of our successful clients and transform your digital presence with expert consulting.
+              Join the ranks of our successful clients and increase your Views by 3-5x on average within 3-6 months.
             </motion.p>
             
             <motion.div 
