@@ -27,6 +27,57 @@ export type Database = {
         }
         Relationships: []
       }
+      hindi_voices: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          preview_url: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          preview_url: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          preview_url?: string
+        }
+        Relationships: []
+      }
+      voices: {
+        Row: {
+          category: string
+          created_at: string | null
+          id: string
+          name: string
+          preview_url: string | null
+          user_id: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          id?: string
+          name: string
+          preview_url?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          id?: string
+          name?: string
+          preview_url?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

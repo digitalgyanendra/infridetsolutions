@@ -246,7 +246,12 @@ const Portfolio = () => {
         </div>
       </motion.section>
 
-      {/* Add the Supporters Section */}
+      {/* People Who Believe in Me Section - Now using a grid of 2 */}
+      <div className="bg-black py-10">
+        <div className="container px-4 md:px-6 mx-auto">
+          <h2 className="text-4xl font-bold mb-12 text-center gradient-text">People Who Believe in Me</h2>
+        </div>
+      </div>
       <SupportersSection />
     </Layout>
   );

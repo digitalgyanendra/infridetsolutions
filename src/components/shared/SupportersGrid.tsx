@@ -2,7 +2,12 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const SupportersSection = () => {
+interface SupportersGridProps {
+  columns?: number;
+  showHeading?: boolean;
+}
+
+const SupportersGrid: React.FC<SupportersGridProps> = ({ columns = 4, showHeading = true }) => {
   const supporters = [
     {
       name: "Manish Pandey",
@@ -59,18 +64,27 @@ const SupportersSection = () => {
   return (
     <motion.section 
       id="supporters"
-      className="pb-20 bg-black"
+      className="py-20 bg-black"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
-      <div className="container px-4 md:px-6 mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-items-center">
+      <div className="container px-4 md:px-6 mx-auto text-center">
+        {showHeading && (
+          <>
+            <h2 className="text-4xl font-bold mb-6 gradient-text">🤝 People Who Believe in Me</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
+              Blessed to have met and learned from these inspiring individuals. Their support, mentorship, and belief fuel my journey every day.
+            </p>
+          </>
+        )}
+
+        <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${columns} gap-8 justify-items-center`}>
           {supporters.map((supporter, index) => (
             <motion.div 
               key={index}
-              className="glass-card p-4 w-full max-w-[300px] transition-all duration-300 hover:scale-105 hover:shadow-orange-500/20 hover:shadow-lg"
+              className="glass-card p-4 max-w-[240px] transition-all duration-300 hover:scale-105 hover:shadow-orange-500/20 hover:shadow-lg"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -93,4 +107,4 @@ const SupportersSection = () => {
   );
 };
 
-export default SupportersSection;
+export default SupportersGrid;
