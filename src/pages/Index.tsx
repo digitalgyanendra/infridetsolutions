@@ -209,7 +209,7 @@ const Index = () => {
       <StatsSection />
       <TestimonialsSection />
       
-      {/* Add Supporters Grid */}
+      {/* People Who Believe in Me section */}
       <SupportersGrid columns={2} />
       
       <CTASection />

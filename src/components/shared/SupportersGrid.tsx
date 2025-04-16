@@ -7,7 +7,7 @@ interface SupportersGridProps {
   showHeading?: boolean;
 }
 
-const SupportersGrid: React.FC<SupportersGridProps> = ({ columns = 4, showHeading = true }) => {
+const SupportersGrid: React.FC<SupportersGridProps> = ({ columns = 2, showHeading = true }) => {
   const supporters = [
     {
       name: "Manish Pandey",
@@ -80,25 +80,25 @@ const SupportersGrid: React.FC<SupportersGridProps> = ({ columns = 4, showHeadin
           </>
         )}
 
-        <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${columns} gap-8 justify-items-center`}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 justify-items-center">
           {supporters.map((supporter, index) => (
             <motion.div 
               key={index}
-              className="glass-card p-4 max-w-[240px] transition-all duration-300 hover:scale-105 hover:shadow-orange-500/20 hover:shadow-lg"
+              className="glass-card p-6 max-w-[350px] w-full transition-all duration-300 hover:scale-105 hover:shadow-orange-500/20 hover:shadow-lg"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
             >
-              <div className="aspect-square overflow-hidden rounded-md mb-4">
+              <div className="aspect-square overflow-hidden rounded-lg mb-5">
                 <img 
                   src={supporter.image} 
                   alt={supporter.name} 
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              <h3 className="text-lg font-semibold text-white">{supporter.name}</h3>
-              <p className="text-muted-foreground text-sm">{supporter.role}</p>
+              <h3 className="text-xl font-semibold text-white">{supporter.name}</h3>
+              <p className="text-muted-foreground">{supporter.role}</p>
             </motion.div>
           ))}
         </div>

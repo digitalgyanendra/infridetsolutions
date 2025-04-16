@@ -75,7 +75,7 @@ const Portfolio = () => {
       >
         <div className="container px-4 md:px-6 mx-auto text-center">
           <motion.h1 
-            className="text-5xl sm:text-6xl font-bold mb-6 gradient-text"
+            className="text-6xl sm:text-7xl font-bold mb-8 gradient-text"
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -83,7 +83,7 @@ const Portfolio = () => {
             Our Portfolio
           </motion.h1>
           <motion.p 
-            className="text-xl text-muted-foreground max-w-3xl mx-auto"
+            className="text-2xl text-white max-w-3xl mx-auto"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
@@ -105,7 +105,7 @@ const Portfolio = () => {
         <div className="container px-4 md:px-6 mx-auto">
           <div className="flex justify-center">
             <img 
-              src="/lovable-uploads/cd0319be-f058-4879-b419-92935b1d069c.png" 
+              src="/lovable-uploads/d6495f81-8718-40ab-bd70-34785247f04b.png" 
               alt="Creators we've worked with" 
               className="w-full max-w-5xl rounded-lg shadow-lg"
             />
@@ -246,7 +246,7 @@ const Portfolio = () => {
         </div>
       </motion.section>
 
-      {/* People Who Believe in Me Section - Now using a grid of 2 */}
+      {/* People Who Believe in Me Section */}
       <div className="bg-black py-10">
         <div className="container px-4 md:px-6 mx-auto">
           <h2 className="text-4xl font-bold mb-12 text-center gradient-text">People Who Believe in Me</h2>

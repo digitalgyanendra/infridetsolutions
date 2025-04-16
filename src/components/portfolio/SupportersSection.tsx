@@ -66,25 +66,30 @@ const SupportersSection = () => {
       transition={{ duration: 0.6 }}
     >
       <div className="container px-4 md:px-6 mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-items-center">
+        <h2 className="text-4xl font-bold mb-10 text-center gradient-text">🤝 People Who Believe in Me</h2>
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-12 text-center">
+          Blessed to have met and learned from these inspiring individuals. Their support, mentorship, and belief fuel my journey every day.
+        </p>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 justify-items-center">
           {supporters.map((supporter, index) => (
             <motion.div 
               key={index}
-              className="glass-card p-4 w-full max-w-[300px] transition-all duration-300 hover:scale-105 hover:shadow-orange-500/20 hover:shadow-lg"
+              className="glass-card p-6 w-full max-w-[350px] transition-all duration-300 hover:scale-105 hover:shadow-orange-500/20 hover:shadow-lg"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
             >
-              <div className="aspect-square overflow-hidden rounded-md mb-4">
+              <div className="aspect-square overflow-hidden rounded-lg mb-5">
                 <img 
                   src={supporter.image} 
                   alt={supporter.name} 
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              <h3 className="text-lg font-semibold text-white">{supporter.name}</h3>
-              <p className="text-muted-foreground text-sm">{supporter.role}</p>
+              <h3 className="text-xl font-semibold text-white">{supporter.name}</h3>
+              <p className="text-muted-foreground">{supporter.role}</p>
             </motion.div>
           ))}
         </div>
