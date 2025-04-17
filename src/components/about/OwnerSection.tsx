@@ -18,10 +18,10 @@ const OwnerSection = () => {
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">About the Founder</h2>
             <div className="text-lg text-muted-foreground space-y-4">
               <p>
-                Himanshu Yadav, the founder and CEO of Infridet Solutions, is a passionate digital marketing expert with years of experience helping creators and businesses build their online presence.
+                Gyanendra Dwivedi, the founder and CEO of Infridet Solutions, is a passionate AI automation expert and YouTube specialist with years of experience helping creators and businesses build their online presence.
               </p>
               <p>
-                With a background in performance marketing and content strategy, Himanshu has worked with numerous content creators, helping them grow their audience and monetize their platforms effectively.
+                With a background in AI-driven marketing strategies and content optimization, Gyanendra has worked with numerous content creators, helping them grow their audience and monetize their platforms effectively.
               </p>
               <p>
                 His vision for Infridet Solutions is to provide accessible, cutting-edge digital marketing services that empower creators to focus on their craft while our team handles the growth strategy.
@@ -46,8 +46,8 @@ const OwnerSection = () => {
             className="rounded-lg overflow-hidden shadow-xl"
           >
             <img
-              src="/lovable-uploads/c4d5ff9c-66c7-4157-a520-9149cacd2ec1.png"
-              alt="Himanshu Yadav - Founder of Infridet Solutions"
+              src="/lovable-uploads/3a1238bf-43d7-4308-b873-3d789a424e88.png"
+              alt="Gyanendra Dwivedi - Founder of Infridet Solutions"
               className="w-full h-auto object-cover rounded-lg"
             />
           </motion.div>

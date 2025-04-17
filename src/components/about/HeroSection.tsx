@@ -45,11 +45,11 @@ const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="relative flex justify-center items-center"
           >
-            <div className="max-w-[300px] w-full">
+            <div className="w-full">
               <img
-                src="/lovable-uploads/3a1238bf-43d7-4308-b873-3d789a424e88.png"
-                alt="Infridet Solutions Logo"
-                className="w-full h-auto"
+                src="/lovable-uploads/76a3608c-1808-48fa-ab73-c5a87ac198da.png"
+                alt="About Infridet Solutions"
+                className="w-full h-auto rounded-lg shadow-2xl"
               />
             </div>
           </motion.div>
