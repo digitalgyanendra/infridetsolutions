@@ -23,12 +23,7 @@ const Footer = () => {
               <a href="#" className="text-muted-foreground hover:text-primary">
                 <Instagram size={20} />
               </a>
-              <a 
-                href="https://www.linkedin.com/company/infridet-solutions-private-limited" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-muted-foreground hover:text-primary"
-              >
+              <a href="#" className="text-muted-foreground hover:text-primary">
                 <Linkedin size={20} />
               </a>
             </div>

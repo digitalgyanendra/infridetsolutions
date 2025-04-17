@@ -7,7 +7,6 @@ import StatsSection from "@/components/home/StatsSection";
 import TrustedBrandsSection from "@/components/home/TrustedBrandsSection";
 import ShowcaseSections from "@/components/home/ShowcaseSections";
 import CTASection from "@/components/home/CTASection";
-import TestimonialsSection from "@/components/home/TestimonialsSection";
 
 const Index = () => {
   return (
@@ -15,7 +14,7 @@ const Index = () => {
       <HeroSection />
       <TrustedBrandsSection />
       <ServicesSection />
-      <TestimonialsSection />
+      {/* Removed TestimonialsSection */}
       <StatsSection />
       <ShowcaseSections />
       <CTASection />
