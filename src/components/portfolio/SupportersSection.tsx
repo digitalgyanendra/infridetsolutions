@@ -66,9 +66,9 @@ const SupportersSection = () => {
       transition={{ duration: 0.6 }}
     >
       <div className="container px-4 md:px-6 mx-auto">
-        <h2 className="text-4xl font-bold mb-10 text-center gradient-text">🤝 I worked and learned from them</h2>
+        <h2 className="text-4xl font-bold mb-10 text-center gradient-text">🤝 We worked and learned from them</h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-12 text-center">
-          Blessed to have met and learned from these inspiring individuals. Their support, mentorship, and belief fuel my journey every day.
+          Blessed to have met and learned from these inspiring individuals. Their support, mentorship, and belief fuel our journey every day.
         </p>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 justify-items-center">
