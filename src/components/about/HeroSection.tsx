@@ -7,7 +7,7 @@ const HeroSection = () => {
     <section className="relative py-20 overflow-hidden bg-black">
       <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
       <div className="container px-4 md:px-6 mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-12 items-center justify-center text-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -20,7 +20,7 @@ const HeroSection = () => {
             <p className="text-xl text-muted-foreground">
               We're a team of digital marketing specialists dedicated to helping creators and businesses thrive in the digital space through innovative strategies and personalized solutions.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.a
                 href="/contact"
                 whileHover={{ scale: 1.05 }}
@@ -37,20 +37,6 @@ const HeroSection = () => {
               >
                 Our Services
               </motion.a>
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="relative flex justify-center items-center"
-          >
-            <div className="w-full">
-              <img
-                src="/lovable-uploads/76a3608c-1808-48fa-ab73-c5a87ac198da.png"
-                alt="About Infridet Solutions"
-                className="w-full h-auto rounded-lg shadow-2xl"
-              />
             </div>
           </motion.div>
         </div>
