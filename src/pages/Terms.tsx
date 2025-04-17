@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import Layout from "@/components/ui/layout/Layout";
@@ -178,7 +177,7 @@ const Terms = () => {
               <div className="mt-4">
                 <p className="font-medium">INFRIDET SOLUTIONS PRIVATE LIMITED</p>
                 <p className="text-muted-foreground">Mahagun Mantra 1, Sector 10, Noida, UP</p>
-                <p className="text-muted-foreground">Email: contact@digitalnexus.com</p>
+                <p className="text-muted-foreground">Email: Marketing@infridetsolutions.com</p>
                 <p className="text-muted-foreground">Phone: +91 8853354829</p>
               </div>
             </div>

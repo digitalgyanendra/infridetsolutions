@@ -1,9 +1,9 @@
 
 import React from "react";
-import { motion } from "framer-motion";
+import VideoTestimonials from "@/components/shared/VideoTestimonials";
 
 const TestimonialsSection = () => {
-  return null; // Remove the entire section
+  return <VideoTestimonials />;
 };
 
 export default TestimonialsSection;
