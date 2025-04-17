@@ -7,14 +7,14 @@ import WorkedWithSection from "@/components/portfolio/WorkedWithSection";
 const ShowcaseSections = () => {
   return (
     <>
+      {/* Video Testimonials */}
+      <VideoTestimonials />
+      
       {/* We worked and learned from them section */}
       <SupportersGrid columns={2} />
       
       {/* Worked With section */}
       <WorkedWithSection />
-      
-      {/* Video Testimonials */}
-      <VideoTestimonials />
     </>
   );
 };
