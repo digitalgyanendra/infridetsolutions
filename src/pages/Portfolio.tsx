@@ -70,7 +70,7 @@ const Portfolio = () => {
         className="py-20 bg-black hero-bg"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
       >
         <div className="container px-4 md:px-6 mx-auto text-center">
           <motion.h1 
@@ -90,25 +90,6 @@ const Portfolio = () => {
             We've generated over 35+ Million Subscribers, over 2.5+ Billion Views, and billions of impressions on YouTube
             working with top brands and creators.
           </motion.p>
-        </div>
-      </motion.section>
-
-      {/* Worked With Section */}
-      <motion.section 
-        className="py-16 bg-black"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="flex justify-center">
-            <img 
-              src="/lovable-uploads/d6495f81-8718-40ab-bd70-34785247f04b.png" 
-              alt="Creators we've worked with" 
-              className="w-full max-w-5xl rounded-lg shadow-lg"
-            />
-          </div>
         </div>
       </motion.section>
 
@@ -247,6 +228,25 @@ const Portfolio = () => {
 
       {/* I worked and learned from them Section */}
       <SupportersSection />
+
+      {/* Worked With Section (after Supporters) */}
+      <motion.section 
+        className="py-16 bg-black"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="container px-4 md:px-6 mx-auto">
+          <div className="flex justify-center">
+            <img 
+              src="/lovable-uploads/d6495f81-8718-40ab-bd70-34785247f04b.png"
+              alt="Creators we've worked with" 
+              className="w-full max-w-6xl rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      </motion.section>
     </Layout>
   );
 };
