@@ -22,7 +22,7 @@ const WorkedWithSection = () => {
             className="w-full"
           >
             <img 
-              src="/lovable-uploads/e3ba2912-21c5-4220-9257-320f415b9352.png"
+              src="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png"
               alt="Brands we've worked with" 
               className="w-full max-w-5xl mx-auto rounded-lg shadow-xl"
             />
