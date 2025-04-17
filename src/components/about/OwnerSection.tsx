@@ -18,13 +18,16 @@ const OwnerSection = () => {
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">About the Founder</h2>
             <div className="text-lg text-muted-foreground space-y-4">
               <p>
-                Gyanendra Dwivedi, the founder and CEO of Infridet Solutions, is a passionate AI automation expert and YouTube specialist with years of experience helping creators and businesses build their online presence.
+                Gyanendra Dwivedi, the founder and CEO of Infridet Solutions Private Limited, is a visionary AI automation expert and YouTube specialist with extensive experience in digital transformation and content optimization.
               </p>
               <p>
-                With a background in AI-driven marketing strategies and content optimization, Gyanendra has worked with numerous content creators, helping them grow their audience and monetize their platforms effectively.
+                With profound expertise in leveraging artificial intelligence for business growth and content strategy, Gyanendra has helped numerous creators and businesses amplify their digital presence and achieve remarkable growth metrics across platforms.
               </p>
               <p>
-                His vision for Infridet Solutions is to provide accessible, cutting-edge digital marketing services that empower creators to focus on their craft while our team handles the growth strategy.
+                Under his leadership, Infridet Solutions has evolved into a comprehensive digital consultancy offering specialized services in YouTube channel optimization, AI-driven marketing automation, content strategy development, and holistic brand growth solutions.
+              </p>
+              <p>
+                His innovative approach combines data-driven insights with creative content strategies, enabling clients to stay ahead in the rapidly evolving digital ecosystem while maximizing their audience engagement and revenue potential.
               </p>
             </div>
             <div className="pt-4">
