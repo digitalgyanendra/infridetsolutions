@@ -8,6 +8,8 @@ import StatsSection from "@/components/home/StatsSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
 import SupportersGrid from "@/components/shared/SupportersGrid";
+import VideoTestimonials from "@/components/shared/VideoTestimonials";
+import WorkedWithSection from "@/components/portfolio/WorkedWithSection";
 
 const Index = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -209,8 +211,14 @@ const Index = () => {
       <StatsSection />
       <TestimonialsSection />
       
-      {/* I worked and learned from them section */}
+      {/* We worked and learned from them section */}
       <SupportersGrid columns={2} />
+      
+      {/* Worked With section */}
+      <WorkedWithSection />
+      
+      {/* Video Testimonials */}
+      <VideoTestimonials />
       
       <CTASection />
     </Layout>

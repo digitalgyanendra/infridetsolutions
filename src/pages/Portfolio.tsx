@@ -7,6 +7,7 @@ import ManagedChannelsSection from "@/components/portfolio/ManagedChannelsSectio
 import CommitmentsSection from "@/components/portfolio/CommitmentsSection";
 import SupportersSection from "@/components/portfolio/SupportersSection";
 import WorkedWithSection from "@/components/portfolio/WorkedWithSection";
+import VideoTestimonials from "@/components/shared/VideoTestimonials";
 
 const Portfolio = () => {
   return (
@@ -17,6 +18,7 @@ const Portfolio = () => {
       <CommitmentsSection />
       <SupportersSection />
       <WorkedWithSection />
+      <VideoTestimonials />
     </Layout>
   );
 };
