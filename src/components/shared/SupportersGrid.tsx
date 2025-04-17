@@ -73,7 +73,7 @@ const SupportersGrid: React.FC<SupportersGridProps> = ({ columns = 2, showHeadin
       <div className="container px-4 md:px-6 mx-auto text-center">
         {showHeading && (
           <>
-            <h2 className="text-4xl font-bold mb-6 gradient-text">🤝 People Who Believe in Me</h2>
+            <h2 className="text-4xl font-bold mb-6 gradient-text">🤝 I worked and learned from them</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
               Blessed to have met and learned from these inspiring individuals. Their support, mentorship, and belief fuel my journey every day.
             </p>
@@ -84,7 +84,7 @@ const SupportersGrid: React.FC<SupportersGridProps> = ({ columns = 2, showHeadin
           {supporters.map((supporter, index) => (
             <motion.div 
               key={index}
-              className="glass-card p-6 max-w-[350px] w-full transition-all duration-300 hover:scale-105 hover:shadow-orange-500/20 hover:shadow-lg"
+              className="glass-card p-6 max-w-[400px] w-full transition-all duration-300 hover:scale-105 hover:shadow-orange-500/20 hover:shadow-lg"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
