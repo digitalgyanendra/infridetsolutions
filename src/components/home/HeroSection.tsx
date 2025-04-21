@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -204,7 +203,7 @@ const HeroSection = () => {
               ))}
             </div>
             <p className="text-sm text-muted-foreground">
-              Join <span className="text-primary font-medium">250+ experts</span> already on our platform
+              Join <span className="text-primary font-medium">25 experts</span> already on our platform
             </p>
           </motion.div>
         </div>

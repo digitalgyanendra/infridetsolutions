@@ -1,4 +1,3 @@
-
 import React from "react";
 import Layout from "@/components/ui/layout/Layout";
 import SupportersGrid from "@/components/shared/SupportersGrid";

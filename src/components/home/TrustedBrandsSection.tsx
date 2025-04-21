@@ -34,6 +34,7 @@ const TrustedBrandsSection = () => {
     };
   }, []);
 
+  // Add new logo URLs
   const companyLogos = [
     { 
       name: "Josh Talks", 
@@ -80,15 +81,20 @@ const TrustedBrandsSection = () => {
       highlight: false,
       imgSrc: "/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png" 
     },
+    // Newly provided "Physics Wallah" and "Seekho" logos
     { 
       name: "Physics Wallah", 
       highlight: true,
-      imgSrc: "" 
+      imgSrc: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgYXrdQffKHm97oCHSFyLupNJPe0wE9Nm_sHp5NLuCUK7GD_UxZnuoFt5PRRv0r27V9kjjsKh8K3u87DAKJRTatfJwK4D9PcHksspdkfK79cFXN6QbEBNMTXw4PPorKRhtiyxi4GmqMvNe5vrvH_cSbElVyKYHJfnX0_ErM0raAbZ2T-XhvGlNNLL6uM4Lb/w319-h320/physics-wallah-seeklogo.png"
     },
     { 
       name: "Seekho", 
-      highlight: false,
-      imgSrc: "" 
+      highlight: true,
+      imgSrc: "https://www.blogger.com/img/transparent.gif",
+      style: {
+        background: "#d8d8d8 url('https://fonts.gstatic.com/s/i/materialiconsextended/insert_photo/v6/grey600-24dp/1x/baseline_insert_photo_grey600_24dp.png') 50% 50% no-repeat",
+        opacity: 0.6
+      }
     },
     { 
       name: "Big Bazaar", 
@@ -144,6 +150,7 @@ const TrustedBrandsSection = () => {
                   <img 
                     src={company.imgSrc} 
                     alt={company.name} 
+                    style={company.style || {}}
                     className="h-full w-auto object-contain"
                   />
                 ) : (
@@ -156,7 +163,6 @@ const TrustedBrandsSection = () => {
               </div>
             ))}
           </div>
-          
           {/* Duplicate the logos for continuous scrolling effect */}
           <div className="flex flex-nowrap gap-8 min-w-max ml-8">
             {companyLogos.map((company, index) => (
@@ -170,6 +176,7 @@ const TrustedBrandsSection = () => {
                   <img 
                     src={company.imgSrc} 
                     alt={company.name} 
+                    style={company.style || {}}
                     className="h-full w-auto object-contain"
                   />
                 ) : (
@@ -197,3 +204,4 @@ const TrustedBrandsSection = () => {
 };
 
 export default TrustedBrandsSection;
+
