@@ -6,23 +6,19 @@ import { Menu, X, User, Users } from "lucide-react";
 // Import both logo images (Company logo + Secondary logo)
 const primaryLogo = "/lovable-uploads/c456053e-22bc-4131-9ce5-44390b74a38a.png";
 const secondaryLogo = "/lovable-uploads/caf97257-1ebc-4af4-8824-692b84108c22.png";
-
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+  return <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
       <div className="container px-4 md:px-6 mx-auto flex h-16 items-center justify-between gap-2">
         <div className="flex items-center gap-3">
           {/* Secondary logo added to the left */}
           <img src={secondaryLogo} alt="Secondary Logo" className="h-7 w-7 object-contain mr-2" />
           
           <Link to="/" className="flex items-center gap-2">
-            <span className="font-bold text-2xl gradient-text">
+            <span className="font-bold text-2xl gradient-text ">
               INFRIDET SOLUTIONS
             </span>
           </Link>
@@ -69,67 +65,33 @@ const Navbar = () => {
         </div>
         
         {/* Mobile Menu Button */}
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className="md:hidden" 
-          onClick={toggleMenu}
-        >
+        <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMenu}>
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </Button>
       </div>
       
       {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden py-4 px-4 bg-black/90 border-b border-border/40 backdrop-blur-md">
+      {isMenuOpen && <div className="md:hidden py-4 px-4 bg-black/90 border-b border-border/40 backdrop-blur-md">
           <nav className="flex flex-col space-y-4">
-            <Link 
-              to="/" 
-              className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={() => setIsMenuOpen(false)}>
               Home
             </Link>
-            <Link 
-              to="/about" 
-              className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/about" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={() => setIsMenuOpen(false)}>
               About
             </Link>
-            <Link 
-              to="/services" 
-              className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/services" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={() => setIsMenuOpen(false)}>
               Services
             </Link>
-            <Link 
-              to="/portfolio" 
-              className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/portfolio" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={() => setIsMenuOpen(false)}>
               Portfolio
             </Link>
-            <Link 
-              to="/blog" 
-              className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/blog" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={() => setIsMenuOpen(false)}>
               Blog
             </Link>
-            <Link 
-              to="/courses" 
-              className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/courses" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={() => setIsMenuOpen(false)}>
               Courses
             </Link>
-            <Link 
-              to="/contact" 
-              className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/contact" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={() => setIsMenuOpen(false)}>
               Contact
             </Link>
             <div className="flex flex-col space-y-2 pt-2 border-t border-border/40">
@@ -147,10 +109,7 @@ const Navbar = () => {
               </Link>
             </div>
           </nav>
-        </div>
-      )}
-    </header>
-  );
+        </div>}
+    </header>;
 };
-
 export default Navbar;
