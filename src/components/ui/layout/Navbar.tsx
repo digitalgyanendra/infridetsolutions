@@ -22,7 +22,6 @@ const Navbar = () => {
           <img src={secondaryLogo} alt="Secondary Logo" className="h-7 w-7 object-contain mr-2" />
           
           <Link to="/" className="flex items-center gap-2">
-            <img src={primaryLogo} alt="Infridet Solutions Logo" className="h-8 w-8 object-contain" />
             <span className="font-bold text-2xl gradient-text">
               INFRIDET SOLUTIONS
             </span>
