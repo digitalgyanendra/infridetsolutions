@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -19,14 +18,15 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
       <div className="container px-4 md:px-6 mx-auto flex h-16 items-center justify-between gap-2">
         <div className="flex items-center gap-3">
+          {/* Secondary logo added to the left */}
+          <img src={secondaryLogo} alt="Secondary Logo" className="h-7 w-7 object-contain mr-2" />
+          
           <Link to="/" className="flex items-center gap-2">
             <img src={primaryLogo} alt="Infridet Solutions Logo" className="h-8 w-8 object-contain" />
             <span className="font-bold text-2xl gradient-text">
               INFRIDET SOLUTIONS
             </span>
           </Link>
-          {/* Secondary logo, visually subtle beside primary */}
-          <img src={secondaryLogo} alt="Secondary Logo" className="h-7 w-7 object-contain ml-1" />
         </div>
         
         {/* Desktop Navigation */}
@@ -155,4 +155,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
