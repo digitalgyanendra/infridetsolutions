@@ -10,7 +10,7 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 gap-12 items-center justify-center text-center">
           <div className="mx-auto mb-8 w-48">
             <img 
-              src="/lovable-uploads/b161bb61-2f9b-4aab-8e37-ed035ad79923.png" 
+              src="/lovable-uploads/5b95ed65-a685-40e7-a150-14769fcefd1b.png" 
               alt="Infridet Solutions Logo" 
               className="w-full h-auto"
             />
