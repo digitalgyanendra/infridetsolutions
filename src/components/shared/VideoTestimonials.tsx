@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 
@@ -39,9 +39,55 @@ const testimonials = [
 
 const VideoTestimonials: React.FC<VideoTestimonialsProps> = ({ showHeading = true }) => {
   const [loadedVideos, setLoadedVideos] = useState<Record<string, boolean>>({});
+  const observerRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  
+  useEffect(() => {
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const embedId = entry.target.getAttribute('data-embed-id');
+          if (embedId) {
+            // Preload the thumbnail when it's visible
+            const img = new Image();
+            img.src = `https://img.youtube.com/vi/${embedId}/hqdefault.jpg`;
+          }
+        }
+      });
+    };
+    
+    const observer = new IntersectionObserver(observerCallback, {
+      rootMargin: '200px', // Start loading when within 200px
+      threshold: 0.1
+    });
+    
+    // Observe all video containers
+    observerRefs.current.forEach((ref) => {
+      if (ref) {
+        observer.observe(ref);
+      }
+    });
+    
+    return () => observer.disconnect();
+  }, []);
   
   const handleLoadVideo = (embedId: string) => {
     setLoadedVideos(prev => ({ ...prev, [embedId]: true }));
+    
+    // Only load YouTube API when first video is clicked
+    if (Object.keys(loadedVideos).length === 0) {
+      const script = document.createElement('script');
+      script.src = 'https://www.youtube.com/iframe_api';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  };
+
+  const setObserverRef = (embedId: string) => (ref: HTMLDivElement | null) => {
+    if (ref) {
+      observerRefs.current.set(embedId, ref);
+    } else {
+      observerRefs.current.delete(embedId);
+    }
   };
 
   return (
@@ -89,21 +135,25 @@ const VideoTestimonials: React.FC<VideoTestimonialsProps> = ({ showHeading = tru
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.12 }}
             >
-              <div className="aspect-video w-full mb-3 relative">
+              <div 
+                className="aspect-video w-full mb-3 relative"
+                ref={setObserverRef(t.embedId)}
+                data-embed-id={t.embedId}
+              >
                 {loadedVideos[t.embedId] ? (
                   <iframe
                     width="100%"
                     height="100%"
-                    src={`https://www.youtube.com/embed/${t.embedId}`}
+                    src={`https://www.youtube.com/embed/${t.embedId}?autoplay=1&rel=0`}
                     title={`${t.name} Testimonial`}
-                    frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     className="w-full h-full object-cover rounded-t-xl"
+                    loading="lazy"
                   ></iframe>
                 ) : (
                   <div 
-                    className="w-full h-full bg-black/70 flex items-center justify-center cursor-pointer relative rounded-t-xl"
+                    className="w-full h-full flex items-center justify-center cursor-pointer relative rounded-t-xl"
                     onClick={() => handleLoadVideo(t.embedId)}
                   >
                     <img 
@@ -111,16 +161,20 @@ const VideoTestimonials: React.FC<VideoTestimonialsProps> = ({ showHeading = tru
                       alt={`${t.name} Testimonial thumbnail`}
                       className="w-full h-full object-cover opacity-60 rounded-t-xl"
                       loading="lazy"
+                      width="480"
+                      height="360"
                     />
                     <div className="absolute flex flex-col items-center justify-center">
-                      <svg 
-                        className="w-16 h-16 text-orange-500" 
-                        fill="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                      <span className="text-white font-medium mt-2">Click to load video</span>
+                      <div className="w-16 h-16 flex items-center justify-center rounded-full bg-background/30 backdrop-blur-sm">
+                        <svg 
+                          className="w-10 h-10 text-orange-500" 
+                          fill="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                      <span className="text-white font-medium mt-2 bg-black/50 px-3 py-1 rounded backdrop-blur-sm">Play Video</span>
                     </div>
                   </div>
                 )}

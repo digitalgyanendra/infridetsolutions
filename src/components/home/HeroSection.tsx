@@ -1,144 +1,18 @@
-import React, { useEffect, useRef } from "react";
+
+import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { UserPlus, Search } from "lucide-react";
 
 const HeroSection = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  
-  useEffect(() => {
-    if (!canvasRef.current) return;
-    
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    
-    // Set canvas dimensions
-    const setCanvasDimensions = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    
-    setCanvasDimensions();
-    window.addEventListener('resize', setCanvasDimensions);
-    
-    // Node class for network visualization
-    class Node {
-      x: number;
-      y: number;
-      radius: number;
-      color: string;
-      velocity: { x: number; y: number };
-      
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.radius = Math.random() * 2 + 1;
-        this.color = Math.random() > 0.5 ? '#f97316' : '#0ea5e9';
-        this.velocity = {
-          x: (Math.random() - 0.5) * 0.5,
-          y: (Math.random() - 0.5) * 0.5
-        };
-      }
-      
-      update() {
-        // Boundary check
-        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-          this.velocity.x = -this.velocity.x;
-        }
-        
-        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-          this.velocity.y = -this.velocity.y;
-        }
-        
-        // Update position
-        this.x += this.velocity.x;
-        this.y += this.velocity.y;
-      }
-      
-      draw() {
-        if (!ctx) return;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-      }
-    }
-    
-    // Create nodes
-    const nodes: Node[] = [];
-    const nodeCount = Math.min(Math.floor(window.innerWidth / 15), 100);
-    
-    for (let i = 0; i < nodeCount; i++) {
-      nodes.push(new Node());
-    }
-    
-    // Draw connections between nodes
-    const drawConnections = () => {
-      if (!ctx) return;
-      
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          // Only draw connections if nodes are close enough
-          if (distance < 100) {
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            
-            // Gradient line based on node colors
-            const gradient = ctx.createLinearGradient(
-              nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y
-            );
-            gradient.addColorStop(0, nodes[i].color);
-            gradient.addColorStop(1, nodes[j].color);
-            
-            ctx.strokeStyle = gradient;
-            ctx.lineWidth = 0.2;
-            ctx.globalAlpha = 1 - (distance / 100); // Fade out with distance
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-          }
-        }
-      }
-    };
-    
-    // Animation loop
-    const animate = () => {
-      if (!ctx) return;
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Update and draw nodes
-      nodes.forEach(node => {
-        node.update();
-        node.draw();
-      });
-      
-      drawConnections();
-      
-      requestAnimationFrame(animate);
-    };
-    
-    animate();
-    
-    return () => window.removeEventListener('resize', setCanvasDimensions);
-  }, []);
-  
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Network background animation */}
-      <canvas 
-        ref={canvasRef} 
-        className="absolute inset-0 z-0 bg-black"
-      />
+      {/* CSS-based gradient background animation instead of Canvas */}
+      <div className="absolute inset-0 z-0 bg-gradient-radial hero-animated-bg"></div>
       
       {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-radial from-transparent to-black z-10"></div>
+      <div className="absolute inset-0 bg-gradient-radial from-transparent to-black/90 z-10"></div>
       
       {/* Content */}
       <div className="container px-4 md:px-6 relative z-20">

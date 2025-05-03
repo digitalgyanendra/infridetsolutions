@@ -6,12 +6,14 @@ import ServicesSection from "@/components/home/ServicesSection";
 import StatsSection from "@/components/home/StatsSection";
 import TrustedBrandsSection from "@/components/home/TrustedBrandsSection";
 import CTASection from "@/components/home/CTASection";
+import PortfolioHighlights from "@/components/home/PortfolioHighlights";
 
 const Index = () => {
   return (
     <Layout>
       <HeroSection />
       <TrustedBrandsSection />
+      <PortfolioHighlights />
       <ServicesSection />
       <StatsSection />
       <CTASection />
