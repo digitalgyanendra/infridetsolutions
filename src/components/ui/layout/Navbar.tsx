@@ -41,7 +41,7 @@ const Navbar = () => {
       <div className="container px-4 md:px-6 mx-auto flex h-16 items-center justify-between gap-2">
         <div className="flex items-center gap-3">
           {/* Secondary logo added to the left */}
-          <img src={secondaryLogo} alt="Secondary Logo" className="h-7 w-7 object-contain mr-2" fetchpriority="high" />
+          <img src={secondaryLogo} alt="Secondary Logo" className="h-7 w-7 object-contain mr-2" fetchPriority="high" />
           
           <Link to="/" className="flex items-center gap-2">
             <span className="font-bold text-2xl gradient-text">
