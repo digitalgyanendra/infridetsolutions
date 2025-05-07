@@ -25,6 +25,10 @@ const WorkedWithSection = () => {
               src="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png"
               alt="Brands we've worked with" 
               className="w-full max-w-5xl mx-auto rounded-lg shadow-xl"
+              loading="lazy"
+              width="1200"
+              height="600"
+              decoding="async"
             />
           </motion.div>
         </div>

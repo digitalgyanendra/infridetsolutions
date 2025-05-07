@@ -1,12 +1,14 @@
 
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import Layout from "@/components/ui/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
-import ServicesSection from "@/components/home/ServicesSection";
-import StatsSection from "@/components/home/StatsSection";
 import TrustedBrandsSection from "@/components/home/TrustedBrandsSection";
-import CTASection from "@/components/home/CTASection";
 import PortfolioHighlights from "@/components/home/PortfolioHighlights";
+
+// Lazy load non-critical sections
+const ServicesSection = lazy(() => import("@/components/home/ServicesSection"));
+const StatsSection = lazy(() => import("@/components/home/StatsSection"));
+const CTASection = lazy(() => import("@/components/home/CTASection"));
 
 const Index = () => {
   return (
@@ -14,9 +16,11 @@ const Index = () => {
       <HeroSection />
       <TrustedBrandsSection />
       <PortfolioHighlights />
-      <ServicesSection />
-      <StatsSection />
-      <CTASection />
+      <Suspense fallback={<div className="py-20 text-center">Loading...</div>}>
+        <ServicesSection />
+        <StatsSection />
+        <CTASection />
+      </Suspense>
     </Layout>
   );
 };

@@ -13,6 +13,9 @@ const HeroSection = () => {
               src="/lovable-uploads/5b95ed65-a685-40e7-a150-14769fcefd1b.png" 
               alt="Infridet Solutions Logo" 
               className="w-full h-auto"
+              width="192"
+              height="192"
+              loading="eager"
             />
           </div>
           <motion.div

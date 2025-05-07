@@ -101,6 +101,7 @@ const TrustedBrandsSection = () => {
                     loading="lazy"
                     width="100"
                     height="64"
+                    decoding="async"
                   />
                 ) : (
                   <div className={`font-bold text-xl whitespace-nowrap ${
@@ -129,6 +130,7 @@ const TrustedBrandsSection = () => {
                     loading="lazy"
                     width="100"
                     height="64"
+                    decoding="async"
                   />
                 ) : (
                   <div className={`font-bold text-xl whitespace-nowrap ${

@@ -39,6 +39,10 @@ const HeroSection = () => {
             src="/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png" 
             alt="Infridet Logo" 
             className="w-64 md:w-80"
+            width="320"
+            height="320"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>

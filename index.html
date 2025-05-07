@@ -17,8 +17,12 @@
     <link rel="preconnect" href="https://img.youtube.com" crossorigin />
     <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="image" href="/lovable-uploads/caf97257-1ebc-4af4-8824-692b84108c22.png" />
-    <link rel="preload" fetchpriority="high" as="image" href="/lovable-uploads/325d2d7a-2a49-4220-8cc1-150319570c01.png" />
+    <link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin />
+    
+    <!-- Critical resource preloads -->
+    <link rel="preload" as="image" href="/lovable-uploads/caf97257-1ebc-4af4-8824-692b84108c22.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/lovable-uploads/325d2d7a-2a49-4220-8cc1-150319570c01.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/lovable-uploads/5b95ed65-a685-40e7-a150-14769fcefd1b.png" fetchpriority="high" />
     
     <!-- Critical CSS inline for LCP optimization -->
     <style>
@@ -56,6 +60,12 @@
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
       }
+      
+      /* Optimize CLS for images */
+      img {
+        max-width: 100%;
+        height: auto;
+      }
     </style>
 
     <!-- Open Graph Metadata -->
@@ -83,11 +93,28 @@
     <!-- Defer main script -->
     <script type="module" src="/src/main.tsx" defer></script>
     
-    <!-- YouTube API loading strategy -->
+    <!-- Optimized YouTube API loading strategy -->
     <script>
       // Intersection Observer to detect when videos are in view
       document.addEventListener('DOMContentLoaded', () => {
         let ytApiLoaded = false;
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            // Only load YouTube API when a video element is near the viewport
+            if (entry.isIntersecting && !ytApiLoaded) {
+              window.onYouTubeLoad();
+            }
+          });
+        }, {
+          rootMargin: '200px', // Load when within 200px of viewport
+          threshold: 0.1
+        });
+        
+        // Observe all potential video elements
+        document.querySelectorAll('.video-container').forEach(el => {
+          observer.observe(el);
+        });
         
         // Load YouTube API only when needed
         window.onYouTubeLoad = () => {
