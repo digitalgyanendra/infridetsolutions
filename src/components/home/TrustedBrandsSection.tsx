@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-// Optimized company logos with WebP format and smaller sizes
+// Updated company logos with proper image paths and formats
 const companyLogos = [
   { 
     name: "Josh Talks", 
@@ -52,17 +52,17 @@ const companyLogos = [
   { 
     name: "Physics Wallah", 
     highlight: true,
-    imgSrc: "/assets/physics-wallah.webp" // Local optimized copy instead of external URL
+    imgSrc: "/lovable-uploads/1dcf30bc-6461-4556-b062-c28e54c66767.png"
   },
   { 
     name: "Big Bazaar", 
     highlight: true,
-    imgSrc: "" 
+    imgSrc: "/lovable-uploads/c456053e-22bc-4131-9ce5-44390b74a38a.webp" 
   },
   { 
     name: "Kuku FM", 
     highlight: false,
-    imgSrc: "" 
+    imgSrc: "/lovable-uploads/cd0319be-f058-4879-b419-92935b1d069c.webp" 
   }
 ];
 
@@ -82,58 +82,33 @@ const TrustedBrandsSection = () => {
           </p>
         </div>
         
-        {/* CSS-based scrolling animation with reduced DOM elements */}
-        <div className="overflow-hidden relative">
-          <div className="logo-carousel flex">
+        {/* Brand logos display grid instead of carousel for better reliability */}
+        <div className="mt-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 items-center justify-items-center">
             {companyLogos.map((company, index) => (
               <div 
                 key={index} 
-                className={`h-16 shrink-0 mx-4 transition-all duration-300 hover:opacity-100 hover:scale-110 ${
+                className={`h-16 flex items-center justify-center transition-all duration-300 hover:scale-110 ${
                   company.highlight ? 'opacity-90' : 'opacity-70'
-                }`}
-                style={{ minWidth: '100px' }}
+                } hover:opacity-100`}
               >
                 {company.imgSrc ? (
                   <img 
                     src={company.imgSrc} 
                     alt={company.name} 
-                    className="h-full w-auto object-contain"
-                    loading="lazy"
+                    className="h-12 w-auto object-contain"
+                    loading={index > 6 ? "lazy" : "eager"}
                     width="100"
                     height="64"
                     decoding="async"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.parentElement.innerHTML = company.name;
+                    }}
                   />
                 ) : (
-                  <div className={`font-bold text-xl whitespace-nowrap ${
-                    company.highlight ? 'gradient-text' : 'text-white/60'
-                  }`}>
-                    {company.name}
-                  </div>
-                )}
-              </div>
-            ))}
-            
-            {/* First few items duplicated for seamless looping */}
-            {companyLogos.slice(0, 6).map((company, index) => (
-              <div 
-                key={`duplicate-${index}`} 
-                className={`h-16 shrink-0 mx-4 transition-all duration-300 hover:opacity-100 hover:scale-110 ${
-                  company.highlight ? 'opacity-90' : 'opacity-70'
-                }`}
-                style={{ minWidth: '100px' }}
-              >
-                {company.imgSrc ? (
-                  <img 
-                    src={company.imgSrc} 
-                    alt={company.name} 
-                    className="h-full w-auto object-contain"
-                    loading="lazy"
-                    width="100"
-                    height="64"
-                    decoding="async"
-                  />
-                ) : (
-                  <div className={`font-bold text-xl whitespace-nowrap ${
+                  <div className={`font-bold text-lg whitespace-nowrap ${
                     company.highlight ? 'gradient-text' : 'text-white/60'
                   }`}>
                     {company.name}
