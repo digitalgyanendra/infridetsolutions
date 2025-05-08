@@ -8,13 +8,13 @@ import { UserPlus, Search } from "lucide-react";
 const HeroSection = () => {
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* CSS-based gradient background animation instead of Canvas */}
-      <div className="absolute inset-0 z-0 bg-gradient-radial hero-animated-bg"></div>
+      {/* Static gradient background instead of animated for better performance */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
       
       {/* Overlay gradient */}
       <div className="absolute inset-0 bg-gradient-radial from-transparent to-black/90 z-10"></div>
       
-      {/* Content */}
+      {/* Content - Optimized for LCP */}
       <div className="container px-4 md:px-6 relative z-20">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-8">
           <motion.h1 
@@ -83,13 +83,13 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Bottom wave */}
+      {/* Bottom wave - simplified SVG */}
       <div className="absolute bottom-0 w-full z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" className="w-full" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" width="1440" height="120" className="w-full" aria-hidden="true">
           <path 
             fill="currentColor" 
             className="text-background"
-            d="M0,96L60,80C120,64,240,32,360,32C480,32,600,64,720,69.3C840,75,960,53,1080,42.7C1200,32,1320,32,1380,32L1440,32L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"
+            d="M0,96L1440,32L1440,120L0,120Z"
           ></path>
         </svg>
       </div>

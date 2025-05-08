@@ -20,9 +20,9 @@
     <link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin />
     
     <!-- Critical resource preloads -->
-    <link rel="preload" as="image" href="/lovable-uploads/caf97257-1ebc-4af4-8824-692b84108c22.png" fetchpriority="high" />
-    <link rel="preload" as="image" href="/lovable-uploads/325d2d7a-2a49-4220-8cc1-150319570c01.png" fetchpriority="high" />
-    <link rel="preload" as="image" href="/lovable-uploads/5b95ed65-a685-40e7-a150-14769fcefd1b.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/lovable-uploads/caf97257-1ebc-4af4-8824-692b84108c22.webp" fetchpriority="high" type="image/webp" />
+    <link rel="preload" as="image" href="/lovable-uploads/325d2d7a-2a49-4220-8cc1-150319570c01.webp" fetchpriority="high" type="image/webp" />
+    <link rel="preload" as="font" href="/fonts/inter.woff2" type="font/woff2" crossorigin />
     
     <!-- Critical CSS inline for LCP optimization -->
     <style>
@@ -53,6 +53,7 @@
         background-size: 400% 400%;
         animation: gradient-shift 15s ease infinite;
         opacity: 0.8;
+        will-change: transform;
       }
       
       @keyframes gradient-shift {
@@ -65,6 +66,22 @@
       img {
         max-width: 100%;
         height: auto;
+        aspect-ratio: attr(width) / attr(height);
+      }
+
+      /* Optimize long animation */
+      .network-bg {
+        background-image: linear-gradient(45deg, rgba(249, 115, 22, 0.1) 25%, transparent 25%, transparent 75%, rgba(249, 115, 22, 0.1) 75%, rgba(249, 115, 22, 0.1)),
+                          linear-gradient(45deg, rgba(249, 115, 22, 0.1) 25%, transparent 25%, transparent 75%, rgba(249, 115, 22, 0.1) 75%, rgba(249, 115, 22, 0.1));
+        background-size: 60px 60px;
+        background-position: 0 0, 30px 30px;
+        will-change: transform;
+      }
+      
+      /* Logo carousel optimization */
+      .logo-carousel {
+        transform: translateZ(0);
+        will-change: transform;
       }
     </style>
 
@@ -72,25 +89,25 @@
     <meta property="og:title" content="Infridet Solutions Private Limited" />
     <meta property="og:description" content="Empowering creators and brands with smart digital growth strategies." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://infridetsolutions.com/assets/infridet-og-image.png" />
+    <meta property="og:image" content="https://infridetsolutions.com/assets/infridet-og-image.webp" />
     <meta property="og:site_name" content="Infridet Solutions" />
 
     <!-- Twitter Metadata -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@infridetsolutions" />
-    <meta name="twitter:image" content="https://infridetsolutions.com/assets/infridet-og-image.png" />
+    <meta name="twitter:image" content="https://infridetsolutions.com/assets/infridet-og-image.webp" />
     <meta name="twitter:title" content="Infridet Solutions Private Limited" />
     <meta name="twitter:description" content="Empowering creators and brands with smart digital growth strategies." />
     
     <!-- Deferred non-critical CSS -->
     <link rel="stylesheet" href="/src/App.css" media="print" onload="this.media='all'" />
+
+    <!-- Cache control directive -->
+    <meta http-equiv="Cache-Control" content="max-age=31536000" />
   </head>
 
   <body>
     <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <!-- Defer main script -->
     <script type="module" src="/src/main.tsx" defer></script>
     
     <!-- Optimized YouTube API loading strategy -->

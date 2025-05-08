@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 
@@ -15,7 +15,8 @@ const testimonials = [
     embedId: "WDyh-Vxx1xI",
     highlight: true,
     quote: "Working with Infridet transformed my consultancy reach and confidence.",
-    company: "Infridet Solutions"
+    company: "Infridet Solutions",
+    thumbnail: "/assets/kartik-thumb.webp" // Locally optimized thumbnail
   },
   {
     name: "Shahbaz Saikh",
@@ -24,7 +25,8 @@ const testimonials = [
     embedId: "5FALD_ok_GM",
     highlight: false,
     quote: "Results showed up within weeks. Highly recommended collaboration.",
-    company: "Infridet Solutions"
+    company: "Infridet Solutions",
+    thumbnail: "/assets/shahbaz-thumb.webp" // Locally optimized thumbnail
   },
   {
     name: "Client #235",
@@ -33,9 +35,44 @@ const testimonials = [
     embedId: "NQ58we3UwTI",
     highlight: false,
     quote: "The team's digital growth expertise was a game-changer.",
-    company: "Infridet Solutions"
+    company: "Infridet Solutions",
+    thumbnail: "/assets/client-thumb.webp" // Locally optimized thumbnail
   }
 ];
+
+// Memoized video thumbnail component
+const VideoThumbnail = memo(({ embedId, thumbnail, name, onLoadVideo }: { 
+  embedId: string, 
+  thumbnail: string, 
+  name: string, 
+  onLoadVideo: () => void 
+}) => (
+  <div 
+    className="w-full h-full flex items-center justify-center cursor-pointer relative rounded-t-xl"
+    onClick={onLoadVideo}
+  >
+    <img 
+      src={thumbnail} 
+      alt={`${name} Testimonial thumbnail`}
+      className="w-full h-full object-cover opacity-60 rounded-t-xl"
+      loading="lazy"
+      width="480"
+      height="360"
+    />
+    <div className="absolute flex flex-col items-center justify-center">
+      <div className="w-16 h-16 flex items-center justify-center rounded-full bg-background/30 backdrop-blur-sm">
+        <svg 
+          className="w-10 h-10 text-orange-500" 
+          fill="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </div>
+      <span className="text-white font-medium mt-2 bg-black/50 px-3 py-1 rounded backdrop-blur-sm">Play Video</span>
+    </div>
+  </div>
+));
 
 const VideoTestimonials: React.FC<VideoTestimonialsProps> = ({ showHeading = true }) => {
   const [loadedVideos, setLoadedVideos] = useState<Record<string, boolean>>({});
@@ -47,20 +84,19 @@ const VideoTestimonials: React.FC<VideoTestimonialsProps> = ({ showHeading = tru
         if (entry.isIntersecting) {
           const embedId = entry.target.getAttribute('data-embed-id');
           if (embedId) {
-            // Preload the thumbnail when it's visible
-            const img = new Image();
-            img.src = `https://img.youtube.com/vi/${embedId}/hqdefault.jpg`;
+            // Just mark that it's visible, don't load the image yet
+            // This will reduce unnecessary resource loading
+            console.log(`Video ${embedId} is in viewport`);
           }
         }
       });
     };
     
     const observer = new IntersectionObserver(observerCallback, {
-      rootMargin: '200px', // Start loading when within 200px
+      rootMargin: '200px',
       threshold: 0.1
     });
     
-    // Observe all video containers
     observerRefs.current.forEach((ref) => {
       if (ref) {
         observer.observe(ref);
@@ -136,7 +172,7 @@ const VideoTestimonials: React.FC<VideoTestimonialsProps> = ({ showHeading = tru
               transition={{ duration: 0.4, delay: idx * 0.12 }}
             >
               <div 
-                className="aspect-video w-full mb-3 relative"
+                className="aspect-video w-full mb-3 relative video-container"
                 ref={setObserverRef(t.embedId)}
                 data-embed-id={t.embedId}
               >
@@ -144,7 +180,7 @@ const VideoTestimonials: React.FC<VideoTestimonialsProps> = ({ showHeading = tru
                   <iframe
                     width="100%"
                     height="100%"
-                    src={`https://www.youtube.com/embed/${t.embedId}?autoplay=1&rel=0`}
+                    src={`https://www.youtube.com/embed/${t.embedId}?rel=0`}
                     title={`${t.name} Testimonial`}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -152,31 +188,12 @@ const VideoTestimonials: React.FC<VideoTestimonialsProps> = ({ showHeading = tru
                     loading="lazy"
                   ></iframe>
                 ) : (
-                  <div 
-                    className="w-full h-full flex items-center justify-center cursor-pointer relative rounded-t-xl"
-                    onClick={() => handleLoadVideo(t.embedId)}
-                  >
-                    <img 
-                      src={`https://img.youtube.com/vi/${t.embedId}/hqdefault.jpg`}
-                      alt={`${t.name} Testimonial thumbnail`}
-                      className="w-full h-full object-cover opacity-60 rounded-t-xl"
-                      loading="lazy"
-                      width="480"
-                      height="360"
-                    />
-                    <div className="absolute flex flex-col items-center justify-center">
-                      <div className="w-16 h-16 flex items-center justify-center rounded-full bg-background/30 backdrop-blur-sm">
-                        <svg 
-                          className="w-10 h-10 text-orange-500" 
-                          fill="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                      <span className="text-white font-medium mt-2 bg-black/50 px-3 py-1 rounded backdrop-blur-sm">Play Video</span>
-                    </div>
-                  </div>
+                  <VideoThumbnail
+                    embedId={t.embedId}
+                    thumbnail={t.thumbnail}
+                    name={t.name}
+                    onLoadVideo={() => handleLoadVideo(t.embedId)}
+                  />
                 )}
                 <div className="absolute top-2 right-2 z-10">
                   <span className="bg-background px-2 py-1 rounded text-xs text-orange-500 font-bold shadow">
@@ -213,4 +230,5 @@ const VideoTestimonials: React.FC<VideoTestimonialsProps> = ({ showHeading = tru
   );
 };
 
-export default VideoTestimonials;
+// Memoize the entire component to prevent unnecessary re-renders
+export default memo(VideoTestimonials);
