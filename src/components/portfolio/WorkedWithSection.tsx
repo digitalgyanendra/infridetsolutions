@@ -21,11 +21,27 @@ const WorkedWithSection = () => {
             viewport={{ once: true }}
             className="w-full"
           >
-            <img 
-              src="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png"
-              alt="Brands we've worked with" 
-              className="w-full max-w-5xl mx-auto rounded-lg shadow-xl"
-            />
+            <picture>
+              <source 
+                srcSet="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png" 
+                type="image/png"
+                media="(min-width: 1024px)"
+              />
+              <source 
+                srcSet="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png" 
+                type="image/png"
+                media="(min-width: 640px)"
+              />
+              <img 
+                src="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png"
+                alt="Brands we've worked with" 
+                className="w-full max-w-5xl mx-auto rounded-lg shadow-xl"
+                loading="lazy"
+                width="1024"
+                height="576"
+                decoding="async"
+              />
+            </picture>
           </motion.div>
         </div>
       </div>

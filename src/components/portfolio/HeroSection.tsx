@@ -33,12 +33,16 @@ const HeroSection = () => {
           </p>
         </motion.div>
         
-        {/* Background logo effect */}
+        {/* Background logo effect with optimized image */}
         <div className="absolute right-0 bottom-0 opacity-10 z-0 pointer-events-none">
           <img 
             src="/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png" 
             alt="Infridet Logo" 
             className="w-64 md:w-80"
+            loading="lazy"
+            width="320"
+            height="320"
+            decoding="async"
           />
         </div>
       </div>

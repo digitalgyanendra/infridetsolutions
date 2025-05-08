@@ -27,10 +27,25 @@ const TrustedBrandsSection = () => {
       requestAnimationFrame(scroll);
     };
     
-    const animationId = requestAnimationFrame(scroll);
+    // Use requestAnimationFrame for smoother animation
+    let animationId: number;
+    
+    // Only start animation when element is in viewport
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animationId = requestAnimationFrame(scroll);
+        } else {
+          cancelAnimationFrame(animationId);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    observer.observe(scrollContainer);
     
     return () => {
       cancelAnimationFrame(animationId);
+      observer.disconnect();
     };
   }, []);
 
@@ -39,58 +54,77 @@ const TrustedBrandsSection = () => {
     { 
       name: "Josh Talks", 
       highlight: true,
-      imgSrc: "/lovable-uploads/325d2d7a-2a49-4220-8cc1-150319570c01.png" 
+      imgSrc: "/lovable-uploads/325d2d7a-2a49-4220-8cc1-150319570c01.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "PharmEasy", 
       highlight: false, 
-      imgSrc: "/lovable-uploads/192a9d94-67c9-40ad-b0b4-e12aaac8ce93.png"
+      imgSrc: "/lovable-uploads/192a9d94-67c9-40ad-b0b4-e12aaac8ce93.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "MPL", 
       highlight: false,
-      imgSrc: "/lovable-uploads/7b907a0d-539e-432d-bef2-9f0b3c5e9149.png" 
+      imgSrc: "/lovable-uploads/7b907a0d-539e-432d-bef2-9f0b3c5e9149.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "Vmart", 
       highlight: true,
-      imgSrc: "/lovable-uploads/b6fd9020-9cfe-4d9b-92a9-bc7fd9dc3f13.png" 
+      imgSrc: "/lovable-uploads/b6fd9020-9cfe-4d9b-92a9-bc7fd9dc3f13.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "Meesho", 
       highlight: false,
-      imgSrc: "/lovable-uploads/bd4ba683-8219-4087-9708-0ef157a6cb71.png" 
+      imgSrc: "/lovable-uploads/bd4ba683-8219-4087-9708-0ef157a6cb71.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "Confirmtkt", 
       highlight: true,
-      imgSrc: "/lovable-uploads/3683885c-5b52-4464-87e1-25c19d49f75c.png" 
+      imgSrc: "/lovable-uploads/3683885c-5b52-4464-87e1-25c19d49f75c.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "Dream11", 
       highlight: false,
-      imgSrc: "/lovable-uploads/f0247702-91e6-4dd7-8ca6-550b78fab2e6.png" 
+      imgSrc: "/lovable-uploads/f0247702-91e6-4dd7-8ca6-550b78fab2e6.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "Airtel", 
       highlight: true,
-      imgSrc: "/lovable-uploads/198368ec-73cb-47ce-892a-f0d7620fae08.png" 
+      imgSrc: "/lovable-uploads/198368ec-73cb-47ce-892a-f0d7620fae08.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "OYO", 
       highlight: false,
-      imgSrc: "/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png" 
+      imgSrc: "/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png",
+      width: 100,
+      height: 64
     },
-    // Newly provided "Physics Wallah" and "Seekho" logos
+    // Previously provided logos with optimized loading
     { 
       name: "Physics Wallah", 
       highlight: true,
-      imgSrc: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgYXrdQffKHm97oCHSFyLupNJPe0wE9Nm_sHp5NLuCUK7GD_UxZnuoFt5PRRv0r27V9kjjsKh8K3u87DAKJRTatfJwK4D9PcHksspdkfK79cFXN6QbEBNMTXw4PPorKRhtiyxi4GmqMvNe5vrvH_cSbElVyKYHJfnX0_ErM0raAbZ2T-XhvGlNNLL6uM4Lb/w319-h320/physics-wallah-seeklogo.png"
+      imgSrc: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgYXrdQffKHm97oCHSFyLupNJPe0wE9Nm_sHp5NLuCUK7GD_UxZnuoFt5PRRv0r27V9kjjsKh8K3u87DAKJRTatfJwK4D9PcHksspdkfK79cFXN6QbEBNMTXw4PPorKRhtiyxi4GmqMvNe5vrvH_cSbElVyKYHJfnX0_ErM0raAbZ2T-XhvGlNNLL6uM4Lb/w319-h320/physics-wallah-seeklogo.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "Seekho", 
       highlight: true,
-      imgSrc: "https://www.blogger.com/img/transparent.gif",
       style: {
         background: "#d8d8d8 url('https://fonts.gstatic.com/s/i/materialiconsextended/insert_photo/v6/grey600-24dp/1x/baseline_insert_photo_grey600_24dp.png') 50% 50% no-repeat",
         opacity: 0.6
@@ -98,23 +132,19 @@ const TrustedBrandsSection = () => {
     },
     { 
       name: "Big Bazaar", 
-      highlight: true,
-      imgSrc: "" 
+      highlight: true
     },
     { 
       name: "Kuku FM", 
-      highlight: false,
-      imgSrc: "" 
+      highlight: false
     },
     { 
       name: "Pocket FM", 
-      highlight: true,
-      imgSrc: "" 
+      highlight: true
     },
     { 
       name: "SuperIndia", 
-      highlight: false,
-      imgSrc: "" 
+      highlight: false
     }
   ];
 
@@ -152,6 +182,10 @@ const TrustedBrandsSection = () => {
                     alt={company.name} 
                     style={company.style || {}}
                     className="h-full w-auto object-contain"
+                    loading="lazy"
+                    width={company.width || 100}
+                    height={company.height || 64}
+                    decoding="async"
                   />
                 ) : (
                   <div className={`font-bold text-xl whitespace-nowrap ${
@@ -178,6 +212,10 @@ const TrustedBrandsSection = () => {
                     alt={company.name} 
                     style={company.style || {}}
                     className="h-full w-auto object-contain"
+                    loading="lazy"
+                    width={company.width || 100}
+                    height={company.height || 64}
+                    decoding="async"
                   />
                 ) : (
                   <div className={`font-bold text-xl whitespace-nowrap ${
@@ -204,4 +242,3 @@ const TrustedBrandsSection = () => {
 };
 
 export default TrustedBrandsSection;
-
