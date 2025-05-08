@@ -45,12 +45,6 @@
   body {
     @apply bg-background text-foreground;
   }
-  
-  /* Optimize images for better CLS */
-  img {
-    @apply max-w-full h-auto;
-    aspect-ratio: attr(width) / attr(height);
-  }
 }
 
 @layer components {
@@ -71,16 +65,10 @@
     background: linear-gradient(45deg, rgb(249, 115, 22), rgb(14, 165, 233));
   }
 
-  /* Optimized network background with will-change for better compositing */
   .network-bg {
-    background-image: linear-gradient(45deg, rgba(249, 115, 22, 0.1) 25%, transparent 25%, transparent 75%, rgba(249, 115, 22, 0.1) 75%, rgba(249, 115, 22, 0.1)),
-                    linear-gradient(45deg, rgba(249, 115, 22, 0.1) 25%, transparent 25%, transparent 75%, rgba(249, 115, 22, 0.1) 75%, rgba(249, 115, 22, 0.1));
-    background-size: 60px 60px;
-    background-position: 0 0, 30px 30px;
-    will-change: transform;
+    @apply bg-network-pattern bg-[length:60px_60px] animate-network-lines;
   }
 
-  /* Optimized hero background */
   .hero-bg {
     @apply relative overflow-hidden;
   }
@@ -90,69 +78,17 @@
   }
   
   .hero-bg::after {
-    @apply content-[""] absolute inset-0 opacity-20 z-[-1];
-    background-image: linear-gradient(45deg, rgba(249, 115, 22, 0.1) 25%, transparent 25%, transparent 75%, rgba(249, 115, 22, 0.1) 75%, rgba(249, 115, 22, 0.1)),
-                    linear-gradient(45deg, rgba(249, 115, 22, 0.1) 25%, transparent 25%, transparent 75%, rgba(249, 115, 22, 0.1) 75%, rgba(249, 115, 22, 0.1));
-    background-size: 60px 60px;
-    background-position: 0 0, 30px 30px;
+    @apply content-[""] absolute inset-0 bg-network-pattern bg-[length:60px_60px] opacity-20 animate-network-lines z-[-1];
   }
   
-  /* Hide scrollbar */
+  /* Hide scrollbar for Chrome, Safari and Opera */
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
   
+  /* Hide scrollbar for IE, Edge and Firefox */
   .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  /* Hero animated background - simplified */
-  .hero-animated-bg {
-    background: linear-gradient(-45deg, #0f0f0f, #1a1a1a, #0e0e0e, #171717);
-    background-size: 400% 400%;
-    animation: gradient-shift 15s ease infinite;
-    opacity: 0.8;
-    will-change: transform;
-  }
-  
-  @keyframes gradient-shift {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-
-  /* Logo carousel animation - optimized with transform */
-  .logo-carousel {
-    animation: scroll 30s linear infinite;
-    will-change: transform;
-  }
-  
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(calc(-100px * 6 - 8px * 6)); /* reduced number of duplicates */
-    }
-  }
-
-  /* Performance optimized animations */
-  .fade-in {
-    opacity: 0;
-    animation: fadeIn 0.5s ease-out forwards;
-    will-change: opacity, transform;
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* This class uses less CPU than full animations */
-  .simple-gradient {
-    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 }

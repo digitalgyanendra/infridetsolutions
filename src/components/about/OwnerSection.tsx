@@ -52,10 +52,6 @@ const OwnerSection = () => {
               src="/lovable-uploads/3a1238bf-43d7-4308-b873-3d789a424e88.png"
               alt="Gyanendra Dwivedi - Founder of Infridet Solutions"
               className="w-full h-auto object-cover rounded-lg"
-              width="600" 
-              height="450"
-              loading="lazy"
-              decoding="async"
             />
           </motion.div>
         </div>

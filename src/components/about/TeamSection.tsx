@@ -62,10 +62,6 @@ const TeamSection = () => {
                   src={member.image}
                   alt={member.name}
                   className="w-full h-full object-cover"
-                  width="128"
-                  height="128"
-                  loading="lazy"
-                  decoding="async"
                 />
               </div>
               <div className="text-center">

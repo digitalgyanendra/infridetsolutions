@@ -11,7 +11,7 @@ const WorkedWithSection = () => {
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
-      <div className="absolute inset-0 opacity-5 z-0 bg-gradient-to-br from-gray-800 to-black"></div>
+      <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
       <div className="container px-4 md:px-6 mx-auto relative z-10">
         <div className="flex flex-col items-center">
           <motion.div 
@@ -21,20 +21,11 @@ const WorkedWithSection = () => {
             viewport={{ once: true }}
             className="w-full"
           >
-            <picture>
-              <source 
-                srcSet="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png" 
-                type="image/png"
-              />
-              <img 
-                src="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png"
-                alt="Brands we've worked with" 
-                className="w-full max-w-5xl mx-auto rounded-lg shadow-xl"
-                width="1200"
-                height="600"
-                decoding="async"
-              />
-            </picture>
+            <img 
+              src="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png"
+              alt="Brands we've worked with" 
+              className="w-full max-w-5xl mx-auto rounded-lg shadow-xl"
+            />
           </motion.div>
         </div>
       </div>
