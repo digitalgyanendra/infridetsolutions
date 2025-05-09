@@ -84,3 +84,31 @@ export const getWebsiteSchema = () => {
     }
   };
 };
+
+// Blog schema (for blog list pages)
+export const getBlogSchema = (posts: any[]) => {
+  return {
+    name: 'Infridet Solutions Blog',
+    description: 'Latest insights, strategies, and expert tips to help grow your digital presence',
+    url: 'https://infridetsolutions.com/blog',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Infridet Solutions Private Limited',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://infridetsolutions.com/lovable-uploads/caf97257-1ebc-4af4-8824-692b84108c22.png'
+      }
+    },
+    blogPost: posts.map(post => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.date,
+      author: {
+        '@type': 'Person',
+        name: post.author
+      },
+      url: `https://infridetsolutions.com/blog/${post.slug}`
+    }))
+  };
+};
