@@ -3,6 +3,8 @@ import React, { lazy, Suspense } from "react";
 import Layout from "@/components/ui/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import TrustedBrandsSection from "@/components/home/TrustedBrandsSection";
+import SEOHead from "@/components/seo/SEOHead";
+import SchemaData, { getOrganizationSchema, getWebsiteSchema } from "@/components/seo/SchemaData";
 
 // Lazy load non-critical components
 const ServicesSection = lazy(() => import("@/components/home/ServicesSection"));
@@ -20,6 +22,16 @@ const LoadingFallback = () => (
 const Index = () => {
   return (
     <Layout>
+      <SEOHead 
+        title="Home" 
+        description="Infridet Solutions - Empowering digital creators and businesses with expert YouTube growth strategies, SEO, and product growth solutions."
+        keywords={["YouTube growth", "digital marketing", "SEO", "content strategy", "channel management", "digital solutions", "Infridet Solutions"]}
+      />
+      
+      {/* Add structured data for rich results */}
+      <SchemaData type="Organization" data={getOrganizationSchema()} />
+      <SchemaData type="WebSite" data={getWebsiteSchema()} />
+      
       <HeroSection />
       <TrustedBrandsSection />
       <Suspense fallback={<LoadingFallback />}>
@@ -30,6 +42,9 @@ const Index = () => {
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <CTASection />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <TestimonialsSection />
       </Suspense>
     </Layout>
   );

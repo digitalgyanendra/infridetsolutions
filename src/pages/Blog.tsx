@@ -12,6 +12,8 @@ import {
   ArrowRight,
   User
 } from "lucide-react";
+import SEOHead from "@/components/seo/SEOHead";
+import SchemaData from "@/components/seo/SchemaData";
 
 interface BlogPost {
   id: number;
@@ -64,6 +66,14 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
       viewport={{ once: true }}
     >
       <div className="relative h-56 bg-gradient-to-br from-black to-gray-900 overflow-hidden">
+        {post.image && (
+          <img 
+            src={post.image} 
+            alt={post.title}
+            className="w-full h-full object-cover opacity-50"
+            loading="lazy"
+          />
+        )}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center p-6">
             <span className="block text-lg font-bold">{post.title}</span>
@@ -85,7 +95,11 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
       <div className="p-6">
         <div className="flex items-center mb-4">
           <div className="w-8 h-8 rounded-full bg-gray-700 mr-3 overflow-hidden flex items-center justify-center">
-            <User size={16} />
+            {post.authorImage ? (
+              <img src={post.authorImage} alt={post.author} className="w-full h-full object-cover" />
+            ) : (
+              <User size={16} />
+            )}
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-medium">{post.author}</span>
@@ -126,7 +140,7 @@ const Blog = () => {
       date: "April 5, 2025",
       readTime: "8 min read",
       category: "YouTube",
-      image: "",
+      image: "/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png",
       slug: "grow-youtube-channel-2025"
     },
     {
@@ -139,7 +153,7 @@ const Blog = () => {
       date: "April 2, 2025",
       readTime: "10 min read",
       category: "SEO",
-      image: "",
+      image: "/lovable-uploads/7b907a0d-539e-432d-bef2-9f0b3c5e9149.png",
       slug: "advanced-ecommerce-seo-tactics"
     },
     {
@@ -152,7 +166,7 @@ const Blog = () => {
       date: "March 28, 2025",
       readTime: "7 min read",
       category: "Branding",
-      image: "",
+      image: "/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png",
       slug: "building-personal-brand-social-media"
     },
     {
@@ -165,7 +179,7 @@ const Blog = () => {
       date: "March 25, 2025",
       readTime: "12 min read",
       category: "AI",
-      image: "",
+      image: "/lovable-uploads/198368ec-73cb-47ce-892a-f0d7620fae08.png",
       slug: "ai-money-mastery-financial-growth"
     },
     {
@@ -178,7 +192,7 @@ const Blog = () => {
       date: "March 20, 2025",
       readTime: "9 min read",
       category: "Content",
-      image: "",
+      image: "/lovable-uploads/bd4ba683-8219-4087-9708-0ef157a6cb71.png",
       slug: "content-strategy-conversion-optimization"
     },
     {
@@ -191,7 +205,7 @@ const Blog = () => {
       date: "March 15, 2025",
       readTime: "11 min read",
       category: "YouTube",
-      image: "",
+      image: "/lovable-uploads/3683885c-5b52-4464-87e1-25c19d49f75c.png",
       slug: "youtube-analytics-channel-growth"
     }
   ];
@@ -213,8 +227,44 @@ const Blog = () => {
     return matchesCategory && matchesSearch;
   });
 
+  // Generate schema for blog list page
+  const blogListSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "headline": "Infridet Solutions Blog",
+    "description": "Latest insights, strategies, and expert tips to help grow your digital presence",
+    "url": "https://infridetsolutions.com/blog",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Infridet Solutions Private Limited",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://infridetsolutions.com/lovable-uploads/caf97257-1ebc-4af4-8824-692b84108c22.png"
+      }
+    },
+    "blogPost": blogPosts.map(post => ({
+      "@type": "BlogPosting",
+      "headline": post.title,
+      "description": post.excerpt,
+      "datePublished": post.date,
+      "author": {
+        "@type": "Person",
+        "name": post.author
+      },
+      "url": `https://infridetsolutions.com/blog/${post.slug}`
+    }))
+  };
+
   return (
     <Layout>
+      <SEOHead 
+        title="Blog" 
+        description="Latest insights, strategies, and expert tips to help grow your digital presence with Infridet Solutions."
+        keywords={["YouTube growth", "digital marketing", "SEO tips", "content strategy", "AI marketing"]}
+      />
+      
+      <SchemaData type="Blog" data={blogListSchema} />
+      
       {/* Hero Section */}
       <section className="py-20 md:py-28 relative overflow-hidden hero-bg">
         <div className="container px-4 md:px-6 relative z-10">

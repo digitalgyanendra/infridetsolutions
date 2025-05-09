@@ -1,14 +1,29 @@
+
+User-agent: *
+Allow: /
+
+# Disallow admin pages from being indexed
+Disallow: /admin/
+Disallow: /admin/*
+
+# Allow specific bots with full access
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Twitterbot
+User-agent: Yandexbot
+Allow: /
+
+User-agent: Baiduspider
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: Twitterbot
 Allow: /
+
+# Sitemap location
+Sitemap: https://infridetsolutions.com/sitemap.xml

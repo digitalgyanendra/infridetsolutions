@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,6 +17,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Blog from "./pages/Blog";
+import BlogPost from "./components/blog/BlogPost";
 import Courses from "./pages/Courses";
 import Policy from "./pages/Policy";
 import Terms from "./pages/Terms";
@@ -28,6 +30,7 @@ import AdminLogin from "./pages/admin/Login";
 import AdminCourses from "./pages/admin/Courses";
 import AdminBlogs from "./pages/admin/Blogs";
 import AdminUsers from "./pages/admin/Users";
+import AdminSettings from "./pages/admin/Settings";
 
 // Initialize QueryClient
 const queryClient = new QueryClient();
@@ -49,6 +52,7 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/courses" element={<Courses />} />
               <Route path="/policy" element={<Policy />} />
               <Route path="/terms" element={<Terms />} />
@@ -61,6 +65,7 @@ const App = () => (
               <Route path="/admin/courses" element={<AdminCourses />} />
               <Route path="/admin/blogs" element={<AdminBlogs />} />
               <Route path="/admin/users" element={<AdminUsers />} />
+              <Route path="/admin/settings" element={<AdminSettings />} />
               
               {/* Additional routes would be added here */}
               <Route path="*" element={<NotFound />} />
