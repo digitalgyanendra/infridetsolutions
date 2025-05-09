@@ -1,0 +1,156 @@
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id               String         @id @default(uuid())
+  title            String
+  slug             String         @unique
+  content          String         @db.LongText
+  excerpt          String         @db.Text
+  featured_image   String?
+  author_id        String
+  status           String         @default("draft")
+  published_at     DateTime?
+  created_at       DateTime       @default(now())
+  updated_at       DateTime       @updatedAt
+  seo_title        String?
+  seo_description  String?
+  canonical_url    String?
+  is_featured      Boolean        @default(false)
+  reading_time     Int?
+  view_count       Int            @default(0)
+  
+  // Relations
+  author           Author         @relation(fields: [author_id], references: [id])
+  post_categories  PostCategory[]
+  post_tags        PostTag[]
+  comments         Comment[]
+  view_logs        ViewLog[]
+}
+
+model Category {
+  id             String        @id @default(uuid())
+  name           String
+  slug           String        @unique
+  description    String?       @db.Text
+  parent_id      String?
+  
+  // Relations
+  parent         Category?     @relation("CategoryToCategory", fields: [parent_id], references: [id])
+  children       Category[]    @relation("CategoryToCategory")
+  post_categories PostCategory[]
+}
+
+model Tag {
+  id           String    @id @default(uuid())
+  name         String
+  slug         String    @unique
+  
+  // Relations
+  post_tags    PostTag[]
+}
+
+model Author {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  bio         String?  @db.Text
+  avatar      String?
+  role        String   @default("author")
+  
+  // Relations
+  posts       Post[]
+  comments    Comment[]
+}
+
+model PostCategory {
+  post_id      String
+  category_id  String
+  
+  // Relations
+  post         Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  category     Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  
+  @@id([post_id, category_id])
+}
+
+model PostTag {
+  post_id     String
+  tag_id      String
+  
+  // Relations
+  post        Post    @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  tag         Tag     @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+  
+  @@id([post_id, tag_id])
+}
+
+model Comment {
+  id           String    @id @default(uuid())
+  post_id      String
+  author_id    String?
+  parent_id    String?
+  content      String    @db.Text
+  status       String    @default("pending")
+  created_at   DateTime  @default(now())
+  author_name  String?
+  author_email String?
+  
+  // Relations
+  post         Post      @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  author       Author?   @relation(fields: [author_id], references: [id])
+  parent       Comment?  @relation("CommentToComment", fields: [parent_id], references: [id])
+  replies      Comment[] @relation("CommentToComment")
+}
+
+model Media {
+  id           String   @id @default(uuid())
+  file_name    String
+  file_path    String
+  file_type    String
+  file_size    Int
+  alt_text     String?
+  uploaded_by  String
+  created_at   DateTime @default(now())
+  url          String
+}
+
+model Subscriber {
+  id             String          @id @default(uuid())
+  email          String          @unique
+  name           String?
+  status         String          @default("active")
+  subscribed_at  DateTime        @default(now())
+  
+  // Relations
+  tags           SubscriberTag[]
+}
+
+model SubscriberTag {
+  subscriber_id  String
+  tag            String
+  
+  // Relations
+  subscriber     Subscriber @relation(fields: [subscriber_id], references: [id], onDelete: Cascade)
+  
+  @@id([subscriber_id, tag])
+}
+
+model ViewLog {
+  id          String    @id @default(uuid())
+  post_id     String
+  viewed_at   DateTime  @default(now())
+  
+  // Relations
+  post        Post      @relation(fields: [post_id], references: [id], onDelete: Cascade)
+}
