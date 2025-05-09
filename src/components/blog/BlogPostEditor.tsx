@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -80,13 +79,15 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
     
     if (name.includes(".")) {
       const [parent, child] = name.split(".");
-      setPostData({
-        ...postData,
-        [parent]: {
-          ...postData[parent as keyof BlogPostData],
-          [child]: value,
-        },
-      });
+      if (parent === "seo") {
+        setPostData({
+          ...postData,
+          seo: {
+            ...postData.seo,
+            [child]: value,
+          },
+        });
+      }
     } else {
       setPostData({ ...postData, [name]: value });
     }

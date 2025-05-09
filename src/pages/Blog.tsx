@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -263,7 +262,7 @@ const Blog = () => {
         keywords={["YouTube growth", "digital marketing", "SEO tips", "content strategy", "AI marketing"]}
       />
       
-      <SchemaData type="Blog" data={blogListSchema} />
+      <SchemaData type="BlogPosting" data={blogListSchema} />
       
       {/* Hero Section */}
       <section className="py-20 md:py-28 relative overflow-hidden hero-bg">

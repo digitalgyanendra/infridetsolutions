@@ -3,7 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 interface SchemaDataProps {
-  type: 'Organization' | 'Article' | 'WebSite' | 'WebPage' | 'BlogPosting' | 'FAQPage' | 'Product' | 'Course';
+  type: 'Organization' | 'Article' | 'WebSite' | 'WebPage' | 'BlogPosting' | 'FAQPage' | 'Product' | 'Course' | 'Blog';
   data: any;
 }
 
