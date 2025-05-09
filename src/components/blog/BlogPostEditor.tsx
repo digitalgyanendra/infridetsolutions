@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -38,7 +39,7 @@ export interface BlogPostData {
   tags: string[];
   status: "Published" | "Draft";
   featuredImage?: string | File;
-  seo?: {
+  seo: {
     metaTitle?: string;
     metaDescription?: string;
     keywords?: string;
