@@ -24,6 +24,9 @@ import Terms from "./pages/Terms";
 import FAQ from "./pages/FAQ";
 import Disclaimer from "./pages/Disclaimer";
 
+// Course Pages
+import YoutubeGrowth from "./pages/courses/YoutubeGrowth";
+
 // Admin Routes
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminLogin from "./pages/admin/Login";
@@ -58,6 +61,9 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
+              
+              {/* Course Detail Routes */}
+              <Route path="/courses/youtube-growth" element={<YoutubeGrowth />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminDashboard />} />
