@@ -1,8 +1,9 @@
 
 // Types for our blog system
+import { PrismaClient } from '@prisma/client';
 
-// Instead of importing PrismaClient directly, we'll create mock functions for now
-// and implement the actual Prisma integration later when needed
+// Initialize Prisma client
+const prisma = new PrismaClient();
 
 export interface Post {
   id: string;
@@ -47,30 +48,31 @@ export interface Author {
   role: 'admin' | 'editor' | 'author' | 'contributor';
 }
 
-// Mock implementations of the APIs
-// These can be replaced with actual Prisma implementations when needed
-
-// Posts API with mock implementation
+// Posts API with Prisma implementation
 export const postsApi = {
   // Get all posts with pagination
   getAll: async (page = 1, limit = 10, status = 'published') => {
-    console.log('Mock getAll posts called', { page, limit, status });
+    const skip = (page - 1) * limit;
+    const take = limit;
     
-    // Mock data
-    const posts = Array(limit).fill(null).map((_, i) => ({
-      id: `post-${i}`,
-      title: `Post Title ${i}`,
-      slug: `post-title-${i}`,
-      content: `Content for post ${i}`,
-      excerpt: `Excerpt for post ${i}`,
-      author_id: 'author-1',
-      status,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      view_count: Math.floor(Math.random() * 1000)
-    }));
-    
-    const totalCount = 100;
+    const [posts, totalCount] = await Promise.all([
+      prisma.post.findMany({
+        where: { status },
+        skip,
+        take,
+        include: {
+          author: true,
+          post_categories: {
+            include: { category: true }
+          },
+          post_tags: {
+            include: { tag: true }
+          }
+        },
+        orderBy: { published_at: 'desc' }
+      }),
+      prisma.post.count({ where: { status } })
+    ]);
     
     return {
       posts,
@@ -81,76 +83,168 @@ export const postsApi = {
   
   // Get a single post by slug
   getBySlug: async (slug: string) => {
-    console.log('Mock getBySlug called', { slug });
+    const post = await prisma.post.findUnique({
+      where: { slug },
+      include: {
+        author: true,
+        post_categories: {
+          include: { category: true }
+        },
+        post_tags: {
+          include: { tag: true }
+        }
+      }
+    });
     
-    // Mock post data
-    const post = {
-      id: 'post-1',
-      title: 'Sample Post',
-      slug,
-      content: 'This is the content of the sample post',
-      excerpt: 'Post excerpt',
-      author_id: 'author-1',
-      status: 'published',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      view_count: 42,
-      author: {
-        id: 'author-1',
-        name: 'John Doe',
-        email: 'john@example.com',
-        role: 'author'
-      },
-      post_categories: [
-        { category: { id: 'cat-1', name: 'Category 1', slug: 'category-1' } }
-      ],
-      post_tags: [
-        { tag: { id: 'tag-1', name: 'Tag 1', slug: 'tag-1' } }
-      ]
-    };
+    if (!post) throw new Error('Post not found');
+    
+    // Increment view count
+    await prisma.post.update({
+      where: { id: post.id },
+      data: { view_count: { increment: 1 } }
+    });
     
     return post;
   },
   
-  // Implementation of other methods with mock data
-  create: async (post: any) => {
-    console.log('Mock create post called', { post });
-    return { id: 'new-post-id', ...post };
+  // Create a new post
+  create: async (post: Omit<Post, 'id' | 'created_at' | 'updated_at' | 'view_count'>) => {
+    const { categories, tags, ...postData } = post as any;
+    
+    const newPost = await prisma.post.create({
+      data: {
+        ...postData,
+        view_count: 0,
+        created_at: new Date(),
+        updated_at: new Date(),
+        post_categories: {
+          create: categories?.map(categoryId => ({
+            category: { connect: { id: categoryId } }
+          }))
+        },
+        post_tags: {
+          create: tags?.map(tagId => ({
+            tag: { connect: { id: tagId } }
+          }))
+        }
+      }
+    });
+    
+    return newPost;
   },
   
-  update: async (id: string, post: any) => {
-    console.log('Mock update post called', { id, post });
-    return { id, ...post };
+  // Update an existing post
+  update: async (id: string, post: Partial<Post>) => {
+    const { categories, tags, ...postData } = post as any;
+    
+    // First update the post data
+    const updatedPost = await prisma.post.update({
+      where: { id },
+      data: {
+        ...postData,
+        updated_at: new Date()
+      }
+    });
+    
+    // If categories are provided, update them
+    if (categories) {
+      // Delete existing category relationships
+      await prisma.postCategory.deleteMany({
+        where: { post_id: id }
+      });
+      
+      // Create new category relationships
+      await prisma.postCategory.createMany({
+        data: categories.map(categoryId => ({
+          post_id: id,
+          category_id: categoryId
+        }))
+      });
+    }
+    
+    // If tags are provided, update them
+    if (tags) {
+      // Delete existing tag relationships
+      await prisma.postTag.deleteMany({
+        where: { post_id: id }
+      });
+      
+      // Create new tag relationships
+      await prisma.postTag.createMany({
+        data: tags.map(tagId => ({
+          post_id: id,
+          tag_id: tagId
+        }))
+      });
+    }
+    
+    return updatedPost;
   },
   
+  // Delete a post
   delete: async (id: string) => {
-    console.log('Mock delete post called', { id });
+    // Delete related categories and tags first
+    await Promise.all([
+      prisma.postCategory.deleteMany({ where: { post_id: id } }),
+      prisma.postTag.deleteMany({ where: { post_id: id } })
+    ]);
+    
+    await prisma.post.delete({ where: { id } });
+    
     return true;
   },
   
+  // Increment view count
   incrementView: async (id: string) => {
-    console.log('Mock incrementView called', { id });
+    await prisma.post.update({
+      where: { id },
+      data: { view_count: { increment: 1 } }
+    });
+    
     return true;
   },
   
+  // Get posts by category
   getByCategory: async (categorySlug: string, page = 1, limit = 10) => {
-    console.log('Mock getByCategory called', { categorySlug, page, limit });
+    const skip = (page - 1) * limit;
+    const take = limit;
     
-    // Mock data
-    const posts = Array(limit).fill(null).map((_, i) => ({
-      id: `post-${i}`,
-      title: `Post Title ${i} for category ${categorySlug}`,
-      slug: `post-title-${i}`,
-      content: `Content for post ${i}`,
-      excerpt: `Excerpt for post ${i}`,
-      author_id: 'author-1',
-      status: 'published',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      view_count: Math.floor(Math.random() * 1000)
-    }));
+    const category = await prisma.category.findUnique({
+      where: { slug: categorySlug }
+    });
     
-    const totalCount = 50;
+    if (!category) throw new Error('Category not found');
+    
+    const [posts, totalCount] = await Promise.all([
+      prisma.post.findMany({
+        where: {
+          status: 'published',
+          post_categories: {
+            some: { category_id: category.id }
+          }
+        },
+        skip,
+        take,
+        include: {
+          author: true,
+          post_categories: {
+            include: { category: true }
+          },
+          post_tags: {
+            include: { tag: true }
+          }
+        },
+        orderBy: { published_at: 'desc' }
+      }),
+      prisma.post.count({
+        where: {
+          status: 'published',
+          post_categories: {
+            some: { category_id: category.id }
+          }
+        }
+      })
+    ]);
     
     return {
       posts,
@@ -159,24 +253,47 @@ export const postsApi = {
     };
   },
   
+  // Get posts by tag
   getByTag: async (tagSlug: string, page = 1, limit = 10) => {
-    console.log('Mock getByTag called', { tagSlug, page, limit });
+    const skip = (page - 1) * limit;
+    const take = limit;
     
-    // Mock data
-    const posts = Array(limit).fill(null).map((_, i) => ({
-      id: `post-${i}`,
-      title: `Post Title ${i} for tag ${tagSlug}`,
-      slug: `post-title-${i}`,
-      content: `Content for post ${i}`,
-      excerpt: `Excerpt for post ${i}`,
-      author_id: 'author-1',
-      status: 'published',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      view_count: Math.floor(Math.random() * 1000)
-    }));
+    const tag = await prisma.tag.findUnique({
+      where: { slug: tagSlug }
+    });
     
-    const totalCount = 30;
+    if (!tag) throw new Error('Tag not found');
+    
+    const [posts, totalCount] = await Promise.all([
+      prisma.post.findMany({
+        where: {
+          status: 'published',
+          post_tags: {
+            some: { tag_id: tag.id }
+          }
+        },
+        skip,
+        take,
+        include: {
+          author: true,
+          post_categories: {
+            include: { category: true }
+          },
+          post_tags: {
+            include: { tag: true }
+          }
+        },
+        orderBy: { published_at: 'desc' }
+      }),
+      prisma.post.count({
+        where: {
+          status: 'published',
+          post_tags: {
+            some: { tag_id: tag.id }
+          }
+        }
+      })
+    ]);
     
     return {
       posts,
@@ -185,24 +302,45 @@ export const postsApi = {
     };
   },
   
+  // Search posts
   search: async (query: string, page = 1, limit = 10) => {
-    console.log('Mock search called', { query, page, limit });
+    const skip = (page - 1) * limit;
+    const take = limit;
     
-    // Mock data
-    const posts = Array(limit).fill(null).map((_, i) => ({
-      id: `post-${i}`,
-      title: `Post Title ${i} matching "${query}"`,
-      slug: `post-title-${i}`,
-      content: `Content for post ${i}`,
-      excerpt: `Excerpt for post ${i}`,
-      author_id: 'author-1',
-      status: 'published',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      view_count: Math.floor(Math.random() * 1000)
-    }));
-    
-    const totalCount = 20;
+    const [posts, totalCount] = await Promise.all([
+      prisma.post.findMany({
+        where: {
+          status: 'published',
+          OR: [
+            { title: { contains: query, mode: 'insensitive' } },
+            { content: { contains: query, mode: 'insensitive' } },
+            { excerpt: { contains: query, mode: 'insensitive' } }
+          ]
+        },
+        skip,
+        take,
+        include: {
+          author: true,
+          post_categories: {
+            include: { category: true }
+          },
+          post_tags: {
+            include: { tag: true }
+          }
+        },
+        orderBy: { published_at: 'desc' }
+      }),
+      prisma.post.count({
+        where: {
+          status: 'published',
+          OR: [
+            { title: { contains: query, mode: 'insensitive' } },
+            { content: { contains: query, mode: 'insensitive' } },
+            { excerpt: { contains: query, mode: 'insensitive' } }
+          ]
+        }
+      })
+    ]);
     
     return {
       posts,
@@ -212,145 +350,205 @@ export const postsApi = {
   }
 };
 
-// Categories API with mock implementation
+// Categories API
 export const categoriesApi = {
+  // Get all categories
   getAll: async () => {
-    console.log('Mock getAll categories called');
-    
-    // Mock data
-    return [
-      { id: 'cat-1', name: 'Category 1', slug: 'category-1' },
-      { id: 'cat-2', name: 'Category 2', slug: 'category-2' },
-      { id: 'cat-3', name: 'Category 3', slug: 'category-3' }
-    ];
+    return await prisma.category.findMany({
+      orderBy: { name: 'asc' }
+    });
   },
   
+  // Get a single category by slug
   getBySlug: async (slug: string) => {
-    console.log('Mock getBySlug category called', { slug });
-    return { id: 'cat-1', name: 'Sample Category', slug };
+    const category = await prisma.category.findUnique({
+      where: { slug }
+    });
+    
+    if (!category) throw new Error('Category not found');
+    
+    return category;
   },
   
+  // Create a new category
   create: async (category: Omit<Category, 'id'>) => {
-    console.log('Mock create category called', { category });
-    return { id: 'new-category-id', ...category };
+    return await prisma.category.create({
+      data: category
+    });
   },
   
+  // Update a category
   update: async (id: string, category: Partial<Category>) => {
-    console.log('Mock update category called', { id, category });
-    return { id, ...category };
+    return await prisma.category.update({
+      where: { id },
+      data: category
+    });
   },
   
+  // Delete a category
   delete: async (id: string) => {
-    console.log('Mock delete category called', { id });
+    // First delete related post_categories
+    await prisma.postCategory.deleteMany({
+      where: { category_id: id }
+    });
+    
+    // Then delete the category
+    await prisma.category.delete({
+      where: { id }
+    });
+    
     return true;
   }
 };
 
-// Tags API with mock implementation
+// Tags API
 export const tagsApi = {
+  // Get all tags
   getAll: async () => {
-    console.log('Mock getAll tags called');
-    
-    // Mock data
-    return [
-      { id: 'tag-1', name: 'Tag 1', slug: 'tag-1' },
-      { id: 'tag-2', name: 'Tag 2', slug: 'tag-2' },
-      { id: 'tag-3', name: 'Tag 3', slug: 'tag-3' }
-    ];
+    return await prisma.tag.findMany({
+      orderBy: { name: 'asc' }
+    });
   },
   
+  // Get a single tag by slug
   getBySlug: async (slug: string) => {
-    console.log('Mock getBySlug tag called', { slug });
-    return { id: 'tag-1', name: 'Sample Tag', slug };
+    const tag = await prisma.tag.findUnique({
+      where: { slug }
+    });
+    
+    if (!tag) throw new Error('Tag not found');
+    
+    return tag;
   },
   
+  // Create a new tag
   create: async (tag: Omit<Tag, 'id'>) => {
-    console.log('Mock create tag called', { tag });
-    return { id: 'new-tag-id', ...tag };
+    return await prisma.tag.create({
+      data: tag
+    });
   },
   
+  // Update a tag
   update: async (id: string, tag: Partial<Tag>) => {
-    console.log('Mock update tag called', { id, tag });
-    return { id, ...tag };
+    return await prisma.tag.update({
+      where: { id },
+      data: tag
+    });
   },
   
+  // Delete a tag
   delete: async (id: string) => {
-    console.log('Mock delete tag called', { id });
+    // First delete related post_tags
+    await prisma.postTag.deleteMany({
+      where: { tag_id: id }
+    });
+    
+    // Then delete the tag
+    await prisma.tag.delete({
+      where: { id }
+    });
+    
     return true;
   }
 };
 
-// Authors API with mock implementation
+// Authors API
 export const authorsApi = {
+  // Get all authors
   getAll: async () => {
-    console.log('Mock getAll authors called');
-    
-    // Mock data
-    return [
-      { id: 'author-1', name: 'Author 1', email: 'author1@example.com', role: 'author' },
-      { id: 'author-2', name: 'Author 2', email: 'author2@example.com', role: 'editor' },
-      { id: 'author-3', name: 'Author 3', email: 'author3@example.com', role: 'contributor' }
-    ];
+    return await prisma.author.findMany({
+      orderBy: { name: 'asc' }
+    });
   },
   
+  // Get an author by ID
   getById: async (id: string) => {
-    console.log('Mock getById author called', { id });
-    return { id, name: 'Sample Author', email: 'author@example.com', role: 'author' };
+    const author = await prisma.author.findUnique({
+      where: { id }
+    });
+    
+    if (!author) throw new Error('Author not found');
+    
+    return author;
   },
   
+  // Create a new author
   create: async (author: Omit<Author, 'id'>) => {
-    console.log('Mock create author called', { author });
-    return { id: 'new-author-id', ...author };
+    return await prisma.author.create({
+      data: author
+    });
   },
   
+  // Update an author
   update: async (id: string, author: Partial<Author>) => {
-    console.log('Mock update author called', { id, author });
-    return { id, ...author };
+    return await prisma.author.update({
+      where: { id },
+      data: author
+    });
   },
   
+  // Delete an author
   delete: async (id: string) => {
-    console.log('Mock delete author called', { id });
-    return true;
+    return await prisma.author.delete({
+      where: { id }
+    });
   }
 };
 
-// Media API with mock implementation
+// Media API
 export const mediaApi = {
+  // Upload a file
   upload: async (file: File, path: string = 'blog') => {
-    console.log('Mock upload file called', { fileName: file.name, path });
+    // In a real implementation, you would use a file upload service
+    // or your server's file system API
+    // For now, return a mock response
+    const fileName = file.name;
+    const filePath = `${path}/${fileName}`;
     
+    // TODO: Implement real file upload functionality
     const fileData = {
-      id: `file-${Math.random().toString(36).substring(2, 9)}`,
-      file_name: file.name,
-      file_path: `${path}/${file.name}`,
+      id: Math.random().toString(),
+      file_name: fileName,
+      file_path: filePath,
       file_type: file.type,
       file_size: file.size,
-      alt_text: file.name,
+      alt_text: fileName,
       uploaded_by: 'current-user',
       created_at: new Date().toISOString(),
       url: URL.createObjectURL(file)
     };
     
+    // In a real app, you would save this to your database
+    await prisma.media.create({
+      data: {
+        id: fileData.id,
+        file_name: fileData.file_name,
+        file_path: fileData.file_path,
+        file_type: fileData.file_type,
+        file_size: fileData.file_size,
+        alt_text: fileData.alt_text,
+        uploaded_by: fileData.uploaded_by,
+        created_at: new Date(fileData.created_at),
+        url: fileData.url
+      }
+    });
+    
     return fileData;
   },
   
+  // Get all media files
   getAll: async (page = 1, limit = 20) => {
-    console.log('Mock getAll media called', { page, limit });
+    const skip = (page - 1) * limit;
+    const take = limit;
     
-    // Mock data
-    const media = Array(limit).fill(null).map((_, i) => ({
-      id: `media-${i}`,
-      file_name: `file-${i}.jpg`,
-      file_path: `/uploads/file-${i}.jpg`,
-      file_type: 'image/jpeg',
-      file_size: Math.floor(Math.random() * 1000000),
-      alt_text: `File ${i}`,
-      uploaded_by: 'user-1',
-      created_at: new Date().toISOString(),
-      url: `/uploads/file-${i}.jpg`
-    }));
-    
-    const totalCount = 50;
+    const [media, totalCount] = await Promise.all([
+      prisma.media.findMany({
+        skip,
+        take,
+        orderBy: { created_at: 'desc' }
+      }),
+      prisma.media.count()
+    ]);
     
     return {
       media,
@@ -359,36 +557,31 @@ export const mediaApi = {
     };
   },
   
+  // Delete a media file
   delete: async (id: string) => {
-    console.log('Mock delete media called', { id });
+    // In a real app, you would also delete the file from your storage
+    await prisma.media.delete({ where: { id } });
     return true;
   }
 };
 
-// Comments API with mock implementation
+// Comments API
 export const commentsApi = {
+  // Get comments for a post
   getByPostId: async (postId: string, page = 1, limit = 20) => {
-    console.log('Mock getByPostId comments called', { postId, page, limit });
+    const skip = (page - 1) * limit;
+    const take = limit;
     
-    // Mock data
-    const comments = Array(limit).fill(null).map((_, i) => ({
-      id: `comment-${i}`,
-      post_id: postId,
-      author_id: i % 2 === 0 ? 'author-1' : null,
-      content: `This is comment ${i} for post ${postId}`,
-      status: 'approved',
-      created_at: new Date().toISOString(),
-      author_name: i % 2 === 0 ? null : `Guest User ${i}`,
-      author_email: i % 2 === 0 ? null : `guest${i}@example.com`,
-      author: i % 2 === 0 ? {
-        id: 'author-1',
-        name: 'John Doe',
-        email: 'john@example.com',
-        role: 'author'
-      } : null
-    }));
-    
-    const totalCount = 30;
+    const [comments, totalCount] = await Promise.all([
+      prisma.comment.findMany({
+        where: { post_id: postId },
+        skip,
+        take,
+        orderBy: { created_at: 'desc' },
+        include: { author: true }
+      }),
+      prisma.comment.count({ where: { post_id: postId } })
+    ]);
     
     return {
       comments,
@@ -397,58 +590,79 @@ export const commentsApi = {
     };
   },
   
-  add: async (comment: any) => {
-    console.log('Mock add comment called', { comment });
-    return {
-      id: 'new-comment-id',
-      ...comment,
-      status: 'pending',
-      created_at: new Date().toISOString()
-    };
+  // Add a comment
+  add: async (comment: {
+    post_id: string;
+    author_id?: string;
+    parent_id?: string;
+    content: string;
+    author_name?: string;
+    author_email?: string;
+  }) => {
+    return await prisma.comment.create({
+      data: {
+        ...comment,
+        status: 'pending',
+        created_at: new Date()
+      }
+    });
   },
   
+  // Update comment status
   updateStatus: async (id: string, status: 'pending' | 'approved' | 'spam') => {
-    console.log('Mock updateStatus comment called', { id, status });
-    return {
-      id,
-      status,
-      updated_at: new Date().toISOString()
-    };
+    return await prisma.comment.update({
+      where: { id },
+      data: { status }
+    });
   },
   
+  // Delete a comment
   delete: async (id: string) => {
-    console.log('Mock delete comment called', { id });
+    await prisma.comment.delete({ where: { id } });
     return true;
   }
 };
 
-// Subscribers API with mock implementation
+// Subscribers API
 export const subscribersApi = {
+  // Add a new subscriber
   add: async (email: string, name?: string, tags: string[] = []) => {
-    console.log('Mock add subscriber called', { email, name, tags });
-    return {
-      id: 'new-subscriber-id',
-      email,
-      name,
-      status: 'active',
-      subscribed_at: new Date().toISOString()
-    };
+    const newSubscriber = await prisma.subscriber.create({
+      data: {
+        email,
+        name,
+        status: 'active',
+        subscribed_at: new Date()
+      }
+    });
+    
+    // Create tag relationships if provided
+    if (tags.length > 0) {
+      await prisma.subscriberTag.createMany({
+        data: tags.map(tag => ({
+          subscriber_id: newSubscriber.id,
+          tag
+        }))
+      });
+    }
+    
+    return newSubscriber;
   },
   
+  // Get all subscribers
   getAll: async (page = 1, limit = 50) => {
-    console.log('Mock getAll subscribers called', { page, limit });
+    const skip = (page - 1) * limit;
+    const take = limit;
     
-    // Mock data
-    const subscribers = Array(limit).fill(null).map((_, i) => ({
-      id: `subscriber-${i}`,
-      email: `subscriber${i}@example.com`,
-      name: i % 2 === 0 ? `Subscriber ${i}` : null,
-      status: 'active',
-      subscribed_at: new Date().toISOString(),
-      tags: [{ tag: 'newsletter' }]
-    }));
-    
-    const totalCount = 150;
+    const [subscribers, totalCount] = await Promise.all([
+      prisma.subscriber.findMany({
+        skip,
+        take,
+        orderBy: { subscribed_at: 'desc' },
+        include: { tags: true }
+      }),
+      prisma.subscriber.count()
+    ]);
     
     return {
       subscribers,
@@ -457,37 +671,88 @@ export const subscribersApi = {
     };
   },
   
-  update: async (id: string, subscriber: any) => {
-    console.log('Mock update subscriber called', { id, subscriber });
-    return {
-      id,
-      ...subscriber,
-      updated_at: new Date().toISOString()
-    };
+  // Update a subscriber
+  update: async (id: string, subscriber: Partial<{
+    name: string;
+    status: 'active' | 'inactive';
+    tags: string[];
+  }>) => {
+    const { tags, ...subscriberData } = subscriber;
+    
+    // Update subscriber data
+    const updatedSubscriber = await prisma.subscriber.update({
+      where: { id },
+      data: subscriberData
+    });
+    
+    // Update tags if provided
+    if (tags) {
+      // Delete existing tags
+      await prisma.subscriberTag.deleteMany({
+        where: { subscriber_id: id }
+      });
+      
+      // Create new tags
+      if (tags.length > 0) {
+        await prisma.subscriberTag.createMany({
+          data: tags.map(tag => ({
+            subscriber_id: id,
+            tag
+          }))
+        });
+      }
+    }
+    
+    return updatedSubscriber;
   },
   
+  // Delete a subscriber
   delete: async (id: string) => {
-    console.log('Mock delete subscriber called', { id });
+    // Delete related tags first
+    await prisma.subscriberTag.deleteMany({
+      where: { subscriber_id: id }
+    });
+    
+    // Then delete the subscriber
+    await prisma.subscriber.delete({
+      where: { id }
+    });
+    
     return true;
   }
 };
 
-// Analytics API with mock implementation
+// Analytics API
 export const analyticsApi = {
+  // Track post view
   trackView: async (postId: string) => {
-    console.log('Mock trackView called', { postId });
+    await postsApi.incrementView(postId);
+    
+    // In a real app, you might want to log additional metrics
+    await prisma.viewLog.create({
+      data: {
+        post_id: postId,
+        viewed_at: new Date()
+      }
+    });
+    
     return true;
   },
   
+  // Get top posts by views
   getTopPosts: async (limit = 5) => {
-    console.log('Mock getTopPosts called', { limit });
+    const topPosts = await prisma.post.findMany({
+      where: { status: 'published' },
+      orderBy: { view_count: 'desc' },
+      take: limit,
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        view_count: true
+      }
+    });
     
-    // Mock data
-    return Array(limit).fill(null).map((_, i) => ({
-      id: `post-${i}`,
-      title: `Top Post ${i}`,
-      slug: `top-post-${i}`,
-      view_count: Math.floor(Math.random() * 10000) + 1000
-    }));
+    return topPosts;
   }
 };
