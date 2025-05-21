@@ -1,8 +1,9 @@
 
 // This file creates a singleton instance of PrismaClient to prevent multiple instances during development
 
-// Import from @prisma/client - the correct way based on the package structure
-import { Prisma, PrismaClient } from '@prisma/client'
+// Import from @prisma/client directly using its default export pattern for v6.x
+import { PrismaClient } from '@prisma/client/edge'
+import { PrismaLibArgs } from '@prisma/client/runtime/library'
 
 // Correctly type the global prisma instance
 declare global {
@@ -21,5 +22,5 @@ if (process.env.NODE_ENV !== 'production') {
 // Export the Prisma instance
 export const prisma = prismaClient;
 
-// Also export Prisma namespace for types
-export { Prisma };
+// Define custom type for Prisma namespace
+export type Prisma = PrismaLibArgs
