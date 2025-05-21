@@ -6,6 +6,8 @@ import Layout from "@/components/ui/layout/Layout";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/seo/SEOHead";
 import SchemaData from "@/components/seo/SchemaData";
+import CountdownTimer from "@/components/ui/countdown-timer";
+import PaymentSection from "@/components/course/PaymentSection";
 import {
   CheckCircle,
   Play,
@@ -18,15 +20,34 @@ import {
   TrendingUp,
   CheckCheck,
   MessageSquare,
-  Clock
+  Clock,
+  Shield,
+  CreditCard,
+  Lock
 } from "lucide-react";
 
-// Instructor photo (to be replaced with actual photos)
+// Instructor photos
 const instructorPhoto = "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b";
+const priyanshuPhoto = "https://images.unsplash.com/photo-1649972904349-6e44c42644a7";
 const timelinePhotos = [
   "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
   "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
   "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
+];
+
+// Achievement images for Priyanshu's section
+const achievementImages = {
+  playButton: "https://images.unsplash.com/photo-1585773690161-7b1cd0e31cea",
+  macbook: "https://images.unsplash.com/photo-1519720842496-3c1c8a542afd",
+  iphone: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c",
+};
+
+// Brand logos and influencer photos for Priyanshu's section
+const brandLogos = [
+  "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9", // Physics Wallah placeholder
+  "https://images.unsplash.com/photo-1614332287897-cdc485fa562d", // MPL placeholder
+  "https://images.unsplash.com/photo-1614332287897-cdc485fa562d", // Meesho placeholder
+  "https://images.unsplash.com/photo-1614332287897-cdc485fa562d", // Dream11 placeholder
 ];
 
 // Fade in animation for sections
@@ -59,15 +80,50 @@ const getCourseSchema = () => {
   };
 };
 
+// Payment link
+const PAYMENT_LINK = "https://payments.cashfree.com/forms/youtube-growth";
+
 const YoutubeGrowth = () => {
   return (
     <Layout>
       <SEOHead 
         title="YouTube Growth Accelerator Course" 
         description="A comprehensive system to grow your YouTube channel from 0 to 100K subscribers. Learn from experts who've managed channels with 26M+ subscribers."
-        keywords={["YouTube growth", "YouTube strategy", "channel growth", "monetization", "content creation", "algorithm", "Gyanendra Dwivedi"]}
+        keywords={["YouTube growth", "YouTube strategy", "channel growth", "monetization", "content creation", "algorithm", "Gyanendra Dwivedi", "Priyanshu Gupta"]}
       />
       <SchemaData type="Course" data={getCourseSchema()} />
+      
+      {/* Background elements - pattern overlays */}
+      <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
+        {/* Abstract gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-black/95 to-black"></div>
+        
+        {/* Grid pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYtMi42ODYgNi02cy0yLjY4Ni02LTYtNi02IDIuNjg2LTYgNiAyLjY4NiA2IDYgNnptMCAwYzMuMzE0IDAgNi0yLjY4NiA2LTZzLTIuNjg2LTYtNi02LTYgMi42ODYtNiA2IDIuNjg2IDYgNiA2em0wIDI0YzMuMzE0IDAgNi0yLjY4NiA2LTZzLTIuNjg2LTYtNi02LTYgMi42ODYtNiA2IDIuNjg2IDYgNiA2em0wIDBjMy4zMTQgMCA2LTIuNjg2IDYtNnMtMi42ODYtNi02LTYtNiAyLjY4Ni02IDYgMi42ODYgNiA2IDZ6IiBzdHJva2U9IiM5ZjcyM2MiIG9wYWNpdHk9Ii4yIi8+PC9nPjwvc3ZnPg==')] opacity-5"></div>
+
+        {/* Radial circles */}
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-orange-500/10 rounded-full filter blur-[100px]"></div>
+        <div className="absolute top-3/4 left-3/4 w-[400px] h-[400px] bg-purple-500/10 rounded-full filter blur-[100px]"></div>
+        <div className="absolute top-1/2 right-1/4 w-[300px] h-[300px] bg-blue-500/5 rounded-full filter blur-[80px]"></div>
+      </div>
+      
+      {/* Countdown Banner */}
+      <div className="sticky top-16 z-50 bg-gradient-to-r from-orange-600 to-orange-700 py-3">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+            <div className="flex items-center">
+              <Clock className="text-white mr-2" size={20} />
+              <p className="text-white font-medium">Limited Time Offer Ends In:</p>
+            </div>
+            <CountdownTimer className="bg-white/10 border-white/20" />
+            <a href={PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+              <Button size="sm" className="bg-white text-orange-600 hover:bg-white/90">
+                Enroll Now
+              </Button>
+            </a>
+          </div>
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section className="py-16 md:py-24 relative overflow-hidden hero-bg">
@@ -124,7 +180,7 @@ const YoutubeGrowth = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
-                <div className="bg-black/40 backdrop-blur-sm p-4 rounded-lg flex items-center">
+                <div className="glass-card p-4 rounded-lg flex items-center">
                   <BookOpen className="text-orange-500 mr-2" />
                   <div>
                     <p className="text-sm text-muted-foreground">Modules</p>
@@ -132,7 +188,7 @@ const YoutubeGrowth = () => {
                   </div>
                 </div>
                 
-                <div className="bg-black/40 backdrop-blur-sm p-4 rounded-lg flex items-center">
+                <div className="glass-card p-4 rounded-lg flex items-center">
                   <Clock className="text-orange-500 mr-2" />
                   <div>
                     <p className="text-sm text-muted-foreground">Duration</p>
@@ -140,7 +196,7 @@ const YoutubeGrowth = () => {
                   </div>
                 </div>
                 
-                <div className="bg-black/40 backdrop-blur-sm p-4 rounded-lg flex items-center">
+                <div className="glass-card p-4 rounded-lg flex items-center">
                   <Users className="text-orange-500 mr-2" />
                   <div>
                     <p className="text-sm text-muted-foreground">Students</p>
@@ -155,7 +211,7 @@ const YoutubeGrowth = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 1 }}
               >
-                <Link to="#enroll">
+                <a href={PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
                   <Button 
                     size="lg" 
                     className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
@@ -163,7 +219,7 @@ const YoutubeGrowth = () => {
                     Enroll Now - ₹7,999
                     <span className="text-sm ml-2 line-through text-orange-200/80">₹12,999</span>
                   </Button>
-                </Link>
+                </a>
                 
                 <Link to="#curriculum">
                   <Button variant="outline" size="lg">
@@ -193,9 +249,9 @@ const YoutubeGrowth = () => {
                 />
               </div>
               
-              <div className="absolute -bottom-4 -right-4 bg-black/80 backdrop-blur-sm p-4 rounded-lg border border-orange-500/20">
+              <div className="absolute -bottom-4 -right-4 glass-card p-4 rounded-lg border border-orange-500/20">
                 <p className="font-bold text-lg">Limited Time Offer!</p>
-                <p className="text-orange-400">38% OFF - Ends in 48hrs</p>
+                <p className="text-orange-400">38% OFF - Ends Soon</p>
               </div>
             </motion.div>
           </div>
@@ -247,25 +303,26 @@ const YoutubeGrowth = () => {
         </div>
       </section>
 
-      {/* Instructor Story */}
-      <section id="instructor" className="py-20 bg-black relative overflow-hidden">
+      {/* Meet Your Instructors Section */}
+      <section id="instructors" className="py-20 bg-black relative overflow-hidden">
         <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
         <div className="container px-4 md:px-6 relative z-10">
           <motion.div 
-            className="text-center max-w-3xl mx-auto mb-12"
+            className="text-center max-w-3xl mx-auto mb-16"
             variants={fadeInUpVariant}
             initial="hidden"
             whileInView="visible"
             custom={0}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">Meet Your Instructor</h2>
+            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">Meet Your Instructors</h2>
             <p className="text-xl text-muted-foreground">
-              Learn from Someone Who's Been Where You Are
+              Learn from experienced professionals who've been where you are
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Instructor 1: Gyanendra */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-16">
             <motion.div 
               className="lg:col-span-5"
               variants={fadeInUpVariant}
@@ -280,7 +337,7 @@ const YoutubeGrowth = () => {
                   alt="Gyanendra Dwivedi" 
                   className="rounded-xl w-full object-cover aspect-[4/5]"
                 />
-                <div className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-sm p-4 rounded-lg">
+                <div className="absolute bottom-4 left-4 right-4 glass-card p-4 rounded-lg">
                   <h3 className="font-bold text-xl">Gyanendra Dwivedi</h3>
                   <p className="text-orange-400">YouTube Growth Expert</p>
                 </div>
@@ -329,14 +386,395 @@ const YoutubeGrowth = () => {
                 </div>
                 
                 <div className="mt-8">
-                  <Link to="#enroll">
+                  <a href={PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
                     <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
                       Learn From My Journey
                     </Button>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </motion.div>
+          </div>
+          
+          {/* Instructor 2: Priyanshu */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-8">
+            <motion.div 
+              className="lg:col-span-7 lg:order-1 order-2"
+              variants={fadeInUpVariant}
+              initial="hidden"
+              whileInView="visible"
+              custom={1}
+              viewport={{ once: true }}
+            >
+              <div className="glass-card p-8">
+                <h3 className="text-2xl font-semibold mb-6">Hi, I'm Priyanshu. And I promise you one thing - you can also make lots of money online.</h3>
+                
+                <div className="space-y-4">
+                  <p className="text-lg">
+                    I started at 15 with nothing. Now at 19, I've:
+                  </p>
+                  
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <CheckCircle size={20} className="text-orange-500 mt-1 mr-3 flex-shrink-0" />
+                      <span>Made over ₹59 Lakhs as a freelancer in just 3 years</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircle size={20} className="text-orange-500 mt-1 mr-3 flex-shrink-0" />
+                      <span>Built multiple income streams (YouTube, Freelancing, Agency, Online Business)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircle size={20} className="text-orange-500 mt-1 mr-3 flex-shrink-0" />
+                      <span>Successfully coached 291+ students to start earning online</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircle size={20} className="text-orange-500 mt-1 mr-3 flex-shrink-0" />
+                      <span>Became financially independent at age 16</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircle size={20} className="text-orange-500 mt-1 mr-3 flex-shrink-0" />
+                      <span>Now charge ₹50K-₹90K per client</span>
+                    </li>
+                  </ul>
+                  
+                  <p className="text-lg font-medium text-orange-400">
+                    If I could do it starting with zero knowledge, imagine what YOU can do with my guidance!
+                  </p>
+                </div>
+                
+                <div className="mt-8">
+                  <a href={PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+                    <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
+                      BOOK YOUR CALL NOW →
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              className="lg:col-span-5 lg:order-2 order-1"
+              variants={fadeInUpVariant}
+              initial="hidden"
+              whileInView="visible"
+              custom={2}
+              viewport={{ once: true }}
+            >
+              <div className="relative">
+                <img 
+                  src={priyanshuPhoto} 
+                  alt="Priyanshu Gupta" 
+                  className="rounded-xl w-full object-cover aspect-[4/5]"
+                />
+                <div className="absolute bottom-4 left-4 right-4 glass-card p-4 rounded-lg">
+                  <h3 className="font-bold text-xl">Priyanshu Gupta</h3>
+                  <p className="text-orange-400">YouTube Strategy Expert</p>
+                </div>
+                
+                {/* Stats */}
+                <div className="absolute -top-4 -right-4 bg-black/80 backdrop-blur-sm p-4 rounded-lg border border-orange-500/20">
+                  <div className="grid grid-cols-2 gap-3 text-center">
+                    <div>
+                      <p className="text-orange-400 font-bold">Since</p>
+                      <p className="font-bold">2019</p>
+                    </div>
+                    <div>
+                      <p className="text-orange-400 font-bold">Students</p>
+                      <p className="font-bold">291+</p>
+                    </div>
+                    <div>
+                      <p className="text-orange-400 font-bold">Earned</p>
+                      <p className="font-bold">₹59L+</p>
+                    </div>
+                    <div>
+                      <p className="text-orange-400 font-bold">Awards</p>
+                      <p className="font-bold">Multiple</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Priyanshu's YouTube Journey */}
+      <section className="py-20 bg-gradient-to-b from-black to-black/90 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-transparent opacity-20"></div>
+        <div className="container px-4 md:px-6 relative z-10">
+          <motion.div 
+            className="text-center max-w-3xl mx-auto mb-12"
+            variants={fadeInUpVariant}
+            initial="hidden"
+            whileInView="visible"
+            custom={0}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">Priyanshu's YouTube Success</h2>
+            <p className="text-xl text-muted-foreground">
+              How I Achieved 300K+ Subscribers On YouTube
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              variants={fadeInUpVariant}
+              initial="hidden"
+              whileInView="visible"
+              custom={1}
+              viewport={{ once: true }}
+            >
+              <div className="space-y-4">
+                <p>
+                  My YouTube journey began with a simple dream - to create content that helps others while building my own brand.
+                </p>
+                <p>
+                  Starting with zero subscribers and no fancy equipment, I focused on providing valuable content around online earning, YouTube growth, and personal development.
+                </p>
+                <p>
+                  Through consistent uploads, audience engagement, and content optimization, I grew my channel to over 300,000 subscribers - all while being a teenager!
+                </p>
+                <p>
+                  This journey taught me exactly what works and what doesn't when it comes to growing on YouTube and monetizing your audience.
+                </p>
+                <blockquote className="border-l-4 border-orange-500 pl-4 italic my-6">
+                  "I can teach you the exact strategies that helped me achieve this milestone, so you can skip the years of trial and error!"
+                </blockquote>
+              </div>
+              
+              <div className="mt-8 p-6 glass-card">
+                <h4 className="text-xl font-bold mb-4">MY JOURNEY FROM ZERO TO LAKHS PER MONTH</h4>
+                <p>
+                  At 15, I had no money and no idea how to earn. I just knew I wanted something bigger for myself and my family.
+                </p>
+                <p className="mt-4">
+                  I started making YouTube videos, then tried freelance video editing and graphic design without any knowledge or skills. After some time in freelancing, I launched my own agency that grew quickly. Then I started another online business.
+                </p>
+                <p className="mt-4">
+                  I faced many ups and downs, but today I can proudly say:
+                </p>
+                <p className="mt-4 text-orange-400 font-medium">
+                  I learned everything from zero, and now I earn lakhs every month while teaching others to do the same.
+                </p>
+                <p className="mt-4">
+                  I had no guide and took 5 years to learn and implement everything. But you have me now. I'll share my 5 years of knowledge with you in just a 1-hour call!
+                </p>
+                
+                <div className="mt-6">
+                  <a href={PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+                    <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
+                      START EARNING TODAY - BOOK YOUR CALL →
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              variants={fadeInUpVariant}
+              initial="hidden"
+              whileInView="visible"
+              custom={2}
+              viewport={{ once: true }}
+            >
+              <div className="rounded-xl overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7" 
+                  alt="YouTube Analytics" 
+                  className="w-full h-96 object-cover"
+                />
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                {[
+                  { 
+                    title: "Multiple YouTube Play Buttons",
+                    image: achievementImages.playButton,
+                    description: "Proudly own multiple YouTube awards!"
+                  },
+                  { 
+                    title: "From a ₹28K Dell to a ₹2 Lakh MacBook",
+                    image: achievementImages.macbook,
+                    description: "Upgraded from a simple Dell to MacBook M3 Pro"
+                  },
+                  { 
+                    title: "Dream Phone: iPhone",
+                    image: achievementImages.iphone,
+                    description: "From iPhone 13 to iPhone 16 Pro Max"
+                  }
+                ].map((achievement, index) => (
+                  <div key={index} className="glass-card overflow-hidden">
+                    <div className="h-36">
+                      <img src={achievement.image} alt={achievement.title} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-4">
+                      <h5 className="font-bold mb-1 text-sm">{achievement.title}</h5>
+                      <p className="text-xs text-muted-foreground">{achievement.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-6 p-4 glass-card rounded-lg text-center">
+                <h4 className="font-bold mb-2">YOU CAN DO THIS TOO - STARTING TODAY!</h4>
+                <p className="text-muted-foreground">
+                  If I could do it, you definitely can. Don't wait for the "perfect time" - it's now!
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+      
+      {/* What Priyanshu Can Teach - Skills Section */}
+      <section className="py-20 bg-gradient-to-b from-black/95 to-background/90 relative overflow-hidden">
+        <div className="container px-4 md:px-6">
+          <motion.div 
+            className="text-center max-w-3xl mx-auto mb-12"
+            variants={fadeInUpVariant}
+            initial="hidden"
+            whileInView="visible"
+            custom={0}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">WHAT I CAN TEACH YOU IN JUST ONE HOUR</h2>
+            <p className="text-xl text-muted-foreground">
+              Practical skills to help you start earning online
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Build a Video Editing Agency",
+                description: "Learn to create and scale a high earning video editing agency from scratch",
+                icon: <Youtube className="text-orange-500" size={24} />
+              },
+              {
+                title: "Create Any Online Business",
+                description: "Start profitable online businesses without any upfront investment",
+                icon: <Award className="text-orange-500" size={24} />
+              },
+              {
+                title: "Grow Your YouTube Channel Fast",
+                description: "Master short and long-form content strategies for rapid growth",
+                icon: <TrendingUp className="text-orange-500" size={24} />
+              },
+              {
+                title: "Master Cinematography & Filming",
+                description: "Learn professional filming techniques to create stunning content",
+                icon: <Youtube className="text-orange-500" size={24} />
+              },
+              {
+                title: "Make Money with AI",
+                description: "Leverage the newest AI technologies to generate income online",
+                icon: <BarChart2 className="text-orange-500" size={24} />
+              },
+              {
+                title: "Learn Sales Process",
+                description: "Develop confidence and skills to sell anything effectively",
+                icon: <Users className="text-orange-500" size={24} />
+              }
+            ].map((skill, index) => (
+              <motion.div 
+                key={index}
+                className="glass-card p-6"
+                variants={fadeInUpVariant}
+                initial="hidden"
+                whileInView="visible"
+                custom={index + 1}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-start">
+                  <div className="mr-4 p-3 rounded-lg bg-orange-500/10">
+                    {skill.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-xl mb-2">{skill.title}</h3>
+                    <p className="text-muted-foreground">{skill.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Make Money Online Section */}
+      <section className="py-20 bg-black relative overflow-hidden">
+        <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
+        <div className="container px-4 md:px-6 relative z-10">
+          <motion.div 
+            className="text-center max-w-3xl mx-auto mb-16"
+            variants={fadeInUpVariant}
+            initial="hidden"
+            whileInView="visible"
+            custom={0}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">MAKE ₹50,000-₹1,00,000 ONLINE EVERY MONTH</h2>
+            <p className="text-xl text-muted-foreground">
+              I did it at the age of 19, and I can show you exactly how. No fluff, no theory - just practical strategies that work in the real world.
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                title: "Content Creation",
+                description: "Learn how to create viral content that attracts brands and sponsors. I'll show you exactly how I built multiple successful YouTube channels at just 19 years old.",
+                icon: <Youtube className="text-orange-500" size={24} />
+              },
+              {
+                title: "Video Editing Agency",
+                description: "Start your own video editing agency where you can earn ₹2 lakh per month like I scaled. I'll teach you the exact strategies I used to grow my agency rapidly.",
+                icon: <Award className="text-orange-500" size={24} />
+              },
+              {
+                title: "Personal Branding",
+                description: "Develop a personal brand that stands out in the crowded digital space. This is how I've attracted top influencers and brands to work with me.",
+                icon: <Users className="text-orange-500" size={24} />
+              },
+              {
+                title: "Freelancing",
+                description: "Start earning immediately by offering your skills as a freelancer. I'll guide you through finding high-paying clients and delivering exceptional work.",
+                icon: <BarChart2 className="text-orange-500" size={24} />
+              }
+            ].map((skill, index) => (
+              <motion.div 
+                key={index}
+                className="glass-card p-6"
+                variants={fadeInUpVariant}
+                initial="hidden"
+                whileInView="visible"
+                custom={index + 1}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-start">
+                  <div className="mr-4 p-3 rounded-lg bg-orange-500/10">
+                    {skill.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-xl mb-2">{skill.title}</h3>
+                    <p className="text-muted-foreground">{skill.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="mt-12 text-center">
+            <a href={PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+              >
+                BOOK YOUR ONE-HOUR CALL WITH ME NOW →
+              </Button>
+            </a>
+            <p className="mt-3 text-muted-foreground">
+              Want to start making ₹50,000–₹1,00,000 every month? Let's make it happen—book your session now and I'll guide you through it!
+            </p>
           </div>
         </div>
       </section>
@@ -513,12 +951,12 @@ const YoutubeGrowth = () => {
                 </div>
                 
                 <div className="mt-8">
-                  <Link to="#enroll">
+                  <a href={PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
                     <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
                       Enroll Now - ₹7,999
                       <span className="text-sm ml-2 line-through text-orange-200/80">₹12,999</span>
                     </Button>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </motion.div>
@@ -609,125 +1047,7 @@ const YoutubeGrowth = () => {
         </div>
       </section>
 
-      {/* Why Choose This Course - With Priyanshu */}
-      <section className="py-20 bg-gradient-to-b from-background to-black/95">
-        <div className="container px-4 md:px-6">
-          <motion.div 
-            className="text-center max-w-3xl mx-auto mb-16"
-            variants={fadeInUpVariant}
-            initial="hidden"
-            whileInView="visible"
-            custom={0}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">Why Choose This Course</h2>
-            <p className="text-xl text-muted-foreground">
-              Learn with Gyanendra & Priyanshu - A Powerful Collaboration
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <motion.div 
-              className="lg:col-span-7"
-              variants={fadeInUpVariant}
-              initial="hidden"
-              whileInView="visible"
-              custom={1}
-              viewport={{ once: true }}
-            >
-              <div className="glass-card p-8">
-                <div className="space-y-6">
-                  <div className="flex items-start">
-                    <div className="bg-orange-500/20 p-3 rounded-lg mr-4">
-                      <Award className="text-orange-500" size={24} />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-xl mb-2">Learn From Experienced Professionals</h3>
-                      <p className="text-muted-foreground">
-                        Gyanendra and Priyanshu have worked with channels that collectively have over 26M+ subscribers 
-                        and billions of views. They bring real-world expertise, not just theories.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start">
-                    <div className="bg-orange-500/20 p-3 rounded-lg mr-4">
-                      <Users className="text-orange-500" size={24} />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-xl mb-2">Two Experts, Double the Knowledge</h3>
-                      <p className="text-muted-foreground">
-                        With both Gyanendra's channel management expertise and Priyanshu's unique insights,
-                        you get a well-rounded education covering all aspects of YouTube success.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start">
-                    <div className="bg-orange-500/20 p-3 rounded-lg mr-4">
-                      <TrendingUp className="text-orange-500" size={24} />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-xl mb-2">Proven Results-Driven Approach</h3>
-                      <p className="text-muted-foreground">
-                        This isn't theory - our strategies have helped channels reach up to 22M views on single videos
-                        and build sustainable growth across various niches.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start">
-                    <div className="bg-orange-500/20 p-3 rounded-lg mr-4">
-                      <MessageSquare className="text-orange-500" size={24} />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-xl mb-2">Direct Access & Community</h3>
-                      <p className="text-muted-foreground">
-                        Get exclusive access to our private community where you can ask questions directly and connect with other creators on the same journey.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-8">
-                  <Link to="#enroll">
-                    <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
-                      Join Our YouTube Masterclass
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className="lg:col-span-5"
-              variants={fadeInUpVariant}
-              initial="hidden"
-              whileInView="visible"
-              custom={2}
-              viewport={{ once: true }}
-            >
-              <div className="relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7" 
-                  alt="Priyanshu" 
-                  className="rounded-xl w-full object-cover aspect-[4/5]"
-                />
-                <div className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-sm p-4 rounded-lg">
-                  <h3 className="font-bold text-xl">Priyanshu</h3>
-                  <p className="text-orange-400">YouTube Strategy Expert</p>
-                </div>
-
-                <div className="absolute -top-4 -right-4 bg-orange-500 text-white px-4 py-2 rounded-lg transform rotate-3 shadow-lg">
-                  <p className="font-bold text-sm">Co-Instructor</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Student Results Section */}
+      {/* Success Stories Section */}
       <section className="py-20 bg-black relative overflow-hidden">
         <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
         <div className="container px-4 md:px-6 relative z-10">
@@ -739,71 +1059,56 @@ const YoutubeGrowth = () => {
             custom={0}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">Student Success Stories</h2>
+            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">Success Stories</h2>
             <p className="text-xl text-muted-foreground">
               See the real results our students have achieved with our strategies
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                name: "Rahul S.",
-                image: "https://images.unsplash.com/photo-1500673922987-e212871fec22",
-                channel: "Tech Simplified",
-                results: "0 to 25K subscribers in 6 months",
-                testimonial: "Before this course, I was stuck at 500 subscribers for a year. The thumbnail optimization techniques alone helped me 10x my click-through rate, and my channel exploded."
+                name: "Rahul Singh",
+                role: "Video Editor",
+                testimonial: "Priyanshu's guidance helped me land my first ₹30,000 client within just 2 weeks! His practical approach and direct feedback made all the difference."
               },
               {
-                name: "Priya M.",
-                image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-                channel: "Cooking With Priya",
-                results: "Monetized in 3 months",
-                testimonial: "I was creating content but getting minimal views. After applying the content strategy framework, my videos started reaching new audiences. I hit the monetization requirements in just 3 months!"
+                name: "Neha Gupta",
+                role: "Content Creator",
+                testimonial: "I was struggling to grow my YouTube channel for 2 years. After just one session with Priyanshu, I implemented his strategies and gained 10K subscribers in 3 months!"
               },
               {
-                name: "Aditya K.",
-                image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
-                channel: "Finance Freedom",
-                results: "Video hit 1M views",
-                testimonial: "The algorithm section of this course is gold. I implemented the strategies and one of my videos hit 1M views, bringing in thousands of new subscribers. The return on investment has been incredible."
+                name: "Amit Sharma",
+                role: "Freelancer",
+                testimonial: "The agency model Priyanshu taught me has completely transformed my income. From making ₹15K per month to now consistently earning over ₹70K monthly."
+              },
+              {
+                name: "Priya Patel",
+                role: "Agency Owner",
+                testimonial: "His sales techniques are pure gold! I was always afraid of selling, but now I close deals with confidence. Already made back 10x what I paid for the coaching."
               }
             ].map((story, index) => (
               <motion.div
                 key={index}
-                className="glass-card overflow-hidden"
+                className="glass-card p-6"
                 variants={fadeInUpVariant}
                 initial="hidden"
                 whileInView="visible"
                 custom={index + 1}
                 viewport={{ once: true }}
               >
-                <div className="h-48 relative">
-                  <img 
-                    src={story.image} 
-                    alt={story.name} 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <span className="bg-orange-500 text-white px-3 py-1 text-sm font-medium rounded-md">
-                      {story.results}
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="p-6">
+                <div className="flex flex-col h-full">
                   <div className="flex items-center mb-4">
-                    <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold">
+                    <div className="w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-500 font-bold">
                       {story.name.charAt(0)}
                     </div>
                     <div className="ml-3">
                       <h4 className="font-semibold">{story.name}</h4>
-                      <p className="text-sm text-muted-foreground">{story.channel}</p>
+                      <p className="text-sm text-muted-foreground">{story.role}</p>
                     </div>
                   </div>
                   
-                  <blockquote className="text-muted-foreground">
+                  <blockquote className="text-muted-foreground flex-grow">
                     "{story.testimonial}"
                   </blockquote>
                   
@@ -816,26 +1121,42 @@ const YoutubeGrowth = () => {
               </motion.div>
             ))}
           </div>
-
-          <motion.div 
-            className="mt-12 text-center"
-            variants={fadeInUpVariant}
-            initial="hidden"
-            whileInView="visible"
-            custom={4}
-            viewport={{ once: true }}
-          >
-            <Link to="#enroll">
-              <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
-                Join Them & Transform Your Channel
-              </Button>
-            </Link>
-          </motion.div>
+          
+          <div className="mt-12">
+            <div className="glass-card p-6 border border-orange-500/20">
+              <h3 className="text-xl font-bold mb-4">I'VE WORKED WITH TOP BRANDS & INFLUENCERS</h3>
+              
+              <div className="grid grid-cols-2 md:grid-cols-8 gap-6">
+                {["Physics Wallah", "MPL", "Meesho", "Dream11", "PharmEasy", "Confirmtkt", "Airtel", "Jar"].map((brand, index) => (
+                  <div key={index} className="bg-white/10 p-3 rounded-md flex items-center justify-center h-16">
+                    <p className="text-sm font-semibold text-center">{brand}</p>
+                  </div>
+                ))}
+              </div>
+              
+              <h4 className="text-lg font-bold mt-8 mb-4">Worked With</h4>
+              <div className="grid grid-cols-2 md:grid-cols-7 gap-4">
+                {[
+                  "Gaurav Malhotra", 
+                  "Praduman Kaushik", 
+                  "Counting Unique", 
+                  "Bhooka Saand", 
+                  "Anmol Jaiswal", 
+                  "Ankit TV", 
+                  "Vijay aka FWS"
+                ].map((influencer, index) => (
+                  <div key={index} className="bg-white/5 p-2 rounded-md text-center">
+                    <p className="text-sm">{influencer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Pricing & Bonuses Section */}
-      <section id="enroll" className="py-20 bg-gradient-to-b from-black/95 to-background">
+      {/* Pricing & Payment Section */}
+      <section id="enroll" className="py-20 bg-gradient-to-b from-background to-black/95">
         <div className="container px-4 md:px-6">
           <motion.div 
             className="text-center max-w-3xl mx-auto mb-16"
@@ -856,58 +1177,18 @@ const YoutubeGrowth = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <motion.div 
-              className="glass-card p-8 border-2 border-orange-500/20"
               variants={fadeInUpVariant}
               initial="hidden"
               whileInView="visible"
               custom={1}
               viewport={{ once: true }}
             >
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold mb-4">YouTube Growth Accelerator</h3>
-                <div className="flex items-baseline justify-center mb-1">
-                  <span className="text-4xl font-bold">₹7,999</span>
-                  <span className="text-xl text-muted-foreground line-through ml-2">₹12,999</span>
-                </div>
-                <p className="text-orange-400">38% Discount - Limited Time</p>
-              </div>
-
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start">
-                  <CheckCircle size={20} className="text-orange-500 mt-0.5 mr-3 flex-shrink-0" />
-                  <p>Complete 8-module course (50+ hours of content)</p>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle size={20} className="text-orange-500 mt-0.5 mr-3 flex-shrink-0" />
-                  <p>Lifetime access to all course materials</p>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle size={20} className="text-orange-500 mt-0.5 mr-3 flex-shrink-0" />
-                  <p>Private community access</p>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle size={20} className="text-orange-500 mt-0.5 mr-3 flex-shrink-0" />
-                  <p>Downloadable resources & templates</p>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle size={20} className="text-orange-500 mt-0.5 mr-3 flex-shrink-0" />
-                  <p>Access to future updates</p>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle size={20} className="text-orange-500 mt-0.5 mr-3 flex-shrink-0" />
-                  <p>30-day money-back guarantee</p>
-                </div>
-              </div>
-
-              <Button 
-                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 py-6 text-lg"
-              >
-                Enroll Now - ₹7,999
-              </Button>
-              
-              <p className="text-center text-muted-foreground mt-4 text-sm">
-                Secure payment via Razorpay / UPI / Cards
-              </p>
+              <PaymentSection 
+                price="7,999" 
+                originalPrice="12,999" 
+                discount="38%" 
+                paymentLink={PAYMENT_LINK} 
+              />
             </motion.div>
 
             <motion.div 
@@ -991,69 +1272,8 @@ const YoutubeGrowth = () => {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 bg-background">
-        <div className="container px-4 md:px-6">
-          <motion.div 
-            className="text-center max-w-3xl mx-auto mb-16"
-            variants={fadeInUpVariant}
-            initial="hidden"
-            whileInView="visible"
-            custom={0}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">Frequently Asked Questions</h2>
-            <p className="text-xl text-muted-foreground">
-              Everything you need to know about the YouTube Growth Accelerator course
-            </p>
-          </motion.div>
-
-          <div className="max-w-3xl mx-auto space-y-6">
-            {[
-              {
-                question: "Who is this course for?",
-                answer: "This course is designed for both beginners starting their YouTube journey and established creators looking to accelerate their growth. Whether you have 0 subscribers or 10,000+, the strategies taught will help you reach the next level."
-              },
-              {
-                question: "How long do I have access to the course?",
-                answer: "You get lifetime access to all course materials, including future updates and improvements we make to the curriculum. Once you enroll, it's yours forever."
-              },
-              {
-                question: "Do I need expensive equipment to implement these strategies?",
-                answer: "Not at all! We show you how to create high-quality content with whatever equipment you currently have. Gyanendra himself started with minimal equipment, and we teach you how to focus on content strategy first, then gradually upgrade your setup as your channel grows."
-              },
-              {
-                question: "Will this work for my niche?",
-                answer: "Yes! The strategies taught in this course have been successfully applied across various niches including education, tech, finance, cooking, lifestyle, gaming, and more. The principles of audience growth and engagement work universally on YouTube."
-              },
-              {
-                question: "Is there a money-back guarantee?",
-                answer: "Absolutely! We offer a 30-day money-back guarantee. If you go through the course, implement the strategies, and don't see improvement in your channel's performance, we'll refund your investment in full."
-              },
-              {
-                question: "How is this different from free YouTube advice?",
-                answer: "While there's plenty of free advice online, this course provides a structured, comprehensive system based on real experience managing channels with 26M+ subscribers. We share insider strategies, hands-on demonstrations, and provide personalized support you won't find in free content."
-              }
-            ].map((faq, index) => (
-              <motion.div 
-                key={index}
-                className="glass-card p-6"
-                variants={fadeInUpVariant}
-                initial="hidden"
-                whileInView="visible"
-                custom={index + 1}
-                viewport={{ once: true }}
-              >
-                <h3 className="text-xl font-semibold mb-3">{faq.question}</h3>
-                <p className="text-muted-foreground">{faq.answer}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Final CTA Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-black/95 relative overflow-hidden">
+      <section className="py-20 bg-black/95 relative overflow-hidden">
         <div className="container px-4 md:px-6 relative z-10">
           <motion.div 
             className="glass-card max-w-4xl mx-auto p-8 md:p-12 text-center border-2 border-orange-500/20"
@@ -1092,17 +1312,55 @@ const YoutubeGrowth = () => {
               custom={3}
               viewport={{ once: true }}
             >
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-8 py-6 text-lg"
-              >
-                Enroll Now - ₹7,999
-                <span className="text-sm ml-2 line-through text-orange-200/80">₹12,999</span>
-              </Button>
+              <a href={PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-8 py-6 text-lg"
+                >
+                  Enroll Now - ₹7,999
+                  <span className="text-sm ml-2 line-through text-orange-200/80">₹12,999</span>
+                </Button>
+              </a>
               
-              <p className="text-center text-muted-foreground mt-4">
-                Lifetime access • 30-day money-back guarantee • Instant access
-              </p>
+              <div className="mt-8">
+                <div className="text-center mb-4">
+                  <p className="font-semibold">Secure Payment Options:</p>
+                </div>
+                
+                <div className="flex flex-wrap gap-3 justify-center">
+                  <div className="bg-white p-1 rounded-md">
+                    <img src="https://cdn.razorpay.com/static/assets/payment_methods/visa.svg" alt="Visa" className="h-6" />
+                  </div>
+                  <div className="bg-white p-1 rounded-md">
+                    <img src="https://cdn.razorpay.com/static/assets/payment_methods/mastercard.svg" alt="Mastercard" className="h-6" />
+                  </div>
+                  <div className="bg-white p-1 rounded-md">
+                    <img src="https://cdn.razorpay.com/static/assets/payment_methods/rupay.svg" alt="RuPay" className="h-6" />
+                  </div>
+                  <div className="bg-white p-1 rounded-md">
+                    <img src="https://cdn.razorpay.com/static/assets/payment_methods/upi.svg" alt="UPI" className="h-6" />
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-center gap-3 mt-4 text-sm text-muted-foreground">
+                  <div className="flex items-center">
+                    <Lock size={14} className="mr-1" />
+                    <span>256-bit SSL Secured</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CreditCard size={14} className="mr-1" />
+                    <span>100% Safe & Secure</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Shield size={14} className="mr-1" />
+                    <span>30-Day Money Back Guarantee</span>
+                  </div>
+                </div>
+                
+                <p className="text-center text-muted-foreground mt-4">
+                  Lifetime access • Instant access • Money-back guarantee
+                </p>
+              </div>
             </motion.div>
           </motion.div>
         </div>
