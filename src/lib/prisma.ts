@@ -1,22 +1,22 @@
 
 // This file creates a singleton instance of PrismaClient to prevent multiple instances during development
 
-// Import PrismaClient correctly - using wildcard import since there might be versioning issues
-import * as PrismaModule from '@prisma/client';
+// Import PrismaClient correctly from the Prisma Client package
+import { PrismaClient as PrismaClientImport } from '@prisma/client'
 
-// Get the PrismaClient constructor
-const { PrismaClient } = PrismaModule;
-
-// Create a global type for Prisma
+// Correctly type the global prisma instance
 declare global {
   // eslint-disable-next-line no-var
-  var prisma: PrismaModule.PrismaClient | undefined;
+  var prisma: PrismaClientImport | undefined;
 }
 
-// Export the Prisma instance
-export const prisma = global.prisma || new PrismaClient();
+// Create a single instance of PrismaClient
+const prismaClient = global.prisma || new PrismaClientImport()
 
 // In development, attach the instance to the global object to prevent multiple instances
 if (process.env.NODE_ENV !== 'production') {
-  global.prisma = prisma;
+  global.prisma = prismaClient;
 }
+
+// Export the Prisma instance
+export const prisma = prismaClient;
