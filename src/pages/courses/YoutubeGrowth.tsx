@@ -11,6 +11,13 @@ import { Check, Video, FileText, Users, MessageCircle, Award } from "lucide-reac
 import PurchaseNotification from "@/components/course/PurchaseNotification";
 import { Card, CardContent } from "@/components/ui/card";
 
+// Import components from portfolio page
+import ManagedChannelsSection from "@/components/portfolio/ManagedChannelsSection";
+import CommitmentsSection from "@/components/portfolio/CommitmentsSection";
+import WorkedWithSection from "@/components/portfolio/WorkedWithSection";
+import PartnershipsSection from "@/components/portfolio/PartnershipsSection";
+import VideoTestimonials from "@/components/shared/VideoTestimonials";
+
 const fadeInVariant = {
   hidden: { opacity: 0, y: 20 },
   visible: (custom: number) => ({
@@ -22,9 +29,9 @@ const fadeInVariant = {
 
 const YoutubeGrowth = () => {
   // Calculate discounted price
-  const originalPrice = "20,000";
-  const discountPercentage = 10;
-  const discountedPrice = (20000 * (100 - discountPercentage) / 100).toLocaleString();
+  const originalPrice = "36,000";
+  const discountPercentage = 50;
+  const discountedPrice = "17,999";
   
   return (
     <Layout>
@@ -65,6 +72,15 @@ const YoutubeGrowth = () => {
               <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
                 Learn How To Start, Grow, and Monetize Your YouTube Channel To Build a Sustainable Online Income
               </p>
+
+              {/* Stats from Portfolio page */}
+              <div className="bg-black/60 p-6 rounded-xl max-w-3xl mx-auto backdrop-blur-sm border border-white/10 mb-8">
+                <p className="text-2xl text-white font-medium">
+                  We've generated over <span className="text-orange-500 font-bold">35+ Million Subscribers</span>, 
+                  over <span className="text-deepBlue-500 font-bold">2.5+ Billion Views</span>, and billions of impressions 
+                  on YouTube working with top brands and creators.
+                </p>
+              </div>
               
               {/* CTA Buttons */}
               <div className="flex flex-wrap justify-center gap-4 mb-8">
@@ -91,7 +107,7 @@ const YoutubeGrowth = () => {
               
               {/* Countdown Timer */}
               <div className="max-w-lg mx-auto">
-                <p className="text-sm md:text-base text-orange-400 mb-2">Limited Time Offer - 10% Off Ends In:</p>
+                <p className="text-sm md:text-base text-orange-400 mb-2">Limited Time Offer - 50% Off Ends In:</p>
                 <CountdownTimer 
                   initialHours={24} 
                   initialMinutes={0} 
@@ -104,7 +120,7 @@ const YoutubeGrowth = () => {
         </div>
       </section>
       
-      {/* Instructor Section - NEW */}
+      {/* Instructor Section */}
       <section className="py-16 md:py-20 relative">
         <div className="container px-4 md:px-6 relative z-10">
           <div className="max-w-5xl mx-auto">
@@ -158,7 +174,7 @@ const YoutubeGrowth = () => {
               >
                 <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
                   <div className="w-32 h-32 rounded-full overflow-hidden flex-shrink-0 border-2 border-orange-500/30">
-                    <img src="/placeholders/user2.jpg" alt="Priyanshu Gupta" className="w-full h-full object-cover" />
+                    <img src="/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png" alt="Priyanshu Gupta" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold mb-2">Priyanshu Gupta</h3>
@@ -314,6 +330,12 @@ const YoutubeGrowth = () => {
               </motion.div>
             </div>
             
+            {/* Commitments Section from Portfolio */}
+            <div className="mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center gradient-text">Our Commitments</h2>
+              <CommitmentsSection />
+            </div>
+            
             {/* Special Call-to-Action */}
             <motion.div 
               className="text-center"
@@ -342,7 +364,7 @@ const YoutubeGrowth = () => {
         </div>
       </section>
       
-      {/* Brands Worked With Section - NEW */}
+      {/* Managed Channels Section from Portfolio */}
       <section className="py-16 md:py-20 relative">
         <div className="container px-4 md:px-6 relative z-10">
           <div className="max-w-5xl mx-auto">
@@ -354,6 +376,56 @@ const YoutubeGrowth = () => {
               custom={3.5}
             >
               <div className="inline-block px-4 py-1.5 mb-6 text-sm font-medium border border-orange-500/30 rounded-full bg-gradient-to-r from-orange-500/20 to-orange-600/20 text-orange-500">
+                Our Channel Portfolio
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Channels We Manage</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                We've successfully managed and grown these YouTube channels across different niches.
+              </p>
+            </motion.div>
+            
+            <ManagedChannelsSection />
+          </div>
+        </div>
+      </section>
+      
+      {/* Partnerships Section from Portfolio */}
+      <section className="py-16 md:py-20 relative bg-gradient-to-b from-black to-muted">
+        <div className="container px-4 md:px-6 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <motion.div 
+              className="text-center mb-12"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInVariant}
+              custom={3.7}
+            >
+              <div className="inline-block px-4 py-1.5 mb-6 text-sm font-medium border border-orange-500/30 rounded-full bg-gradient-to-r from-orange-500/20 to-orange-600/20 text-orange-500">
+                Our Partners
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Major Partnerships</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                We've partnered with top brands and channels to drive exceptional growth.
+              </p>
+            </motion.div>
+            
+            <PartnershipsSection />
+          </div>
+        </div>
+      </section>
+
+      {/* Brands Worked With Section */}
+      <section className="py-16 md:py-20 relative">
+        <div className="container px-4 md:px-6 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <motion.div 
+              className="text-center mb-12"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInVariant}
+              custom={4}
+            >
+              <div className="inline-block px-4 py-1.5 mb-6 text-sm font-medium border border-orange-500/30 rounded-full bg-gradient-to-r from-orange-500/20 to-orange-600/20 text-orange-500">
                 Industry Recognition
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Brands We've Worked With</h2>
@@ -362,26 +434,14 @@ const YoutubeGrowth = () => {
               </p>
             </motion.div>
             
-            <motion.div 
-              className="glass-card p-8 mb-12"
-              initial="hidden"
-              animate="visible"
-              variants={fadeInVariant}
-              custom={3.7}
-            >
-              <img 
-                src="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png" 
-                alt="Brands we've worked with" 
-                className="w-full max-w-4xl mx-auto rounded"
-              />
-            </motion.div>
+            <WorkedWithSection />
             
             <motion.div
-              className="text-center"
+              className="text-center mt-8"
               initial="hidden"
               animate="visible"
               variants={fadeInVariant}
-              custom={3.8}
+              custom={4.2}
             >
               <Card className="border-orange-500/20 bg-black/40">
                 <CardContent className="pt-6">
@@ -415,216 +475,32 @@ const YoutubeGrowth = () => {
         </div>
       </section>
       
+      {/* Video Testimonials from Portfolio */}
+      <section className="py-16 md:py-20 relative">
+        <div className="container px-4 md:px-6 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <motion.div 
+              className="text-center mb-12"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInVariant}
+              custom={4.5}
+            >
+              <div className="inline-block px-4 py-1.5 mb-6 text-sm font-medium border border-orange-500/30 rounded-full bg-gradient-to-r from-orange-500/20 to-orange-600/20 text-orange-500">
+                Client Success Stories
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Video Testimonials</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Hear directly from our clients about their experience working with us.
+              </p>
+            </motion.div>
+            
+            <VideoTestimonials showHeading={false} />
+          </div>
+        </div>
+      </section>
+      
       {/* Social Proof Section */}
-      <section className="py-16 md:py-24 relative">
-        <div className="container px-4 md:px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <motion.div 
-              className="text-center mb-12"
-              initial="hidden"
-              animate="visible"
-              variants={fadeInVariant}
-              custom={4}
-            >
-              <div className="inline-block px-4 py-1.5 mb-6 text-sm font-medium border border-orange-500/30 rounded-full bg-gradient-to-r from-orange-500/20 to-orange-600/20 text-orange-500">
-                Success Stories
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Join Thousands of Successful Students</h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                See how creators just like you have transformed their YouTube channels and built sustainable incomes online.
-              </p>
-            </motion.div>
-            
-            {/* Testimonial Tabs */}
-            <Tabs defaultValue="testimonial-1" className="w-full">
-              <TabsList className="grid grid-cols-3 max-w-md mx-auto mb-8">
-                <TabsTrigger value="testimonial-1">Sarah</TabsTrigger>
-                <TabsTrigger value="testimonial-2">Rahul</TabsTrigger>
-                <TabsTrigger value="testimonial-3">Priya</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="testimonial-1" className="glass-card p-6 md:p-8">
-                <div className="flex flex-col md:flex-row gap-6 items-center">
-                  <div className="w-24 h-24 rounded-full overflow-hidden flex-shrink-0">
-                    <img src="/placeholders/user1.jpg" alt="Sarah" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <div className="flex items-center mb-2">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i} className="text-orange-500">★</span>
-                        ))}
-                      </div>
-                    </div>
-                    <blockquote className="text-lg mb-4">
-                      "This program helped me grow my YouTube channel from 500 to over 100,000 subscribers in just 8 months. The strategies work amazingly well if you put in the effort!"
-                    </blockquote>
-                    <div className="font-semibold">Sarah P.</div>
-                    <div className="text-sm text-muted-foreground">Fitness & Lifestyle Creator</div>
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="testimonial-2" className="glass-card p-6 md:p-8">
-                <div className="flex flex-col md:flex-row gap-6 items-center">
-                  <div className="w-24 h-24 rounded-full overflow-hidden flex-shrink-0">
-                    <img src="/placeholders/user2.jpg" alt="Rahul" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <div className="flex items-center mb-2">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i} className="text-orange-500">★</span>
-                        ))}
-                      </div>
-                    </div>
-                    <blockquote className="text-lg mb-4">
-                      "I was struggling to get views on my tech channel for years. Within 3 months of applying these strategies, my channel hit monetization requirements and I'm now making ₹50,000+ per month!"
-                    </blockquote>
-                    <div className="font-semibold">Rahul S.</div>
-                    <div className="text-sm text-muted-foreground">Tech Review Creator</div>
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="testimonial-3" className="glass-card p-6 md:p-8">
-                <div className="flex flex-col md:flex-row gap-6 items-center">
-                  <div className="w-24 h-24 rounded-full overflow-hidden flex-shrink-0">
-                    <img src="/placeholders/user3.jpg" alt="Priya" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <div className="flex items-center mb-2">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i} className="text-orange-500">★</span>
-                        ))}
-                      </div>
-                    </div>
-                    <blockquote className="text-lg mb-4">
-                      "The advanced SEO techniques and thumbnail strategies completely transformed my cooking channel. I went from 2,000 views per video to over 50,000 views consistently!"
-                    </blockquote>
-                    <div className="font-semibold">Priya M.</div>
-                    <div className="text-sm text-muted-foreground">Cooking Channel Creator</div>
-                  </div>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </div>
-      </section>
-      
-      {/* Pricing Section */}
-      <section id="pricing" className="py-16 md:py-24 relative">
-        <div className="container px-4 md:px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <motion.div 
-              className="text-center mb-12"
-              initial="hidden"
-              animate="visible"
-              variants={fadeInVariant}
-              custom={5}
-            >
-              <div className="inline-block px-4 py-1.5 mb-6 text-sm font-medium border border-orange-500/30 rounded-full bg-gradient-to-r from-orange-500/20 to-orange-600/20 text-orange-500">
-                Special 10% OFF - Limited Time Offer
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Invest In Your YouTube Future Today</h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Get complete access to the YouTube Growth Accelerator program at our special limited-time price.
-              </p>
-            </motion.div>
-            
-            <div className="flex flex-col lg:flex-row gap-8 items-center">
-              <div className="lg:w-2/3">
-                <motion.div 
-                  className="space-y-6"
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeInVariant}
-                  custom={5.5}
-                >
-                  <div className="glass-card p-6 border-2 border-orange-500/20">
-                    <h3 className="text-xl font-bold mb-4">What You'll Get:</h3>
-                    <ul className="space-y-3">
-                      <li className="flex items-start">
-                        <Check size={20} className="text-orange-500 mt-1 mr-3 flex-shrink-0" />
-                        <div>
-                          <span className="font-medium">Complete 8-Module Course</span>
-                          <p className="text-muted-foreground text-sm">50+ hours of in-depth video lessons</p>
-                        </div>
-                      </li>
-                      <li className="flex items-start">
-                        <Check size={20} className="text-orange-500 mt-1 mr-3 flex-shrink-0" />
-                        <div>
-                          <span className="font-medium">Practical Templates & Resources</span>
-                          <p className="text-muted-foreground text-sm">Channel audit worksheet, content calendar, thumbnail templates, and more</p>
-                        </div>
-                      </li>
-                      <li className="flex items-start">
-                        <Check size={20} className="text-orange-500 mt-1 mr-3 flex-shrink-0" />
-                        <div>
-                          <span className="font-medium">Private Community Access</span>
-                          <p className="text-muted-foreground text-sm">Connect with fellow creators and get feedback</p>
-                        </div>
-                      </li>
-                      <li className="flex items-start">
-                        <Check size={20} className="text-orange-500 mt-1 mr-3 flex-shrink-0" />
-                        <div>
-                          <span className="font-medium">Lifetime Access</span>
-                          <p className="text-muted-foreground text-sm">Including all future updates and additions</p>
-                        </div>
-                      </li>
-                    </ul>
-                    
-                    <div className="mt-6 pt-6 border-t border-white/10">
-                      <h4 className="font-bold mb-3">Special Bonuses:</h4>
-                      <ul className="space-y-3">
-                        <li className="flex items-start">
-                          <Check size={20} className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                          <div>
-                            <span className="font-medium">Viral Thumbnail Formula</span>
-                            <p className="text-muted-foreground text-sm">Worth ₹4,999</p>
-                          </div>
-                        </li>
-                        <li className="flex items-start">
-                          <Check size={20} className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                          <div>
-                            <span className="font-medium">Brand Deal Negotiation Guide</span>
-                            <p className="text-muted-foreground text-sm">Worth ₹3,999</p>
-                          </div>
-                        </li>
-                        <li className="flex items-start">
-                          <Check size={20} className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                          <div>
-                            <span className="font-medium">YouTube Algorithm Masterclass</span>
-                            <p className="text-muted-foreground text-sm">Worth ₹5,999</p>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-              
-              <motion.div 
-                className="lg:w-1/3 w-full"
-                initial="hidden"
-                animate="visible"
-                variants={fadeInVariant}
-                custom={6}
-              >
-                <PaymentSection 
-                  price={discountedPrice} 
-                  originalPrice={originalPrice} 
-                  discount="10%" 
-                  paymentLink="https://example.com/checkout"
-                />
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* FAQs Section */}
       <section className="py-16 md:py-24 relative">
         <div className="container px-4 md:px-6 relative z-10">
           <div className="max-w-4xl mx-auto">
@@ -633,7 +509,7 @@ const YoutubeGrowth = () => {
               initial="hidden"
               animate="visible"
               variants={fadeInVariant}
-              custom={7}
+              custom={5}
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
               <p className="text-xl text-muted-foreground">
@@ -673,7 +549,7 @@ const YoutubeGrowth = () => {
               initial="hidden"
               animate="visible"
               variants={fadeInVariant}
-              custom={8}
+              custom={6}
             >
               <p className="text-lg mb-6">Still have questions? We're here to help!</p>
               <Button 
@@ -700,7 +576,7 @@ const YoutubeGrowth = () => {
               initial="hidden"
               animate="visible"
               variants={fadeInVariant}
-              custom={9}
+              custom={7}
             >
               <div className="flex justify-center mb-6">
                 <div className="bg-orange-500/20 p-3 rounded-full">
@@ -720,7 +596,7 @@ const YoutubeGrowth = () => {
                   initialSeconds={0}
                   className="max-w-md mx-auto shadow-lg"
                 />
-                <p className="text-orange-400 mt-2">Limited-Time 10% Discount Ends Soon!</p>
+                <p className="text-orange-400 mt-2">Limited-Time 50% Discount Ends Soon!</p>
               </div>
               
               <Button 
