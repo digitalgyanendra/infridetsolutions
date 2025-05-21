@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -10,6 +9,7 @@ import PaymentSection from "@/components/course/PaymentSection";
 import SEOHead from "@/components/seo/SEOHead";
 import { Check, Video, FileText, Users, MessageCircle, Award } from "lucide-react";
 import PurchaseNotification from "@/components/course/PurchaseNotification";
+import { Card, CardContent } from "@/components/ui/card";
 
 const fadeInVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -21,6 +21,11 @@ const fadeInVariant = {
 };
 
 const YoutubeGrowth = () => {
+  // Calculate discounted price
+  const originalPrice = "20,000";
+  const discountPercentage = 10;
+  const discountedPrice = (20000 * (100 - discountPercentage) / 100).toLocaleString();
+  
   return (
     <Layout>
       <SEOHead
@@ -86,7 +91,7 @@ const YoutubeGrowth = () => {
               
               {/* Countdown Timer */}
               <div className="max-w-lg mx-auto">
-                <p className="text-sm md:text-base text-orange-400 mb-2">Limited Time Offer - 50% Off Ends In:</p>
+                <p className="text-sm md:text-base text-orange-400 mb-2">Limited Time Offer - 10% Off Ends In:</p>
                 <CountdownTimer 
                   initialHours={24} 
                   initialMinutes={0} 
@@ -95,6 +100,80 @@ const YoutubeGrowth = () => {
                 />
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Instructor Section - NEW */}
+      <section className="py-16 md:py-20 relative">
+        <div className="container px-4 md:px-6 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <motion.div 
+              className="text-center mb-12"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInVariant}
+              custom={1}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Meet Your Instructors</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Learn from industry professionals with proven track records in YouTube growth and content creation.
+              </p>
+            </motion.div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Main Instructor Card */}
+              <motion.div 
+                className="glass-card p-6"
+                initial="hidden"
+                animate="visible"
+                variants={fadeInVariant}
+                custom={1.5}
+              >
+                <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
+                  <div className="w-32 h-32 rounded-full overflow-hidden flex-shrink-0 border-2 border-orange-500/30">
+                    <img src="/lovable-uploads/325d2d7a-2a49-4220-8cc1-150319570c01.png" alt="Gyanendra Dwivedi" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">Gyanendra Dwivedi</h3>
+                    <p className="text-orange-500 font-medium mb-3">Lead Instructor & YouTube Strategist</p>
+                    <p className="text-muted-foreground mb-4">
+                      Gyanendra has helped over 300+ content creators scale their YouTube channels and build sustainable online businesses through proven growth strategies.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm">10+ Years Experience</span>
+                      <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm">YouTube Certified</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+              
+              {/* Co-Instructor Card */}
+              <motion.div 
+                className="glass-card p-6"
+                initial="hidden"
+                animate="visible"
+                variants={fadeInVariant}
+                custom={1.7}
+              >
+                <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
+                  <div className="w-32 h-32 rounded-full overflow-hidden flex-shrink-0 border-2 border-orange-500/30">
+                    <img src="/placeholders/user2.jpg" alt="Priyanshu Gupta" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">Priyanshu Gupta</h3>
+                    <p className="text-orange-500 font-medium mb-3">Co-Instructor & Content Specialist</p>
+                    <p className="text-muted-foreground mb-4">
+                      Priyanshu specializes in content optimization and audience growth strategies, helping creators maximize engagement and build loyal communities.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm">Content Strategy</span>
+                      <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm">Audience Building</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -108,7 +187,7 @@ const YoutubeGrowth = () => {
               initial="hidden"
               animate="visible"
               variants={fadeInVariant}
-              custom={1}
+              custom={2}
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Everything You Need To Master YouTube</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -123,7 +202,7 @@ const YoutubeGrowth = () => {
                 initial="hidden"
                 animate="visible"
                 variants={fadeInVariant}
-                custom={2}
+                custom={2.2}
               >
                 <div className="flex items-center mb-4">
                   <div className="bg-orange-500/20 p-3 rounded-full mr-4">
@@ -152,7 +231,7 @@ const YoutubeGrowth = () => {
                 initial="hidden"
                 animate="visible"
                 variants={fadeInVariant}
-                custom={2.2}
+                custom={2.4}
               >
                 <div className="flex items-center mb-4">
                   <div className="bg-orange-500/20 p-3 rounded-full mr-4">
@@ -181,7 +260,7 @@ const YoutubeGrowth = () => {
                 initial="hidden"
                 animate="visible"
                 variants={fadeInVariant}
-                custom={2.4}
+                custom={2.6}
               >
                 <div className="flex items-center mb-4">
                   <div className="bg-orange-500/20 p-3 rounded-full mr-4">
@@ -210,7 +289,7 @@ const YoutubeGrowth = () => {
                 initial="hidden"
                 animate="visible"
                 variants={fadeInVariant}
-                custom={2.6}
+                custom={2.8}
               >
                 <div className="flex items-center mb-4">
                   <div className="bg-orange-500/20 p-3 rounded-full mr-4">
@@ -258,6 +337,79 @@ const YoutubeGrowth = () => {
                   </a>
                 </Button>
               </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Brands Worked With Section - NEW */}
+      <section className="py-16 md:py-20 relative">
+        <div className="container px-4 md:px-6 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <motion.div 
+              className="text-center mb-12"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInVariant}
+              custom={3.5}
+            >
+              <div className="inline-block px-4 py-1.5 mb-6 text-sm font-medium border border-orange-500/30 rounded-full bg-gradient-to-r from-orange-500/20 to-orange-600/20 text-orange-500">
+                Industry Recognition
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Brands We've Worked With</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Our instructors have collaborated with leading brands and creators to deliver exceptional growth results.
+              </p>
+            </motion.div>
+            
+            <motion.div 
+              className="glass-card p-8 mb-12"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInVariant}
+              custom={3.7}
+            >
+              <img 
+                src="/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png" 
+                alt="Brands we've worked with" 
+                className="w-full max-w-4xl mx-auto rounded"
+              />
+            </motion.div>
+            
+            <motion.div
+              className="text-center"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInVariant}
+              custom={3.8}
+            >
+              <Card className="border-orange-500/20 bg-black/40">
+                <CardContent className="pt-6">
+                  <h3 className="text-xl font-bold mb-2">Gyanendra's Industry Experience</h3>
+                  <p className="text-muted-foreground mb-6">
+                    With over a decade of experience in digital marketing and content creation, Gyanendra has worked with top brands and creators across industries.
+                  </p>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div>
+                      <div className="text-3xl font-bold text-orange-500">300+</div>
+                      <p className="text-sm text-muted-foreground">Channels Grown</p>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-orange-500">20M+</div>
+                      <p className="text-sm text-muted-foreground">Views Generated</p>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-orange-500">50+</div>
+                      <p className="text-sm text-muted-foreground">Brand Collaborations</p>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-orange-500">₹100M+</div>
+                      <p className="text-sm text-muted-foreground">Revenue Generated</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           </div>
         </div>
@@ -373,7 +525,7 @@ const YoutubeGrowth = () => {
               custom={5}
             >
               <div className="inline-block px-4 py-1.5 mb-6 text-sm font-medium border border-orange-500/30 rounded-full bg-gradient-to-r from-orange-500/20 to-orange-600/20 text-orange-500">
-                Special Limited Offer
+                Special 10% OFF - Limited Time Offer
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Invest In Your YouTube Future Today</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -461,9 +613,9 @@ const YoutubeGrowth = () => {
                 custom={6}
               >
                 <PaymentSection 
-                  price="4,999" 
-                  originalPrice="9,999" 
-                  discount="50%" 
+                  price={discountedPrice} 
+                  originalPrice={originalPrice} 
+                  discount="10%" 
                   paymentLink="https://example.com/checkout"
                 />
               </motion.div>
@@ -568,7 +720,7 @@ const YoutubeGrowth = () => {
                   initialSeconds={0}
                   className="max-w-md mx-auto shadow-lg"
                 />
-                <p className="text-orange-400 mt-2">Limited-Time 50% Discount Ends Soon!</p>
+                <p className="text-orange-400 mt-2">Limited-Time 10% Discount Ends Soon!</p>
               </div>
               
               <Button 
@@ -577,7 +729,7 @@ const YoutubeGrowth = () => {
                 asChild
               >
                 <a href="#pricing">
-                  Enroll Now - ₹4,999 Only
+                  Enroll Now - ₹{discountedPrice} Only
                 </a>
               </Button>
               

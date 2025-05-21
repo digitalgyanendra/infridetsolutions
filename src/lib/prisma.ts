@@ -1,17 +1,14 @@
 
 // This file creates a singleton instance of PrismaClient to prevent multiple instances during development
 
-// Try a different import pattern for PrismaClient
-import { PrismaClient as PrismaClientType } from '@prisma/client'
+// Import PrismaClient correctly
+import { PrismaClient } from '@prisma/client'
 
 // Create a global type for Prisma
 declare global {
   // eslint-disable-next-line no-var
-  var prisma: PrismaClientType | undefined;
+  var prisma: PrismaClient | undefined;
 }
-
-// Create the PrismaClient constructor
-const PrismaClient = PrismaClientType
 
 // Export the Prisma instance
 export const prisma = global.prisma || new PrismaClient();
