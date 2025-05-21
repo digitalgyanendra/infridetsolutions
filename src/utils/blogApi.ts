@@ -1,4 +1,3 @@
-
 // Import the prisma client instance
 import { prisma } from '@/lib/prisma';
 import { Prisma as PrismaNamespace } from '@prisma/client';
