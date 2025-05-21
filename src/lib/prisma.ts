@@ -1,7 +1,7 @@
 
 // This file creates a singleton instance of PrismaClient to prevent multiple instances during development
 
-// Import PrismaClient from @prisma/client
+// Import PrismaClient directly
 import { PrismaClient } from '@prisma/client';
 
 // Create a global type for Prisma
