@@ -26,7 +26,6 @@ import Disclaimer from "./pages/Disclaimer";
 
 // Course Pages
 import YoutubeGrowth from "./pages/courses/YoutubeGrowth";
-import PaymentSuccess from "./pages/courses/PaymentSuccess";
 
 // Admin Routes
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -65,7 +64,6 @@ const App = () => (
               
               {/* Course Detail Routes */}
               <Route path="/courses/youtube-growth" element={<YoutubeGrowth />} />
-              <Route path="/courses/payment-success" element={<PaymentSuccess />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminDashboard />} />
