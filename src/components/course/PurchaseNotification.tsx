@@ -30,8 +30,7 @@ const PurchaseNotification = () => {
         title: "New Course Purchase!",
         description: `${randomName} from ${randomCity} just enrolled in the YouTube Growth Accelerator course.`,
         duration: 5000,
-        className: "bg-gradient-to-r from-green-500/80 to-green-600/80 text-white border-green-500",
-        icon: <Check className="h-5 w-5 text-white" />
+        className: "bg-gradient-to-r from-green-500/80 to-green-600/80 text-white border-green-500"
       });
     };
 

@@ -1,17 +1,19 @@
 
+// This file creates a singleton instance of PrismaClient to prevent multiple instances during development
+
+// Import PrismaClient from @prisma/client
 import { PrismaClient } from '@prisma/client';
 
-// Export a singleton instance of Prisma Client
-const prismaClientSingleton = () => {
-  return new PrismaClient();
-};
+// Create a global type for Prisma
+declare global {
+  // eslint-disable-next-line no-var
+  var prisma: PrismaClient | undefined;
+}
 
-type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
+// Export the Prisma instance
+export const prisma = global.prisma || new PrismaClient();
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClientSingleton | undefined;
-};
-
-export const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+// In development, attach the instance to the global object to prevent multiple instances
+if (process.env.NODE_ENV !== 'production') {
+  global.prisma = prisma;
+}
