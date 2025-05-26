@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const WorkedWithSection = () => {
   return (
     <motion.section 
-      className="py-16 bg-black relative"
+      className="py-16 bg-white relative"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}

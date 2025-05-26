@@ -36,7 +36,7 @@ const PartnershipsSection = () => {
 
   return (
     <motion.section 
-      className="py-20 bg-gradient-to-b from-black to-muted"
+      className="py-20 bg-gradient-to-b from-white to-gray-50"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -56,22 +56,22 @@ const PartnershipsSection = () => {
           >
             <div className="grid md:grid-cols-[1fr_2fr] gap-8 items-center">
               <div className="flex flex-col items-center">
-                <div className="w-40 h-40 bg-black/30 p-4 rounded-full flex items-center justify-center mb-6">
+                <div className="w-40 h-40 bg-gray-100/30 p-4 rounded-full flex items-center justify-center mb-6">
                   <img src={item.logo} alt={item.client} className="w-28 h-auto object-contain" />
                 </div>
-                <h3 className="text-2xl font-semibold text-white mb-2">{item.client}</h3>
-                <p className="text-orange-500 font-medium">{item.category}</p>
+                <h3 className="text-2xl font-semibold text-gray-800 mb-2">{item.client}</h3>
+                <p className="text-orange-600 font-medium">{item.category}</p>
               </div>
               
               <div>
-                <p className="text-lg text-foreground mb-6">{item.description}</p>
+                <p className="text-lg text-gray-700 mb-6">{item.description}</p>
                 
-                <h4 className="text-xl font-semibold mb-4 text-white">Managed Channels:</h4>
+                <h4 className="text-xl font-semibold mb-4 text-gray-800">Managed Channels:</h4>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {item.channels.map((channel, idx) => (
-                    <Card key={idx} className="bg-black/40 border-border/50">
+                    <Card key={idx} className="bg-white/60 border-gray-200/50">
                       <CardContent className="p-4">
-                        <a href={channel.url} target="_blank" rel="noopener noreferrer" className="text-deepBlue-400 hover:text-orange-500 transition-colors">
+                        <a href={channel.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-orange-600 transition-colors">
                           {channel.name}
                         </a>
                       </CardContent>

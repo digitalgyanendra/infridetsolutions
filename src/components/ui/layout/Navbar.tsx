@@ -37,7 +37,7 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
-  return <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+  return <header className="sticky top-0 z-50 w-full border-b border-gray-200/40 bg-white/80 backdrop-blur-md">
       <div className="container px-4 md:px-6 mx-auto flex h-16 items-center justify-between gap-2">
         <div className="flex items-center gap-3">
           {/* Secondary logo added to the left with optimized attributes */}
@@ -60,32 +60,32 @@ const Navbar = () => {
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link to="/" className="text-sm hover:text-primary transition-colors">
+          <Link to="/" className="text-sm text-gray-700 hover:text-primary transition-colors">
             Home
           </Link>
-          <Link to="/about" className="text-sm hover:text-primary transition-colors">
+          <Link to="/about" className="text-sm text-gray-700 hover:text-primary transition-colors">
             About
           </Link>
-          <Link to="/services" className="text-sm hover:text-primary transition-colors">
+          <Link to="/services" className="text-sm text-gray-700 hover:text-primary transition-colors">
             Services
           </Link>
-          <Link to="/portfolio" className="text-sm hover:text-primary transition-colors">
+          <Link to="/portfolio" className="text-sm text-gray-700 hover:text-primary transition-colors">
             Portfolio
           </Link>
-          <Link to="/blog" className="text-sm hover:text-primary transition-colors">
+          <Link to="/blog" className="text-sm text-gray-700 hover:text-primary transition-colors">
             Blog
           </Link>
-          <Link to="/courses" className="text-sm hover:text-primary transition-colors">
+          <Link to="/courses" className="text-sm text-gray-700 hover:text-primary transition-colors">
             Courses
           </Link>
-          <Link to="/contact" className="text-sm hover:text-primary transition-colors">
+          <Link to="/contact" className="text-sm text-gray-700 hover:text-primary transition-colors">
             Contact
           </Link>
         </nav>
         
         <div className="hidden md:flex items-center gap-4">
           <Link to="/login">
-            <Button variant="outline" size="sm" className="border-orange-500/50 hover:bg-orange-500/10 text-white">
+            <Button variant="outline" size="sm" className="border-orange-500/50 hover:bg-orange-500/10 text-gray-700">
               <User size={16} className="mr-2" />
               Log In
             </Button>
@@ -102,7 +102,7 @@ const Navbar = () => {
         <Button 
           variant="ghost" 
           size="icon" 
-          className="md:hidden" 
+          className="md:hidden text-gray-700" 
           onClick={toggleMenu}
           aria-expanded={isMenuOpen}
           aria-label="Toggle menu"
@@ -112,32 +112,32 @@ const Navbar = () => {
       </div>
       
       {/* Mobile Navigation */}
-      {isMenuOpen && <div className="md:hidden py-4 px-4 bg-black/90 border-b border-border/40 backdrop-blur-md">
+      {isMenuOpen && <div className="md:hidden py-4 px-4 bg-white/90 border-b border-gray-200/40 backdrop-blur-md">
           <nav className="flex flex-col space-y-4">
-            <Link to="/" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={handleNavigation}>
+            <Link to="/" className="text-sm px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors" onClick={handleNavigation}>
               Home
             </Link>
-            <Link to="/about" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={handleNavigation}>
+            <Link to="/about" className="text-sm px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors" onClick={handleNavigation}>
               About
             </Link>
-            <Link to="/services" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={handleNavigation}>
+            <Link to="/services" className="text-sm px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors" onClick={handleNavigation}>
               Services
             </Link>
-            <Link to="/portfolio" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={handleNavigation}>
+            <Link to="/portfolio" className="text-sm px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors" onClick={handleNavigation}>
               Portfolio
             </Link>
-            <Link to="/blog" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={handleNavigation}>
+            <Link to="/blog" className="text-sm px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors" onClick={handleNavigation}>
               Blog
             </Link>
-            <Link to="/courses" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={handleNavigation}>
+            <Link to="/courses" className="text-sm px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors" onClick={handleNavigation}>
               Courses
             </Link>
-            <Link to="/contact" className="text-sm px-4 py-2 hover:bg-muted rounded-md transition-colors" onClick={handleNavigation}>
+            <Link to="/contact" className="text-sm px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors" onClick={handleNavigation}>
               Contact
             </Link>
-            <div className="flex flex-col space-y-2 pt-2 border-t border-border/40">
+            <div className="flex flex-col space-y-2 pt-2 border-t border-gray-200/40">
               <Link to="/login" onClick={handleNavigation}>
-                <Button variant="outline" className="w-full border-orange-500/50 hover:bg-orange-500/10">
+                <Button variant="outline" className="w-full border-orange-500/50 hover:bg-orange-500/10 text-gray-700">
                   <User size={16} className="mr-2" />
                   Log In
                 </Button>

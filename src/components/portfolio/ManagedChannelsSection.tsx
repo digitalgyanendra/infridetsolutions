@@ -57,7 +57,7 @@ const ManagedChannelsSection = () => {
 
   return (
     <motion.section 
-      className="py-20 bg-muted"
+      className="py-20 bg-gray-50"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -75,17 +75,17 @@ const ManagedChannelsSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <h3 className="text-2xl font-bold text-orange-500 mb-6">{category.category}</h3>
+              <h3 className="text-2xl font-bold text-orange-600 mb-6">{category.category}</h3>
               <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {category.channels.map((channel, idx) => (
-                  <Card key={idx} className="bg-black/60 hover:bg-black/80 transition-colors">
+                  <Card key={idx} className="bg-white/60 hover:bg-white/80 transition-colors border-gray-200/50">
                     <CardContent className="p-4">
                       {channel.url ? (
-                        <a href={channel.url} target="_blank" rel="noopener noreferrer" className="text-deepBlue-400 hover:text-orange-500 transition-colors">
+                        <a href={channel.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-orange-600 transition-colors">
                           {channel.name}
                         </a>
                       ) : (
-                        <span className="text-white">{channel.name}</span>
+                        <span className="text-gray-700">{channel.name}</span>
                       )}
                     </CardContent>
                   </Card>
