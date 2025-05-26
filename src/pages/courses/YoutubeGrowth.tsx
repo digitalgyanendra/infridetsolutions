@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -71,7 +70,7 @@ const YoutubeGrowth = () => {
 
       {/* Hero Section */}
       <section className="py-16 md:py-24 relative overflow-hidden hero-bg">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/90 to-transparent opacity-80 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-silver-800/90 to-transparent opacity-80 z-0"></div>
         <div className="container px-4 md:px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
@@ -124,37 +123,6 @@ const YoutubeGrowth = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
-                <div className="bg-black/40 backdrop-blur-sm p-4 rounded-lg flex items-center">
-                  <BookOpen className="text-orange-500 mr-2" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Modules</p>
-                    <p className="font-semibold">8</p>
-                  </div>
-                </div>
-                
-                <div className="bg-black/40 backdrop-blur-sm p-4 rounded-lg flex items-center">
-                  <Clock className="text-orange-500 mr-2" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Duration</p>
-                    <p className="font-semibold">50+ Hours</p>
-                  </div>
-                </div>
-                
-                <div className="bg-black/40 backdrop-blur-sm p-4 rounded-lg flex items-center">
-                  <Users className="text-orange-500 mr-2" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Students</p>
-                    <p className="font-semibold">1,500+</p>
-                  </div>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="flex flex-wrap gap-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 1 }}
-              >
                 <Link to="#enroll">
                   <Button 
                     size="lg" 
@@ -181,7 +149,7 @@ const YoutubeGrowth = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <div className="aspect-video rounded-xl overflow-hidden relative">
-                <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                <div className="absolute inset-0 flex items-center justify-center bg-silver-700/50">
                   <div className="w-20 h-20 rounded-full bg-orange-500 flex items-center justify-center cursor-pointer hover:bg-orange-600 transition-colors">
                     <Play size={36} className="text-white ml-1" />
                   </div>
@@ -193,7 +161,7 @@ const YoutubeGrowth = () => {
                 />
               </div>
               
-              <div className="absolute -bottom-4 -right-4 bg-black/80 backdrop-blur-sm p-4 rounded-lg border border-orange-500/20">
+              <div className="absolute -bottom-4 -right-4 bg-silver-800/80 backdrop-blur-sm p-4 rounded-lg border border-orange-500/20">
                 <p className="font-bold text-lg">Limited Time Offer!</p>
                 <p className="text-orange-400">38% OFF - Ends in 48hrs</p>
               </div>
@@ -203,7 +171,7 @@ const YoutubeGrowth = () => {
       </section>
 
       {/* Quick Course Overview */}
-      <section className="py-12 bg-gradient-to-b from-background to-black/90">
+      <section className="py-12 bg-gradient-to-b from-background to-silver-200/90">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
@@ -248,7 +216,7 @@ const YoutubeGrowth = () => {
       </section>
 
       {/* Instructor Story */}
-      <section id="instructor" className="py-20 bg-black relative overflow-hidden">
+      <section id="instructor" className="py-20 bg-silver-100 relative overflow-hidden">
         <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
         <div className="container px-4 md:px-6 relative z-10">
           <motion.div 
@@ -280,7 +248,7 @@ const YoutubeGrowth = () => {
                   alt="Gyanendra Dwivedi" 
                   className="rounded-xl w-full object-cover aspect-[4/5]"
                 />
-                <div className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-sm p-4 rounded-lg">
+                <div className="absolute bottom-4 left-4 right-4 bg-silver-800/80 backdrop-blur-sm p-4 rounded-lg">
                   <h3 className="font-bold text-xl">Gyanendra Dwivedi</h3>
                   <p className="text-orange-400">YouTube Growth Expert</p>
                 </div>
@@ -342,7 +310,7 @@ const YoutubeGrowth = () => {
       </section>
 
       {/* Journey Timeline */}
-      <section className="py-20 bg-gradient-to-b from-black/95 to-background">
+      <section className="py-20 bg-gradient-to-b from-silver-200/95 to-background">
         <div className="container px-4 md:px-6">
           <motion.div 
             className="text-center max-w-3xl mx-auto mb-16"
@@ -576,7 +544,7 @@ const YoutubeGrowth = () => {
                       duration: "7 hrs"
                     }
                   ].map((module, index) => (
-                    <div key={index} className="border border-border/40 rounded-lg p-4 bg-black/40">
+                    <div key={index} className="border border-border/40 rounded-lg p-4 bg-silver-100/40">
                       <div className="flex justify-between items-center">
                         <h4 className="font-semibold">{module.title}</h4>
                         <div className="flex space-x-4 text-sm text-muted-foreground">
@@ -610,7 +578,7 @@ const YoutubeGrowth = () => {
       </section>
 
       {/* Why Choose This Course - With Priyanshu */}
-      <section className="py-20 bg-gradient-to-b from-background to-black/95">
+      <section className="py-20 bg-gradient-to-b from-background to-silver-200/95">
         <div className="container px-4 md:px-6">
           <motion.div 
             className="text-center max-w-3xl mx-auto mb-16"
@@ -713,7 +681,7 @@ const YoutubeGrowth = () => {
                   alt="Priyanshu" 
                   className="rounded-xl w-full object-cover aspect-[4/5]"
                 />
-                <div className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-sm p-4 rounded-lg">
+                <div className="absolute bottom-4 left-4 right-4 bg-silver-800/80 backdrop-blur-sm p-4 rounded-lg">
                   <h3 className="font-bold text-xl">Priyanshu</h3>
                   <p className="text-orange-400">YouTube Strategy Expert</p>
                 </div>
@@ -728,7 +696,7 @@ const YoutubeGrowth = () => {
       </section>
 
       {/* Student Results Section */}
-      <section className="py-20 bg-black relative overflow-hidden">
+      <section className="py-20 bg-silver-100 relative overflow-hidden">
         <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
         <div className="container px-4 md:px-6 relative z-10">
           <motion.div 
@@ -835,7 +803,7 @@ const YoutubeGrowth = () => {
       </section>
 
       {/* Pricing & Bonuses Section */}
-      <section id="enroll" className="py-20 bg-gradient-to-b from-black/95 to-background">
+      <section id="enroll" className="py-20 bg-gradient-to-b from-silver-200/95 to-background">
         <div className="container px-4 md:px-6">
           <motion.div 
             className="text-center max-w-3xl mx-auto mb-16"
@@ -1053,7 +1021,7 @@ const YoutubeGrowth = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-black/95 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-b from-background to-silver-200/95 relative overflow-hidden">
         <div className="container px-4 md:px-6 relative z-10">
           <motion.div 
             className="glass-card max-w-4xl mx-auto p-8 md:p-12 text-center border-2 border-orange-500/20"

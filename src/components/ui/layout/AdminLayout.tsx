@@ -68,7 +68,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   return (
     <div className="h-screen flex flex-col bg-background">
       {/* Top Navigation Bar */}
-      <div className="bg-black border-b border-border/40 h-16 flex items-center px-4 justify-between">
+      <div className="bg-silver-800 border-b border-border/40 h-16 flex items-center px-4 justify-between">
         <div className="flex items-center">
           <button
             onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
@@ -92,7 +92,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               <span className="mr-2">{user?.email || "Admin User"}</span>
               <ChevronDown size={16} />
             </button>
-            <div className="dropdown-menu hidden group-hover:block absolute right-0 mt-2 w-48 bg-black border border-border rounded-md shadow-lg z-50">
+            <div className="dropdown-menu hidden group-hover:block absolute right-0 mt-2 w-48 bg-silver-800 border border-border rounded-md shadow-lg z-50">
               <Link to="/admin/profile" className="block px-4 py-2 text-white hover:bg-muted">
                 Profile
               </Link>
@@ -110,9 +110,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar for Mobile */}
         {isMobileSidebarOpen && (
-          <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setIsMobileSidebarOpen(false)}>
+          <div className="fixed inset-0 bg-silver-800/50 z-40 md:hidden" onClick={() => setIsMobileSidebarOpen(false)}>
             <div 
-              className="absolute left-0 top-0 bottom-0 w-64 bg-black border-r border-border/40 p-4"
+              className="absolute left-0 top-0 bottom-0 w-64 bg-silver-800 border-r border-border/40 p-4"
               onClick={e => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-6">
@@ -154,7 +154,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         
         {/* Sidebar for Desktop */}
         <div
-          className={`hidden md:block border-r border-border/40 bg-black ${
+          className={`hidden md:block border-r border-border/40 bg-silver-800 ${
             isSidebarOpen ? "w-64" : "w-20"
           } transition-all duration-300 flex-shrink-0`}
         >
