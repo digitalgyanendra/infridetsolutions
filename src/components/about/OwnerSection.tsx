@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const OwnerSection = () => {
   return (
-    <section className="py-20 bg-black relative">
+    <section className="py-20 bg-white relative">
       <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
       <div className="container px-4 md:px-6 mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -16,7 +16,7 @@ const OwnerSection = () => {
             className="space-y-6"
           >
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">About the Founder</h2>
-            <div className="text-lg text-muted-foreground space-y-4">
+            <div className="text-lg text-gray-700 space-y-4">
               <p>
                 Gyanendra Dwivedi, the founder and CEO of Infridet Solutions Private Limited, is a visionary AI automation expert and YouTube specialist with extensive experience in digital transformation and content optimization.
               </p>

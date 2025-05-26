@@ -32,7 +32,7 @@ const CoreValuesSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black to-gray-900">
+    <section className="py-20 bg-gradient-to-b from-white to-gray-100">
       <div className="container px-4 md:px-6 mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -42,7 +42,7 @@ const CoreValuesSection = () => {
           className="text-center mb-12"
         >
           <h2 className="text-4xl font-bold gradient-text mb-4">Our Core Values</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-gray-700 text-lg max-w-2xl mx-auto">
             These principles guide our work and define our culture as we strive to deliver exceptional digital marketing solutions.
           </p>
         </motion.div>
@@ -59,9 +59,9 @@ const CoreValuesSection = () => {
             >
               <div className="flex items-start mb-4">
                 <CheckCircle className="text-orange-500 mr-3 h-6 w-6 shrink-0" />
-                <h3 className="text-xl font-semibold">{value.title}</h3>
+                <h3 className="text-xl font-semibold text-gray-800">{value.title}</h3>
               </div>
-              <p className="text-muted-foreground">{value.description}</p>
+              <p className="text-gray-600">{value.description}</p>
             </motion.div>
           ))}
         </div>

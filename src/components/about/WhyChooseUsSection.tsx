@@ -38,7 +38,7 @@ const WhyChooseUsSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-900 to-black">
+    <section className="py-20 bg-gradient-to-b from-gray-100 to-white">
       <div className="container px-4 md:px-6 mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -48,7 +48,7 @@ const WhyChooseUsSection = () => {
           className="text-center mb-12"
         >
           <h2 className="text-4xl font-bold gradient-text mb-4">Why Choose Us</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-gray-700 text-lg max-w-2xl mx-auto">
             Discover the advantages of partnering with Infridet Solutions for your digital marketing needs.
           </p>
         </motion.div>
@@ -67,8 +67,8 @@ const WhyChooseUsSection = () => {
                 <div className="mb-4">
                   {reason.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{reason.title}</h3>
-                <p className="text-muted-foreground">{reason.description}</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-800">{reason.title}</h3>
+                <p className="text-gray-600">{reason.description}</p>
               </div>
             </motion.div>
           ))}
