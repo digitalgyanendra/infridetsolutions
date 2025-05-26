@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 
@@ -59,7 +58,7 @@ const SupportersSection = () => {
   return (
     <motion.section 
       id="supporters"
-      className="pb-20 bg-black"
+      className="pb-20 bg-silver-100"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -88,7 +87,7 @@ const SupportersSection = () => {
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-white">{supporter.name}</h3>
+              <h3 className="text-xl font-semibold text-gray-800">{supporter.name}</h3>
               <p className="text-muted-foreground">{supporter.role}</p>
             </motion.div>
           ))}
