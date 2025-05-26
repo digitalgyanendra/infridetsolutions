@@ -63,7 +63,7 @@ const YouTube = ({ embedId, title }: { embedId: string; title: string }) => {
 
   return (
     <div 
-      className="w-full h-full bg-black/70 flex items-center justify-center cursor-pointer relative rounded-t-xl"
+      className="w-full h-full bg-silver-600/70 flex items-center justify-center cursor-pointer relative rounded-t-xl"
       onClick={handleLoadVideo}
       aria-label={`Play ${title} video`}
     >
@@ -94,7 +94,7 @@ const YouTube = ({ embedId, title }: { embedId: string; title: string }) => {
 const VideoTestimonials: React.FC<VideoTestimonialsProps> = ({ showHeading = true }) => {
   return (
     <motion.section
-      className="py-16 bg-gradient-to-b from-black via-background/90 to-background/80 relative overflow-hidden"
+      className="py-16 bg-gradient-to-b from-silver-100 via-background/90 to-background/80 relative overflow-hidden"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}

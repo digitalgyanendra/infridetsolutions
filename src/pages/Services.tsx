@@ -165,7 +165,7 @@ const Services = () => {
       </section>
 
       {/* Main Services */}
-      <section className="py-20 bg-gradient-to-b from-background to-black/95">
+      <section className="py-20 bg-gradient-to-b from-background to-silver-100">
         <div className="container px-4 md:px-6">
           <motion.div 
             className="text-center max-w-3xl mx-auto mb-16"
@@ -196,7 +196,7 @@ const Services = () => {
       </section>
 
       {/* Additional Services */}
-      <section className="py-20 bg-black relative overflow-hidden">
+      <section className="py-20 bg-silver-100 relative overflow-hidden">
         <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
         
         <div className="container px-4 md:px-6 relative z-10">
@@ -239,7 +239,7 @@ const Services = () => {
       </section>
 
       {/* Process Section */}
-      <section className="py-20 bg-gradient-to-b from-black/95 to-background">
+      <section className="py-20 bg-gradient-to-b from-silver-100 to-background">
         <div className="container px-4 md:px-6">
           <motion.div 
             className="text-center max-w-3xl mx-auto mb-16"
@@ -317,7 +317,7 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-black relative overflow-hidden">
+      <section className="py-16 bg-silver-100 relative overflow-hidden">
         <div className="absolute inset-0 network-bg opacity-10 z-0"></div>
         
         <div className="container px-4 md:px-6 relative z-10">

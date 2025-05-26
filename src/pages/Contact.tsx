@@ -79,7 +79,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-black/95">
+      <section className="py-20 bg-gradient-to-b from-background to-silver-100">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <motion.div 
@@ -129,7 +129,7 @@ const Contact = () => {
               </div>
 
               <div className="glass-card p-6 relative overflow-hidden">
-                <div className="w-full h-48 bg-gradient-to-br from-deepBlue-900/30 to-black rounded-lg flex items-center justify-center">
+                <div className="w-full h-48 bg-gradient-to-br from-deepBlue-900/30 to-silver-200 rounded-lg flex items-center justify-center">
                   <div className="text-center">
                     <h3 className="text-xl font-bold mb-2">Our Location</h3>
                     <p className="text-muted-foreground mb-4">Google Maps integration would appear here</p>
@@ -260,7 +260,7 @@ const Contact = () => {
       </section>
 
       {/* Work Hours Section */}
-      <section className="py-16 bg-black relative overflow-hidden">
+      <section className="py-16 bg-silver-100 relative overflow-hidden">
         <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
         
         <div className="container px-4 md:px-6 relative z-10">
