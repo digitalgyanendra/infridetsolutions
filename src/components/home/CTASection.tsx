@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 
 const CTASection = () => {
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section className="py-20 relative overflow-hidden bg-white">
       {/* Background with gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-deepBlue-500/10 z-0"></div>
       <div className="absolute inset-0 network-bg opacity-20 z-0"></div>
@@ -25,7 +25,7 @@ const CTASection = () => {
           </motion.h2>
           
           <motion.p 
-            className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto"
+            className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -55,7 +55,7 @@ const CTASection = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="text-white border-muted hover:bg-muted/20 px-8"
+                className="text-gray-800 border-gray-300 hover:bg-gray-100 px-8"
               >
                 Explore Services
               </Button>

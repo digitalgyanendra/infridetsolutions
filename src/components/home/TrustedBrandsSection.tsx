@@ -150,7 +150,7 @@ const TrustedBrandsSection = () => {
 
   return (
     <motion.section 
-      className="py-12 bg-black overflow-hidden"
+      className="py-12 bg-white overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.8 }}
@@ -158,7 +158,7 @@ const TrustedBrandsSection = () => {
       <div className="container px-4 md:px-6">
         <div className="text-center mb-6">
           <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-2">Trusted by Brands Worldwide</h2>
-          <p className="text-muted-foreground text-sm uppercase tracking-wider font-medium">
+          <p className="text-gray-600 text-sm uppercase tracking-wider font-medium">
             Partnering with industry leaders to drive growth
           </p>
         </div>
@@ -189,7 +189,7 @@ const TrustedBrandsSection = () => {
                   />
                 ) : (
                   <div className={`font-bold text-xl whitespace-nowrap ${
-                    company.highlight ? 'gradient-text' : 'text-white/60'
+                    company.highlight ? 'gradient-text' : 'text-gray-800'
                   }`}>
                     {company.name}
                   </div>
@@ -219,7 +219,7 @@ const TrustedBrandsSection = () => {
                   />
                 ) : (
                   <div className={`font-bold text-xl whitespace-nowrap ${
-                    company.highlight ? 'gradient-text' : 'text-white/60'
+                    company.highlight ? 'gradient-text' : 'text-gray-800'
                   }`}>
                     {company.name}
                   </div>
@@ -230,7 +230,7 @@ const TrustedBrandsSection = () => {
         </div>
         
         <div className="mt-8 text-center">
-          <p className="text-muted-foreground">
+          <p className="text-gray-700">
             <span className="text-orange-500 font-bold">35+ Million</span> Subscribers | 
             <span className="text-deepBlue-500 font-bold"> 2.5+ Billion</span> Views | 
             <span className="text-orange-500 font-bold"> Billions</span> of Impressions

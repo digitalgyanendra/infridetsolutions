@@ -24,8 +24,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, del
       <div className="w-16 h-16 rounded-full bg-gradient-to-br from-orange-500/20 to-deepBlue-500/20 flex items-center justify-center mb-6 group-hover:from-orange-500/30 group-hover:to-deepBlue-500/30 transition-all">
         {icon}
       </div>
-      <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{title}</h3>
-      <p className="text-muted-foreground mb-4">{description}</p>
+      <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors text-gray-800">{title}</h3>
+      <p className="text-gray-600 mb-4">{description}</p>
       <Link to="/services" className="text-primary hover:text-primary/80 font-medium inline-flex items-center">
         Learn more 
         <svg className="ml-1 w-4 h-4 group-hover:ml-2 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -56,7 +56,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-black/95">
+    <section className="py-24 bg-gradient-to-b from-background to-white">
       <div className="container px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.h2 
@@ -69,7 +69,7 @@ const ServicesSection = () => {
             Our Services
           </motion.h2>
           <motion.p 
-            className="text-muted-foreground"
+            className="text-gray-600"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}

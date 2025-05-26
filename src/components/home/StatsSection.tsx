@@ -23,7 +23,7 @@ const StatItem: React.FC<StatItemProps> = ({ icon, value, label, delay }) => {
         {icon}
       </div>
       <h3 className="text-3xl font-bold mb-1 gradient-text">{value}</h3>
-      <p className="text-muted-foreground text-center">{label}</p>
+      <p className="text-gray-600 text-center">{label}</p>
     </motion.div>
   );
 };
@@ -53,7 +53,7 @@ const StatsSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-black relative overflow-hidden">
+    <section className="py-20 bg-white relative overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 network-bg opacity-10 z-0"></div>
       
@@ -69,7 +69,7 @@ const StatsSection = () => {
             Our Impact in Numbers
           </motion.h2>
           <motion.p 
-            className="text-muted-foreground"
+            className="text-gray-600"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}

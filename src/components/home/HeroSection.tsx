@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -134,11 +135,11 @@ const HeroSection = () => {
       {/* Network background animation */}
       <canvas 
         ref={canvasRef} 
-        className="absolute inset-0 z-0 bg-black"
+        className="absolute inset-0 z-0 bg-white"
       />
       
       {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-radial from-transparent to-black z-10"></div>
+      <div className="absolute inset-0 bg-gradient-radial from-transparent to-white z-10"></div>
       
       {/* Content */}
       <div className="container px-4 md:px-6 relative z-20">
@@ -153,7 +154,7 @@ const HeroSection = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-lg md:text-xl text-muted-foreground max-w-3xl"
+            className="text-lg md:text-xl text-gray-700 max-w-3xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -181,7 +182,7 @@ const HeroSection = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="text-white border-deepBlue-500 hover:bg-deepBlue-500/10 shadow-lg hover:shadow-deepBlue-500/25 transition-all px-8"
+                className="text-gray-800 border-deepBlue-500 hover:bg-deepBlue-500/10 shadow-lg hover:shadow-deepBlue-500/25 transition-all px-8"
               >
                 <Search className="mr-2 h-5 w-5" />
                 Find a Consultant
@@ -197,12 +198,12 @@ const HeroSection = () => {
           >
             <div className="flex -space-x-2">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 border-2 border-background flex items-center justify-center">
+                <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 border-2 border-white flex items-center justify-center shadow-lg">
                   <span className="text-xs font-medium">🧑‍💼</span>
                 </div>
               ))}
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-gray-600">
               Join <span className="text-primary font-medium">25 experts</span> already on our platform
             </p>
           </motion.div>
