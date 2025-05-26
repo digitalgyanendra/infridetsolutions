@@ -64,7 +64,7 @@ const SupportersGrid: React.FC<SupportersGridProps> = ({ columns = 2, showHeadin
   return (
     <motion.section 
       id="supporters"
-      className="py-20 bg-black"
+      className="py-20 bg-silver-100"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -97,7 +97,7 @@ const SupportersGrid: React.FC<SupportersGridProps> = ({ columns = 2, showHeadin
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-white">{supporter.name}</h3>
+              <h3 className="text-xl font-semibold text-gray-800">{supporter.name}</h3>
               <p className="text-muted-foreground">{supporter.role}</p>
             </motion.div>
           ))}
