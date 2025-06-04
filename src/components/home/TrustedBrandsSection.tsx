@@ -49,7 +49,7 @@ const TrustedBrandsSection = () => {
     };
   }, []);
 
-  // Add new logo URLs with proper logos for missing companies
+  // Updated logo URLs with proper logos for all companies
   const companyLogos = [
     { 
       name: "Josh Talks", 
@@ -124,35 +124,35 @@ const TrustedBrandsSection = () => {
     { 
       name: "Seekho", 
       highlight: true,
-      imgSrc: "https://images.crunchbase.com/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/v1477995316/s8e3j26kyhztlzc6hl5a.png",
+      imgSrc: "https://s3-us-west-2.amazonaws.com/cbi-image-service-prd/original/ce2cd7f1-2145-4aea-92d7-a141af587318.png",
       width: 100,
       height: 64
     },
     { 
       name: "Big Bazaar", 
       highlight: true,
-      imgSrc: "https://logos-world.net/wp-content/uploads/2020/12/Big-Bazaar-Logo.png",
+      imgSrc: "https://bigbazaar.com.co/wp-content/uploads/2023/06/Big-Bazaar-Grocery-Store.png.webp",
       width: 100,
       height: 64
     },
     { 
       name: "Kuku FM", 
       highlight: false,
-      imgSrc: "https://play-lh.googleusercontent.com/1EAY0Z0vNz-8n_fG-JZKuHHcYJ9Raa7Cr3QlWfOVGKjqhJqZ4vwUEqWP8HNVxz7v7-0",
+      imgSrc: "https://d1l07mcd18xic4.cloudfront.net/static/KukuFM-logos/KukuFM144-144.png",
       width: 100,
       height: 64
     },
     { 
       name: "Pocket FM", 
       highlight: true,
-      imgSrc: "https://play-lh.googleusercontent.com/gN2zEjxLT5mPqzQ3z8fzJKY7_fMEBV_LtQzGr-KfKgN3VCzx5o8P_9UQf6vHWJpE8A",
+      imgSrc: "https://dzh2zima160vx.cloudfront.net/logo/657914371c5b6d3a474b0c53d58dc68f_332_160?Expires=1861920000&Signature=UAvK9ruE~mLLHjDCRUunStanZIA8vXApByGf7mUExKcAfTf-Twlz7Qr~PY~WfCPHpdrifB0-9ukXqDhKtpa4unFQScOecRATUXmnSSGnydY9OggwE478RR~-9gLj7n2FDDWO7dJGophSziSnKsQBfhw0fhlXlPbfNhvAxo7669PHgdx4OB1Wgr7gKgy94RhyxrDwQB32UKlcOrpjyBj7A2UIvU2fjlB0huxUU6ng3BVxNGFxlOHht0E0Si1cgQ1RzxZCX8Nh-xVDqWKM3~GiPDB~7a3Q4nYvyXsKgrts2C48oRHUnLsxlU6vbGxcdW1bF8m4SLWWYfgp4KM30~N-vg__&Key-Pair-Id=APKAII5OVX4LZ3WT422Q",
       width: 100,
       height: 64
     },
     { 
       name: "SuperIndia", 
       highlight: false,
-      imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5uHgpxK3YXOx8gKcQ5R6zLxS8Ny7bKzjxmA&s",
+      imgSrc: "https://yt3.googleusercontent.com/x_NgpbaqE2Z0gMORl3hmeYQQT4PepNVqEIJMa3OL8AS_KYI_JD0Z7ZhKz_C69gkweOJNupb4yA=s900-c-k-c0x00ffffff-no-rj",
       width: 100,
       height: 64
     }
@@ -186,23 +186,15 @@ const TrustedBrandsSection = () => {
                   company.highlight ? 'opacity-90' : 'opacity-70'
                 }`}
               >
-                {company.imgSrc ? (
-                  <img 
-                    src={company.imgSrc} 
-                    alt={company.name} 
-                    className="h-full w-auto object-contain"
-                    loading="lazy"
-                    width={company.width || 100}
-                    height={company.height || 64}
-                    decoding="async"
-                  />
-                ) : (
-                  <div className={`font-bold text-xl whitespace-nowrap ${
-                    company.highlight ? 'gradient-text' : 'text-gray-800'
-                  }`}>
-                    {company.name}
-                  </div>
-                )}
+                <img 
+                  src={company.imgSrc} 
+                  alt={company.name} 
+                  className="h-full w-auto object-contain"
+                  loading="lazy"
+                  width={company.width || 100}
+                  height={company.height || 64}
+                  decoding="async"
+                />
               </div>
             ))}
           </div>
@@ -215,23 +207,15 @@ const TrustedBrandsSection = () => {
                   company.highlight ? 'opacity-90' : 'opacity-70'
                 }`}
               >
-                {company.imgSrc ? (
-                  <img 
-                    src={company.imgSrc} 
-                    alt={company.name} 
-                    className="h-full w-auto object-contain"
-                    loading="lazy"
-                    width={company.width || 100}
-                    height={company.height || 64}
-                    decoding="async"
-                  />
-                ) : (
-                  <div className={`font-bold text-xl whitespace-nowrap ${
-                    company.highlight ? 'gradient-text' : 'text-gray-800'
-                  }`}>
-                    {company.name}
-                  </div>
-                )}
+                <img 
+                  src={company.imgSrc} 
+                  alt={company.name} 
+                  className="h-full w-auto object-contain"
+                  loading="lazy"
+                  width={company.width || 100}
+                  height={company.height || 64}
+                  decoding="async"
+                />
               </div>
             ))}
           </div>
