@@ -2,6 +2,7 @@
 import React, { lazy, Suspense } from "react";
 import Layout from "@/components/ui/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
+import CertificationsSection from "@/components/home/CertificationsSection";
 import TrustedBrandsSection from "@/components/home/TrustedBrandsSection";
 import SEOHead from "@/components/seo/SEOHead";
 import SchemaData, { getOrganizationSchema, getWebsiteSchema } from "@/components/seo/SchemaData";
@@ -33,6 +34,7 @@ const Index = () => {
       <SchemaData type="WebSite" data={getWebsiteSchema()} />
       
       <HeroSection />
+      <CertificationsSection />
       <TrustedBrandsSection />
       <Suspense fallback={<LoadingFallback />}>
         <ServicesSection />

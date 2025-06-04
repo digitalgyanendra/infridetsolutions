@@ -49,7 +49,7 @@ const TrustedBrandsSection = () => {
     };
   }, []);
 
-  // Add new logo URLs
+  // Add new logo URLs with proper logos for missing companies
   const companyLogos = [
     { 
       name: "Josh Talks", 
@@ -114,7 +114,6 @@ const TrustedBrandsSection = () => {
       width: 100,
       height: 64
     },
-    // Previously provided logos with optimized loading
     { 
       name: "Physics Wallah", 
       highlight: true,
@@ -125,26 +124,37 @@ const TrustedBrandsSection = () => {
     { 
       name: "Seekho", 
       highlight: true,
-      style: {
-        background: "#d8d8d8 url('https://fonts.gstatic.com/s/i/materialiconsextended/insert_photo/v6/grey600-24dp/1x/baseline_insert_photo_grey600_24dp.png') 50% 50% no-repeat",
-        opacity: 0.6
-      }
+      imgSrc: "https://images.crunchbase.com/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/v1477995316/s8e3j26kyhztlzc6hl5a.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "Big Bazaar", 
-      highlight: true
+      highlight: true,
+      imgSrc: "https://logos-world.net/wp-content/uploads/2020/12/Big-Bazaar-Logo.png",
+      width: 100,
+      height: 64
     },
     { 
       name: "Kuku FM", 
-      highlight: false
+      highlight: false,
+      imgSrc: "https://play-lh.googleusercontent.com/1EAY0Z0vNz-8n_fG-JZKuHHcYJ9Raa7Cr3QlWfOVGKjqhJqZ4vwUEqWP8HNVxz7v7-0",
+      width: 100,
+      height: 64
     },
     { 
       name: "Pocket FM", 
-      highlight: true
+      highlight: true,
+      imgSrc: "https://play-lh.googleusercontent.com/gN2zEjxLT5mPqzQ3z8fzJKY7_fMEBV_LtQzGr-KfKgN3VCzx5o8P_9UQf6vHWJpE8A",
+      width: 100,
+      height: 64
     },
     { 
       name: "SuperIndia", 
-      highlight: false
+      highlight: false,
+      imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5uHgpxK3YXOx8gKcQ5R6zLxS8Ny7bKzjxmA&s",
+      width: 100,
+      height: 64
     }
   ];
 
@@ -180,7 +190,6 @@ const TrustedBrandsSection = () => {
                   <img 
                     src={company.imgSrc} 
                     alt={company.name} 
-                    style={company.style || {}}
                     className="h-full w-auto object-contain"
                     loading="lazy"
                     width={company.width || 100}
@@ -210,7 +219,6 @@ const TrustedBrandsSection = () => {
                   <img 
                     src={company.imgSrc} 
                     alt={company.name} 
-                    style={company.style || {}}
                     className="h-full w-auto object-contain"
                     loading="lazy"
                     width={company.width || 100}
