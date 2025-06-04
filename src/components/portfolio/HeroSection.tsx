@@ -27,8 +27,8 @@ const HeroSection = () => {
           transition={{ delay: 0.4, duration: 0.8 }}
         >
           <p className="text-2xl text-gray-800 font-medium">
-            We've generated over <span className="text-orange-600 font-bold">35+ Million Subscribers</span>, 
-            over <span className="text-blue-600 font-bold">2.5+ Billion Views</span>, and billions of impressions 
+            We've generated over <span className="text-orange-600 font-bold">43+ Million Subscribers</span>, 
+            over <span className="text-blue-600 font-bold">6.5+ Billion Views</span>, and billions of impressions 
             on YouTube working with top brands and creators.
           </p>
         </motion.div>
