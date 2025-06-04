@@ -32,13 +32,13 @@ const StatsSection = () => {
   const stats = [
     {
       icon: <TrendingUp size={28} className="text-orange-500" />,
-      value: "250%",
-      label: "Average Growth for Clients",
+      value: "43M+",
+      label: "Total Subscribers",
     },
     {
       icon: <Users size={28} className="text-deepBlue-500" />,
-      value: "1,200+",
-      label: "Satisfied Clients",
+      value: "6.5B+",
+      label: "Total Views",
     },
     {
       icon: <Award size={28} className="text-orange-500" />,

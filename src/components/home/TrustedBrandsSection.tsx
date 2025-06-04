@@ -223,8 +223,8 @@ const TrustedBrandsSection = () => {
         
         <div className="mt-8 text-center">
           <p className="text-gray-700">
-            <span className="text-orange-500 font-bold">35+ Million</span> Subscribers | 
-            <span className="text-deepBlue-500 font-bold"> 2.5+ Billion</span> Views | 
+            <span className="text-orange-500 font-bold">43+ Million</span> Subscribers | 
+            <span className="text-deepBlue-500 font-bold"> 6.5+ Billion</span> Views | 
             <span className="text-orange-500 font-bold"> Billions</span> of Impressions
           </p>
         </div>
