@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -57,13 +56,13 @@ const CourseCard: React.FC<CourseCardProps> = ({
           {icon}
         </div>
         
-        <h3 className="text-xl font-bold mb-2">{title}</h3>
-        <p className="text-muted-foreground mb-6">{description}</p>
+        <h3 className="text-xl font-bold mb-2 text-gray-800">{title}</h3>
+        <p className="text-gray-600 mb-6">{description}</p>
         
         <div className="flex items-baseline mb-6">
-          <span className="text-3xl font-bold">{price}</span>
+          <span className="text-3xl font-bold text-gray-800">{price}</span>
           {originalPrice && (
-            <span className="text-lg text-muted-foreground line-through ml-2">{originalPrice}</span>
+            <span className="text-lg text-gray-500 line-through ml-2">{originalPrice}</span>
           )}
         </div>
         
@@ -75,7 +74,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
               </div>
-              <span className="text-muted-foreground">{feature}</span>
+              <span className="text-gray-600">{feature}</span>
             </li>
           ))}
         </ul>
@@ -203,7 +202,7 @@ const Courses = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 md:py-28 relative overflow-hidden hero-bg">
+      <section className="py-20 md:py-28 relative overflow-hidden bg-white">
         <div className="container px-4 md:px-6 relative z-10">
           <div className="max-w-3xl">
             <motion.h1 
@@ -215,7 +214,7 @@ const Courses = () => {
               Transform Your Skills with Our Courses
             </motion.h1>
             <motion.p 
-              className="text-xl text-muted-foreground mb-8"
+              className="text-xl text-gray-600 mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -227,7 +226,7 @@ const Courses = () => {
       </section>
 
       {/* Courses Grid */}
-      <section className="py-20 bg-gradient-to-b from-background to-black/95">
+      <section className="py-20 bg-white">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {courses.map((course, index) => (
@@ -250,9 +249,7 @@ const Courses = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-black relative overflow-hidden">
-        <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
-        
+      <section className="py-20 bg-gray-50 relative overflow-hidden">
         <div className="container px-4 md:px-6 relative z-10">
           <motion.div 
             className="text-center max-w-3xl mx-auto mb-16"
@@ -262,7 +259,7 @@ const Courses = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl font-bold gradient-text mb-4">Frequently Asked Questions</h2>
-            <p className="text-muted-foreground">
+            <p className="text-gray-600">
               Everything you need to know about our courses and learning experience.
             </p>
           </motion.div>
@@ -298,8 +295,8 @@ const Courses = () => {
                 transition={{ duration: 0.5, delay: 0.1 * index }}
                 viewport={{ once: true }}
               >
-                <h3 className="text-xl font-semibold mb-3">{faq.question}</h3>
-                <p className="text-muted-foreground">{faq.answer}</p>
+                <h3 className="text-xl font-semibold mb-3 text-gray-800">{faq.question}</h3>
+                <p className="text-gray-600">{faq.answer}</p>
               </motion.div>
             ))}
           </div>
@@ -307,7 +304,7 @@ const Courses = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-b from-black/95 to-background">
+      <section className="py-16 bg-white">
         <div className="container px-4 md:px-6">
           <div className="glass-card max-w-4xl mx-auto p-8 md:p-12 text-center">
             <motion.h2 
@@ -321,7 +318,7 @@ const Courses = () => {
             </motion.h2>
             
             <motion.p 
-              className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto"
+              className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}

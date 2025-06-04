@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Layout from "@/components/ui/layout/Layout";
@@ -31,7 +30,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, toggleOpen,
         className="w-full flex justify-between items-center p-6 text-left focus:outline-none"
         onClick={toggleOpen}
       >
-        <h3 className="text-lg font-semibold">{question}</h3>
+        <h3 className="text-lg font-semibold text-gray-800">{question}</h3>
         {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
       </button>
       
@@ -40,7 +39,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, toggleOpen,
           isOpen ? "max-h-96 pb-6" : "max-h-0"
         }`}
       >
-        <p className="text-muted-foreground">{answer}</p>
+        <p className="text-gray-600">{answer}</p>
       </div>
     </motion.div>
   );
@@ -178,7 +177,7 @@ const FAQ = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-16 md:py-20 relative overflow-hidden hero-bg">
+      <section className="py-16 md:py-20 relative overflow-hidden bg-white">
         <div className="container px-4 md:px-6 relative z-10">
           <div className="max-w-3xl">
             <motion.h1 
@@ -190,7 +189,7 @@ const FAQ = () => {
               Frequently Asked Questions
             </motion.h1>
             <motion.p 
-              className="text-lg text-muted-foreground mb-4"
+              className="text-lg text-gray-600 mb-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -202,7 +201,7 @@ const FAQ = () => {
       </section>
 
       {/* FAQ Content */}
-      <section className="py-12 bg-gradient-to-b from-background to-black/95">
+      <section className="py-12 bg-white">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Category Sidebar */}
@@ -214,7 +213,7 @@ const FAQ = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h2 className="text-xl font-semibold mb-4 flex items-center">
+                  <h2 className="text-xl font-semibold mb-4 flex items-center text-gray-800">
                     <HelpCircle size={20} className="mr-2 text-orange-500" />
                     Categories
                   </h2>
@@ -224,8 +223,8 @@ const FAQ = () => {
                         key={index}
                         className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
                           activeCategory === category.title
-                            ? "bg-primary/10 text-primary"
-                            : "hover:bg-muted"
+                            ? "bg-orange-100 text-orange-600"
+                            : "hover:bg-gray-100 text-gray-700"
                         }`}
                         onClick={() => setActiveCategory(category.title)}
                       >
@@ -240,7 +239,7 @@ const FAQ = () => {
             {/* FAQ Content */}
             <div className="lg:w-3/4">
               <motion.h2 
-                className="text-2xl font-bold mb-6"
+                className="text-2xl font-bold mb-6 text-gray-800"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -270,7 +269,7 @@ const FAQ = () => {
             viewport={{ once: true }}
           >
             <h3 className="text-2xl font-bold gradient-text mb-4">Still Have Questions?</h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
               If you couldn't find the answer you were looking for, our team is ready to help. Reach out to us and we'll get back to you as soon as possible.
             </p>
             <Link to="/contact">
