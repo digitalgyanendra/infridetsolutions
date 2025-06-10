@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Layout from "@/components/ui/layout/Layout";
@@ -13,19 +14,21 @@ import {
 } from "lucide-react";
 import SEOHead from "@/components/seo/SEOHead";
 import SchemaData from "@/components/seo/SchemaData";
+import { useGetPosts, useGetCategories } from "@/hooks/useBlogData";
 
 interface BlogPost {
-  id: number;
+  id: string | number;
   title: string;
-  excerpt: string;
+  excerpt?: string;
   content: string;
   author: string;
-  authorImage: string;
-  date: string;
-  readTime: string;
-  category: string;
-  image: string;
+  authorImage?: string;
+  created_at: string;
+  readTime?: string;
+  category?: string;
+  featured_image?: string;
   slug: string;
+  view_count?: number;
 }
 
 interface BlogCategoryProps {
@@ -56,6 +59,28 @@ interface BlogCardProps {
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
+  // Generate slug if not provided
+  const slug = post.slug || post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  
+  // Format date
+  const formatDate = (dateString: string) => {
+    try {
+      return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch {
+      return dateString;
+    }
+  };
+
+  // Generate excerpt if not provided
+  const excerpt = post.excerpt || post.content?.substring(0, 150) + '...' || '';
+  
+  // Calculate read time if not provided
+  const readTime = post.readTime || `${Math.ceil((post.content?.length || 0) / 1000)} min read`;
+
   return (
     <motion.article 
       className="glass-card overflow-hidden group"
@@ -65,9 +90,9 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
       viewport={{ once: true }}
     >
       <div className="relative h-56 bg-gradient-to-br from-black to-gray-900 overflow-hidden">
-        {post.image && (
+        {post.featured_image && (
           <img 
-            src={post.image} 
+            src={post.featured_image} 
             alt={post.title}
             className="w-full h-full object-cover opacity-50"
             loading="lazy"
@@ -82,11 +107,11 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           <div className="flex justify-between items-center">
             <span className="text-xs text-orange-500 font-medium flex items-center">
               <Tag size={14} className="mr-1" />
-              {post.category}
+              {post.category || 'General'}
             </span>
             <div className="text-xs text-white flex items-center">
               <Clock size={14} className="mr-1" />
-              {post.readTime}
+              {readTime}
             </div>
           </div>
         </div>
@@ -101,15 +126,15 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
             )}
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-medium">{post.author}</span>
+            <span className="text-sm font-medium">{post.author || 'Admin'}</span>
             <div className="flex items-center text-xs text-muted-foreground">
               <CalendarIcon size={12} className="mr-1" />
-              {post.date}
+              {formatDate(post.created_at)}
             </div>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{post.excerpt}</p>
-        <Link to={`/blog/${post.slug}`}>
+        <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{excerpt}</p>
+        <Link to={`/blog/${slug}`}>
           <Button 
             variant="outline" 
             size="sm" 
@@ -128,101 +153,34 @@ const Blog = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const blogPosts: BlogPost[] = [
-    {
-      id: 1,
-      title: "How to Grow Your YouTube Channel in 2025",
-      excerpt: "Learn the latest strategies and tools to grow your YouTube channel faster than ever before, even in a competitive landscape.",
-      content: "",
-      author: "Founder",
-      authorImage: "",
-      date: "April 5, 2025",
-      readTime: "8 min read",
-      category: "YouTube",
-      image: "/lovable-uploads/30adb30e-a545-42cd-a151-a01cd3659715.png",
-      slug: "grow-youtube-channel-2025"
-    },
-    {
-      id: 2,
-      title: "Advanced SEO Tactics for E-commerce Websites",
-      excerpt: "Discover how to optimize your e-commerce store for maximum search engine visibility and conversions.",
-      content: "",
-      author: "SEO Expert",
-      authorImage: "",
-      date: "April 2, 2025",
-      readTime: "10 min read",
-      category: "SEO",
-      image: "/lovable-uploads/7b907a0d-539e-432d-bef2-9f0b3c5e9149.png",
-      slug: "advanced-ecommerce-seo-tactics"
-    },
-    {
-      id: 3,
-      title: "Building a Strong Personal Brand on Social Media",
-      excerpt: "Step-by-step guide to creating a compelling personal brand that attracts followers and business opportunities.",
-      content: "",
-      author: "Brand Strategist",
-      authorImage: "",
-      date: "March 28, 2025",
-      readTime: "7 min read",
-      category: "Branding",
-      image: "/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png",
-      slug: "building-personal-brand-social-media"
-    },
-    {
-      id: 4,
-      title: "AI Money Mastery: Leveraging AI for Financial Growth",
-      excerpt: "Learn how artificial intelligence tools can be used to optimize your investment strategy and financial decisions.",
-      content: "",
-      author: "AI Specialist",
-      authorImage: "",
-      date: "March 25, 2025",
-      readTime: "12 min read",
-      category: "AI",
-      image: "/lovable-uploads/198368ec-73cb-47ce-892a-f0d7620fae08.png",
-      slug: "ai-money-mastery-financial-growth"
-    },
-    {
-      id: 5,
-      title: "Content Strategy That Converts: Beyond Creating Content",
-      excerpt: "Moving past content creation to strategic distribution and conversion optimization for business growth.",
-      content: "",
-      author: "Content Strategist",
-      authorImage: "",
-      date: "March 20, 2025",
-      readTime: "9 min read",
-      category: "Content",
-      image: "/lovable-uploads/bd4ba683-8219-4087-9708-0ef157a6cb71.png",
-      slug: "content-strategy-conversion-optimization"
-    },
-    {
-      id: 6,
-      title: "Understanding YouTube Analytics for Channel Growth",
-      excerpt: "A deep dive into YouTube analytics and how to use data to inform your content strategy and grow your audience.",
-      content: "",
-      author: "Data Analyst",
-      authorImage: "",
-      date: "March 15, 2025",
-      readTime: "11 min read",
-      category: "YouTube",
-      image: "/lovable-uploads/3683885c-5b52-4464-87e1-25c19d49f75c.png",
-      slug: "youtube-analytics-channel-growth"
-    }
-  ];
+  // Fetch posts from PHP API
+  const { data: postsData, isLoading: postsLoading, error: postsError } = useGetPosts(1, 50, 'published');
+  const { data: categoriesData } = useGetCategories();
 
+  const blogPosts: BlogPost[] = postsData?.posts || [];
+  const apiCategories = categoriesData || [];
+
+  // Generate categories from posts and API data
   const categories = [
     { name: "All", count: blogPosts.length },
-    { name: "YouTube", count: blogPosts.filter(post => post.category === "YouTube").length },
-    { name: "SEO", count: blogPosts.filter(post => post.category === "SEO").length },
-    { name: "Branding", count: blogPosts.filter(post => post.category === "Branding").length },
-    { name: "AI", count: blogPosts.filter(post => post.category === "AI").length },
-    { name: "Content", count: blogPosts.filter(post => post.category === "Content").length },
-  ];
+    ...apiCategories.map(cat => ({
+      name: cat.name,
+      count: blogPosts.filter(post => post.category === cat.name).length
+    })),
+    // Add categories from posts that might not be in API
+    ...Array.from(new Set(blogPosts.map(post => post.category).filter(Boolean)))
+      .filter(category => !apiCategories.find(cat => cat.name === category))
+      .map(category => ({
+        name: category!,
+        count: blogPosts.filter(post => post.category === category).length
+      }))
+  ].filter(cat => cat.count > 0);
 
   const filteredPosts = blogPosts.filter(post => {
     const matchesCategory = activeCategory === "All" || post.category === activeCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         post.category.toLowerCase().includes(searchQuery.toLowerCase());
+                         (post.excerpt || post.content)?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         post.category?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -244,15 +202,43 @@ const Blog = () => {
     "blogPost": blogPosts.map(post => ({
       "@type": "BlogPosting",
       "headline": post.title,
-      "description": post.excerpt,
-      "datePublished": post.date,
+      "description": post.excerpt || post.content?.substring(0, 150),
+      "datePublished": post.created_at,
       "author": {
         "@type": "Person",
-        "name": post.author
+        "name": post.author || 'Admin'
       },
-      "url": `https://infridetsolutions.com/blog/${post.slug}`
+      "url": `https://infridetsolutions.com/blog/${post.slug || post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
     }))
   };
+
+  if (postsLoading) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading blog posts...</p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (postsError) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-red-500 mb-4">Error loading blog posts</p>
+            <Button onClick={() => window.location.reload()}>
+              Try Again
+            </Button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -351,11 +337,18 @@ const Blog = () => {
                 </div>
               ) : null}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {filteredPosts.map((post) => (
-                  <BlogCard key={post.id} post={post} />
-                ))}
-              </div>
+              {blogPosts.length === 0 && !postsLoading ? (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground text-lg mb-4">No blog posts available yet.</p>
+                  <p className="text-sm text-muted-foreground">Check back soon for new content!</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {filteredPosts.map((post) => (
+                    <BlogCard key={post.id} post={post} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
