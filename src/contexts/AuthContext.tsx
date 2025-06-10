@@ -1,274 +1,167 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { Session, User } from "@supabase/supabase-js";
+
+interface User {
+  id: string;
+  username: string;
+  email?: string;
+  role: string;
+}
 
 interface AuthContextType {
   user: User | null;
-  session: Session | null;
   isAdmin: boolean;
   isLoading: boolean;
-  signIn: (email: string, password: string, isAdminLogin?: boolean) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
+  signIn: (username: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
-  checkAdminAccess: (email: string) => Promise<boolean>;
-  adminSignIn: (email: string) => Promise<boolean>;
-  adminDirectAccess: (email: string) => Promise<boolean>;
+  adminDirectAccess: (username: string, password: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// API base URL - update this to your domain
+const API_BASE_URL = "https://infridetsolutions.com/api";
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Function to check if a user is an admin
-  const checkAdminAccess = async (email: string): Promise<boolean> => {
-    try {
-      const { data, error } = await supabase.rpc('is_admin', {
-        user_email: email
-      });
-      
-      if (error) throw error;
-      return !!data;
-    } catch (error) {
-      console.error("Error checking admin status:", error);
-      return false;
-    }
-  };
-
-  // Direct admin access without email verification
-  const adminDirectAccess = async (email: string): Promise<boolean> => {
-    try {
-      // First check if the email is in admin table
-      const isUserAdmin = await checkAdminAccess(email);
-      
-      if (!isUserAdmin) {
-        toast({
-          title: "Access Denied",
-          description: "This email does not have admin privileges.",
-          variant: "destructive",
-        });
-        return false;
-      }
-      
-      // Create a temporary mock user for direct admin access
-      const mockUser = {
-        id: 'admin-' + Date.now(),
-        email: email,
-        app_metadata: { provider: 'email' },
-        user_metadata: { is_admin: true }
-      };
-      
-      const mockSession = {
-        access_token: 'mock-token',
-        refresh_token: 'mock-refresh-token',
-        user: mockUser
-      } as any;
-      
-      // Set user and session states
-      setUser(mockUser as any);
-      setSession(mockSession);
-      setIsAdmin(true);
-      
-      toast({
-        title: "Admin Access Granted",
-        description: "You now have temporary admin access to the dashboard.",
-      });
-      
-      // Return success
-      return true;
-    } catch (error: any) {
-      console.error("Admin login error:", error);
-      toast({
-        title: "Login Failed",
-        description: error.message || "An error occurred during login.",
-        variant: "destructive",
-      });
-      return false;
-    }
-  };
-
-  // Special function for admin login that doesn't require a password
-  const adminSignIn = async (email: string): Promise<boolean> => {
-    try {
-      // First check if the email is in admin table
-      const isUserAdmin = await checkAdminAccess(email);
-      
-      if (!isUserAdmin) {
-        toast({
-          title: "Access Denied",
-          description: "This email does not have admin privileges.",
-          variant: "destructive",
-        });
-        return false;
-      }
-      
-      // For local development, create a session for this admin without password
-      // In a real production app, you would use a more secure approach
-      const { data, error } = await supabase.auth.signInWithOtp({
-        email: email,
-        options: {
-          shouldCreateUser: true
-        }
-      });
-      
-      if (error) {
-        throw error;
-      }
-      
-      // Set admin flag directly since we already verified admin status
-      setIsAdmin(true);
-      
-      toast({
-        title: "Admin Access Granted",
-        description: "You are now logged in as admin. Check your email for the OTP link.",
-      });
-      
-      // Return success
-      return true;
-    } catch (error: any) {
-      console.error("Admin login error:", error);
-      toast({
-        title: "Login Failed",
-        description: error.message || "An error occurred during login.",
-        variant: "destructive",
-      });
-      return false;
-    }
-  };
-
+  // Check for existing session on load
   useEffect(() => {
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          // Check if user is admin
-          setTimeout(async () => {
-            const isUserAdmin = await checkAdminAccess(session.user.email || '');
-            setIsAdmin(isUserAdmin);
-          }, 0);
-        } else {
-          setIsAdmin(false);
-        }
+    const storedUser = localStorage.getItem('admin_user');
+    const storedToken = localStorage.getItem('admin_token');
+    
+    if (storedUser && storedToken) {
+      try {
+        const userData = JSON.parse(storedUser);
+        setUser(userData);
+        setIsAdmin(true);
+        // Optionally verify token with backend
+        verifyToken(storedToken);
+      } catch (error) {
+        console.error("Error parsing stored user data:", error);
+        localStorage.removeItem('admin_user');
+        localStorage.removeItem('admin_token');
       }
-    );
-
-    // THEN check for existing session
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        const isUserAdmin = await checkAdminAccess(session.user.email || '');
-        setIsAdmin(isUserAdmin);
-      }
-      
-      setIsLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
+    }
+    
+    setIsLoading(false);
   }, []);
 
-  const signIn = async (email: string, password: string, isAdminLogin = false) => {
+  // Verify token with backend
+  const verifyToken = async (token: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/verify-token.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      const data = await response.json();
+      
+      if (!data.success) {
+        // Token is invalid, clear session
+        signOut();
+      }
+    } catch (error) {
+      console.error("Token verification failed:", error);
+      signOut();
+    }
+  };
+
+  // Direct admin access with username and password
+  const adminDirectAccess = async (username: string, password: string): Promise<boolean> => {
     try {
       setIsLoading(true);
       
-      // For admin login, first check if the user has admin access
-      if (isAdminLogin) {
-        const isUserAdmin = await checkAdminAccess(email);
-        
-        if (!isUserAdmin) {
-          toast({
-            title: "Access Denied",
-            description: "You don't have admin privileges.",
-            variant: "destructive",
-          });
-          return;
-        }
-      }
-      
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const response = await fetch(`${API_BASE_URL}/login.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
       });
-
-      if (error) throw error;
-
-      // For admin login, check if the user has admin access
-      if (isAdminLogin) {
+      
+      const data = await response.json();
+      
+      if (data.success && data.user) {
+        const userData = {
+          id: data.user.id.toString(),
+          username: data.user.username,
+          email: data.user.email,
+          role: data.user.role
+        };
+        
+        setUser(userData);
+        setIsAdmin(true);
+        
+        // Store user data and token in localStorage
+        localStorage.setItem('admin_user', JSON.stringify(userData));
+        if (data.token) {
+          localStorage.setItem('admin_token', data.token);
+        }
+        
         toast({
-          title: "Admin Login Successful",
-          description: "Welcome to the admin dashboard.",
+          title: "Admin Access Granted",
+          description: `Welcome back, ${userData.username}!`,
         });
         
-        navigate("/admin");
+        return true;
       } else {
         toast({
-          title: "Login Successful",
-          description: "Welcome back!",
+          title: "Access Denied",
+          description: data.message || "Invalid username or password.",
+          variant: "destructive",
         });
-        
-        navigate("/");
+        return false;
       }
     } catch (error: any) {
+      console.error("Admin login error:", error);
       toast({
         title: "Login Failed",
-        description: error.message || "An error occurred during login.",
+        description: "Unable to connect to server. Please try again.",
         variant: "destructive",
       });
+      return false;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const signUp = async (email: string, password: string) => {
-    try {
-      setIsLoading(true);
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Registration Successful",
-        description: "Your account has been created successfully.",
-      });
-      
-      navigate("/");
-    } catch (error: any) {
-      toast({
-        title: "Registration Failed",
-        description: error.message || "An error occurred during registration.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+  // Regular sign in (same as adminDirectAccess for now)
+  const signIn = async (username: string, password: string) => {
+    const success = await adminDirectAccess(username, password);
+    if (success) {
+      navigate("/admin");
     }
   };
 
+  // Sign out
   const signOut = async () => {
     try {
-      await supabase.auth.signOut();
+      setUser(null);
+      setIsAdmin(false);
+      
+      // Clear localStorage
+      localStorage.removeItem('admin_user');
+      localStorage.removeItem('admin_token');
+      
       toast({
         title: "Logged Out",
         description: "You have been logged out successfully.",
       });
-      navigate("/login");
+      
+      navigate("/admin/login");
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "An error occurred during logout.",
+        description: "An error occurred during logout.",
         variant: "destructive",
       });
     }
@@ -277,14 +170,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return (
     <AuthContext.Provider value={{ 
       user, 
-      session, 
       isAdmin, 
       isLoading, 
-      signIn, 
-      signUp, 
+      signIn,
       signOut, 
-      checkAdminAccess,
-      adminSignIn,
       adminDirectAccess
     }}>
       {children}

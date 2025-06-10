@@ -34,7 +34,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     if (!isAdmin) {
       navigate("/admin/login");
     }
-  }, [isAdmin, navigate, toast]);
+  }, [isAdmin, navigate]);
   
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -89,7 +89,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <div className="flex items-center gap-4">
           <div className="dropdown relative group">
             <button className="flex items-center text-white hover:text-primary">
-              <span className="mr-2">{user?.email || "Admin User"}</span>
+              <span className="mr-2">{user?.username || "Admin User"}</span>
               <ChevronDown size={16} />
             </button>
             <div className="dropdown-menu hidden group-hover:block absolute right-0 mt-2 w-48 bg-silver-800 border border-border rounded-md shadow-lg z-50">
@@ -108,7 +108,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       </div>
       
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar for Mobile */}
+        {/* Mobile Sidebar */}
         {isMobileSidebarOpen && (
           <div className="fixed inset-0 bg-silver-800/50 z-40 md:hidden" onClick={() => setIsMobileSidebarOpen(false)}>
             <div 
@@ -152,7 +152,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           </div>
         )}
         
-        {/* Sidebar for Desktop */}
+        {/* Desktop Sidebar */}
         <div
           className={`hidden md:block border-r border-border/40 bg-silver-800 ${
             isSidebarOpen ? "w-64" : "w-20"
