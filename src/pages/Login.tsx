@@ -8,7 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signIn, signUp, user, isLoading } = useAuth();
+  const { signIn, user, isLoading } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -38,7 +38,9 @@ const Login = () => {
       if (mode === "login") {
         await signIn(formData.email, formData.password);
       } else {
-        await signUp(formData.email, formData.password);
+        // For now, redirect to register page or show message
+        // Since we removed signUp, we need to handle registration differently
+        console.log("Registration not implemented yet");
       }
     } finally {
       setActionInProgress(false);
