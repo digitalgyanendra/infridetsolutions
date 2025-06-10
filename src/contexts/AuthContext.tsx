@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
+import { API_CONFIG, apiCall } from "@/config/api";
 
 interface User {
   id: string;
@@ -20,9 +21,6 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// API base URL - update this to your domain
-const API_BASE_URL = "https://infridetsolutions.com/api";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -55,7 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Verify token with backend
   const verifyToken = async (token: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/verify-token.php`, {
+      const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.VERIFY_TOKEN}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (error) {
       console.error("Token verification failed:", error);
-      signOut();
+      // Don't sign out on network errors, let user continue
     }
   };
 
@@ -80,7 +78,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       setIsLoading(true);
       
-      const response = await fetch(`${API_BASE_URL}/login.php`, {
+      console.log("Attempting login to:", `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGIN}`);
+      
+      const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGIN}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +88,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ username, password }),
       });
       
+      console.log("Response status:", response.status);
+      console.log("Response ok:", response.ok);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
       const data = await response.json();
+      console.log("Response data:", data);
       
       if (data.success && data.user) {
         const userData = {
@@ -123,9 +131,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (error: any) {
       console.error("Admin login error:", error);
+      
+      let errorMessage = "Unable to connect to server. Please try again.";
+      
+      if (error.message.includes('Failed to fetch')) {
+        errorMessage = "Network error: Unable to reach the server. Please check your internet connection.";
+      } else if (error.message.includes('HTTP 404')) {
+        errorMessage = "API endpoint not found. Please contact support.";
+      } else if (error.message.includes('HTTP 500')) {
+        errorMessage = "Server error. Please try again later.";
+      }
+      
       toast({
         title: "Login Failed",
-        description: "Unable to connect to server. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
       return false;

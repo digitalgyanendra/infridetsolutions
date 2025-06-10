@@ -34,11 +34,32 @@ export const apiCall = async (endpoint: string, options: RequestInit = {}) => {
     },
   };
   
+  console.log(`Making API call to: ${API_CONFIG.BASE_URL}${endpoint}`);
+  console.log('Request config:', config);
+  
   const response = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`, config);
+  
+  console.log('Response status:', response.status);
+  console.log('Response headers:', response.headers);
   
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   
-  return response.json();
+  const data = await response.json();
+  console.log('Response data:', data);
+  
+  return data;
+};
+
+// Test function to check if API is reachable
+export const testApiConnection = async () => {
+  try {
+    const response = await fetch(`${API_CONFIG.BASE_URL}/ping.php`);
+    console.log('Ping test response:', response.status);
+    return response.ok;
+  } catch (error) {
+    console.error('API connection test failed:', error);
+    return false;
+  }
 };
