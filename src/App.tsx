@@ -23,6 +23,9 @@ import Policy from "./pages/Policy";
 import Terms from "./pages/Terms";
 import FAQ from "./pages/FAQ";
 import Disclaimer from "./pages/Disclaimer";
+import Sitemap from "./pages/Sitemap";
+import RefundPolicy from "./pages/RefundPolicy";
+import AboutGyan from "./pages/AboutGyan";
 
 // Course Pages
 import YoutubeGrowth from "./pages/courses/YoutubeGrowth";
@@ -49,6 +52,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
+              <Route path="/about-gyan" element={<AboutGyan />} />
               <Route path="/services" element={<Services />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contact" element={<Contact />} />
@@ -59,8 +63,10 @@ const App = () => (
               <Route path="/courses" element={<Courses />} />
               <Route path="/policy" element={<Policy />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
+              <Route path="/sitemap" element={<Sitemap />} />
               
               {/* Course Detail Routes */}
               <Route path="/courses/youtube-growth" element={<YoutubeGrowth />} />

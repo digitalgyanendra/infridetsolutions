@@ -48,6 +48,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/about-gyan" className="text-gray-600 hover:text-primary transition-colors">
+                  About Gyan Dwivedi
+                </Link>
+              </li>
+              <li>
                 <Link to="/services" className="text-gray-600 hover:text-primary transition-colors">
                   Services
                 </Link>
@@ -89,6 +94,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/refund-policy" className="text-gray-600 hover:text-primary transition-colors">
+                  Refund Policy
+                </Link>
+              </li>
+              <li>
                 <Link to="/disclaimer" className="text-gray-600 hover:text-primary transition-colors">
                   Disclaimer
                 </Link>
@@ -96,6 +106,11 @@ const Footer = () => {
               <li>
                 <Link to="/faq" className="text-gray-600 hover:text-primary transition-colors">
                   FAQ
+                </Link>
+              </li>
+              <li>
+                <Link to="/sitemap" className="text-gray-600 hover:text-primary transition-colors">
+                  Sitemap
                 </Link>
               </li>
             </ul>
@@ -139,6 +154,9 @@ const Footer = () => {
             </Link>
             <Link to="/terms" className="text-gray-600 hover:text-primary text-sm transition-colors">
               Terms & Conditions
+            </Link>
+            <Link to="/refund-policy" className="text-gray-600 hover:text-primary text-sm transition-colors">
+              Refund Policy
             </Link>
           </div>
         </div>
