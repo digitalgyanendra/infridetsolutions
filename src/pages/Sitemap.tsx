@@ -1,11 +1,24 @@
-
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/ui/layout/Layout";
 import SEOHead from "@/components/seo/SEOHead";
-import { FileText, Home, Info, Briefcase, FolderOpen, Phone, BookOpen, GraduationCap, Shield, Scale, HelpCircle, AlertTriangle } from "lucide-react";
+import { FileText, Home, Info, Briefcase, FolderOpen, Phone, BookOpen, GraduationCap, Shield, Scale, HelpCircle, AlertTriangle, ExternalLink } from "lucide-react";
 
 const Sitemap = () => {
+  // Redirect search engines to the XML sitemap
+  useEffect(() => {
+    // Add canonical link to XML sitemap for search engines
+    const link = document.createElement('link');
+    link.rel = 'alternate';
+    link.type = 'application/rss+xml';
+    link.href = '/sitemap.xml';
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
+
   const siteStructure = [
     {
       category: "Main Pages",
@@ -61,10 +74,30 @@ const Sitemap = () => {
             <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-6">
               Website Sitemap
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
               Navigate through all pages and resources available on Infridet Solutions. 
               Find everything from our services to educational content and legal information.
             </p>
+            
+            {/* XML Sitemap Notice for Search Engines */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-2xl mx-auto mb-8">
+              <div className="flex items-center justify-center space-x-2 text-blue-800">
+                <FileText className="w-5 h-5" />
+                <span className="font-medium">For Search Engines:</span>
+              </div>
+              <p className="text-blue-700 text-sm mt-2">
+                Looking for our XML sitemap? 
+                <a 
+                  href="/sitemap.xml" 
+                  className="font-medium underline hover:text-blue-600 ml-1 inline-flex items-center"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Access XML Sitemap
+                  <ExternalLink className="w-3 h-3 ml-1" />
+                </a>
+              </p>
+            </div>
           </div>
 
           <div className="grid gap-8">
