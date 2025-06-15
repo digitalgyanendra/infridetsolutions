@@ -2,7 +2,7 @@
 import React from "react";
 import Layout from "@/components/ui/layout/Layout";
 import SEOHead from "@/components/seo/SEOHead";
-import { Shield, Clock, FileText, AlertCircle, CheckCircle } from "lucide-react";
+import { Shield, Clock, FileText, AlertCircle, CheckCircle, CreditCard } from "lucide-react";
 
 const RefundPolicy = () => {
   return (
@@ -58,6 +58,35 @@ const RefundPolicy = () => {
                   <h3 className="font-semibold text-blue-800 mb-2">7-Day Request Window</h3>
                   <p className="text-blue-700">
                     All refund requests must be made in writing within 7 days of the transaction. Please contact us through our official channels with your request and transaction details.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+              <CreditCard className="w-6 h-6 text-orange-500 mr-3" />
+              Refund Processing and Credit Timeframes
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4 p-4 bg-orange-50 rounded-lg border-l-4 border-orange-400">
+                <Clock className="w-6 h-6 text-orange-500 mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-orange-800 mb-2">Refund Initiation Timeframe</h3>
+                  <p className="text-orange-700">
+                    Once your refund is approved, we will initiate the refund within 24–48 hours.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                <CreditCard className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-blue-800 mb-2">Refund Credit Timeframe</h3>
+                  <p className="text-blue-700">
+                    After initiation, the refunded amount will be credited to your original payment method within 3–5 business days, depending on your bank or payment provider.
                   </p>
                 </div>
               </div>
