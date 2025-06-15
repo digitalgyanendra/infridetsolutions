@@ -1,0 +1,42 @@
+
+UPLOAD INSTRUCTIONS FOR YOUR PHP BACKEND
+
+1. Using FileZilla, connect to your server
+2. Navigate to /public_html/ directory
+3. Create a folder called "api"
+4. Upload these files to /public_html/api/:
+
+   - login.php
+   - verify-token.php
+   - get-posts.php
+   - create-post.php
+   - create-admin.php
+
+5. Create a subfolder /public_html/api/config/
+6. Upload database.php to /public_html/api/config/
+
+7. In phpMyAdmin, run the SQL from database-setup.sql
+
+8. Visit https://infridetsolutions.com/api/create-admin.php ONCE to create admin user
+
+9. DELETE create-admin.php immediately after use
+
+10. Test login at https://infridetsolutions.com/api/login.php
+    (should show JSON error, not 404)
+
+DEFAULT ADMIN CREDENTIALS:
+Username: admin
+Password: admin123
+
+Your folder structure should be:
+/public_html/
+├── api/
+│   ├── login.php
+│   ├── verify-token.php
+│   ├── get-posts.php
+│   ├── create-post.php
+│   ├── create-admin.php
+│   └── config/
+│       └── database.php
+└── dist/
+    └── (your React app files)
