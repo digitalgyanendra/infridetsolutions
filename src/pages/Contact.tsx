@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Layout from "@/components/ui/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, MapPin, SendIcon, CheckCircle2 } from "lucide-react";
+import { Phone, Mail, MapPin, SendIcon, CheckCircle2, ExternalLink, Youtube } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const Contact = () => {
@@ -72,8 +72,30 @@ const Contact = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Have a question or need assistance? Our team is here to help you.
+              Have a question or need assistance? Our team is here to help you grow your digital presence.
             </motion.p>
+            
+            <motion.div
+              className="flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <a 
+                href="/talk-to-gyan"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-md transition-colors"
+              >
+                <Youtube className="w-5 h-5 mr-2" />
+                Talk to YouTube Expert
+              </a>
+              <a 
+                href="tel:+918853354829"
+                className="inline-flex items-center px-6 py-3 border border-border hover:bg-muted text-foreground rounded-md transition-colors"
+              >
+                <Phone className="w-5 h-5 mr-2" />
+                Call Directly
+              </a>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -128,13 +150,36 @@ const Contact = () => {
                 </div>
               </div>
 
+              {/* Form Integration Guide */}
               <div className="glass-card p-6 relative overflow-hidden">
-                <div className="w-full h-48 bg-gradient-to-br from-deepBlue-900/30 to-silver-200 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <h3 className="text-xl font-bold mb-2">Our Location</h3>
-                    <p className="text-muted-foreground mb-4">Google Maps integration would appear here</p>
-                    <div className="flex justify-center">
-                      <MapPin size={32} className="text-orange-500" />
+                <h3 className="text-xl font-bold mb-4">Form Integration Options</h3>
+                <div className="space-y-4 text-sm text-muted-foreground">
+                  <div className="flex items-start">
+                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-foreground">Email Notifications</p>
+                      <p>Set up Marketing@infridetsolutions.com for instant alerts</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-foreground">Auto-Reply Messages</p>
+                      <p>Custom thank you messages and response timeframes</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-foreground">Form Embedding</p>
+                      <p>Easy integration with Lovable.dev or custom solutions</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-foreground">Webhook Integration</p>
+                      <p>Connect to external APIs and automation tools</p>
                     </div>
                   </div>
                 </div>
@@ -210,9 +255,11 @@ const Contact = () => {
                         >
                           <option value="" disabled>Select a subject</option>
                           <option value="general">General Inquiry</option>
-                          <option value="consultation">Consultation</option>
+                          <option value="youtube-consultation">YouTube Consultation</option>
+                          <option value="web-development">Web Development</option>
+                          <option value="seo-services">SEO Services</option>
                           <option value="support">Technical Support</option>
-                          <option value="feedback">Feedback</option>
+                          <option value="partnership">Partnership</option>
                         </select>
                       </div>
                     </div>
