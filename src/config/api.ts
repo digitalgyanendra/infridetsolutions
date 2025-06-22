@@ -1,4 +1,3 @@
-
 // API Configuration
 export const API_CONFIG = {
   BASE_URL: "https://infridetsolutions.com/api",
@@ -10,7 +9,8 @@ export const API_CONFIG = {
     CREATE_POST: "/create-post.php",
     GET_COURSES: "/get-courses.php",
     UPLOAD: "/upload.php",
-    ADMIN_USERS: "/admin-users.php"
+    ADMIN_USERS: "/admin-users.php",
+    DASHBOARD_STATS: "/get-dashboard-stats.php"
   }
 };
 
