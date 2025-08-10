@@ -72,6 +72,9 @@ const Navbar = () => {
           <Link to="/portfolio" className="text-sm text-gray-700 hover:text-primary transition-colors">
             Portfolio
           </Link>
+          <Link to="/podcast-with-gyan" className="text-sm text-gray-700 hover:text-primary transition-colors">
+            Podcast
+          </Link>
           <Link to="/blog" className="text-sm text-gray-700 hover:text-primary transition-colors">
             Blog
           </Link>
@@ -125,6 +128,9 @@ const Navbar = () => {
             </Link>
             <Link to="/portfolio" className="text-sm px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors" onClick={handleNavigation}>
               Portfolio
+            </Link>
+            <Link to="/podcast-with-gyan" className="text-sm px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors" onClick={handleNavigation}>
+              Podcast
             </Link>
             <Link to="/blog" className="text-sm px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors" onClick={handleNavigation}>
               Blog
