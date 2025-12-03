@@ -11,6 +11,7 @@ import {
   Search,
   BarChart3
 } from "lucide-react";
+import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
 
 interface CourseCardProps {
   title: string;
@@ -302,6 +303,9 @@ const Courses = () => {
           </div>
         </div>
       </section>
+
+      {/* Hydra Automation Form */}
+      <HydraAutomationForm />
 
       {/* CTA Section */}
       <section className="py-16 bg-white">
