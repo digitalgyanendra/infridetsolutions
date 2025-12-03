@@ -4,6 +4,7 @@ import Layout from "@/components/ui/layout/Layout";
 import SEOHead from "@/components/seo/SEOHead";
 import SchemaData from "@/components/seo/SchemaData";
 import { Youtube, Linkedin, Instagram, Brain, Code, TrendingUp, Users, Target, Lightbulb } from "lucide-react";
+import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
 
 const AboutGyan = () => {
   const personSchema = {
@@ -191,6 +192,9 @@ const AboutGyan = () => {
             </div>
           </div>
         </section>
+
+        {/* Hydra Automation Form */}
+        <HydraAutomationForm />
 
         {/* Connect Section */}
         <section className="py-20 bg-gray-50">
