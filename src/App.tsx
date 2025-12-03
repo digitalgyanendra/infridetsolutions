@@ -27,7 +27,6 @@ import Disclaimer from "./pages/Disclaimer";
 import Sitemap from "./pages/Sitemap";
 import RefundPolicy from "./pages/RefundPolicy";
 import AboutGyan from "./pages/AboutGyan";
-import PodcastWithGyan from "./pages/PodcastWithGyan";
 
 // Course Pages
 import YoutubeGrowth from "./pages/courses/YoutubeGrowth";
@@ -55,7 +54,6 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
               <Route path="/about-gyan" element={<AboutGyan />} />
-              <Route path="/podcast-with-gyan" element={<PodcastWithGyan />} />
               <Route path="/services" element={<Services />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contact" element={<Contact />} />

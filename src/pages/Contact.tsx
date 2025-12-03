@@ -5,6 +5,7 @@ import Layout from "@/components/ui/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, MapPin, SendIcon, CheckCircle2, ExternalLink, Youtube } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -305,6 +306,9 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
+      {/* Hydra Automation Form */}
+      <HydraAutomationForm />
 
       {/* Work Hours Section */}
       <section className="py-16 bg-silver-100 relative overflow-hidden">
