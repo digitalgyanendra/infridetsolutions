@@ -307,8 +307,6 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Hydra Automation Form */}
-      <HydraAutomationForm />
 
       {/* Work Hours Section */}
       <section className="py-16 bg-silver-100 relative overflow-hidden">

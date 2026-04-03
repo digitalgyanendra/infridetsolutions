@@ -193,8 +193,6 @@ const AboutGyan = () => {
           </div>
         </section>
 
-        {/* Hydra Automation Form */}
-        <HydraAutomationForm />
 
         {/* Connect Section */}
         <section className="py-20 bg-gray-50">

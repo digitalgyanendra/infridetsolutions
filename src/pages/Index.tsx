@@ -43,7 +43,7 @@ const Index = () => {
       <Suspense fallback={<LoadingFallback />}>
         <StatsSection />
       </Suspense>
-      <HydraAutomationForm />
+      
       <Suspense fallback={<LoadingFallback />}>
         <CTASection />
       </Suspense>

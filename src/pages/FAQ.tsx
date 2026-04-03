@@ -283,8 +283,6 @@ const FAQ = () => {
             </Link>
           </motion.div>
 
-          {/* Hydra Automation Form */}
-          <HydraAutomationForm />
         </div>
       </section>
     </Layout>

@@ -355,8 +355,6 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Hydra Automation Form */}
-      <HydraAutomationForm />
 
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-b from-black/95 to-background">

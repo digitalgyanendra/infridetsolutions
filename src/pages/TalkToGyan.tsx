@@ -371,8 +371,6 @@ const TalkToGyan = () => {
         </div>
       </section>
 
-      {/* Hydra Automation Form */}
-      <HydraAutomationForm />
 
       {/* Contact Information */}
       <section className="py-16 bg-muted">

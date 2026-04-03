@@ -304,8 +304,6 @@ const Courses = () => {
         </div>
       </section>
 
-      {/* Hydra Automation Form */}
-      <HydraAutomationForm />
 
       {/* CTA Section */}
       <section className="py-16 bg-white">

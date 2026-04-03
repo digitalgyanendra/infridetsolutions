@@ -15,7 +15,7 @@ const About = () => {
       <OwnerSection />
       <CoreValuesSection />
       <WhyChooseUsSection />
-      <HydraAutomationForm />
+      
       <SupportersGrid columns={2} />
       <VideoTestimonials />
     </Layout>
