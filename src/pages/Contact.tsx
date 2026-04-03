@@ -27,30 +27,26 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    const { name, email, phone, subject, message } = formState;
+    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0APhone: ${phone}%0D%0ASubject: ${subject}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+    const mailtoLink = `mailto:Marketing@infridetsolutions.com?subject=${encodeURIComponent(subject || 'Contact Form Inquiry')}&body=${body}`;
     
-    // Simulate form submission
+    window.location.href = mailtoLink;
+
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      
       toast({
-        title: "Message Sent Successfully",
-        description: "We'll get back to you as soon as possible!",
+        title: "Email Client Opened",
+        description: "Please send the email from your mail app to complete your message!",
         duration: 5000,
       });
-      
-      // Reset form after 2 seconds
       setTimeout(() => {
-        setFormState({
-          name: "",
-          email: "",
-          phone: "",
-          subject: "",
-          message: "",
-        });
+        setFormState({ name: "", email: "", phone: "", subject: "", message: "" });
         setIsSubmitted(false);
       }, 2000);
-    }, 1500);
+    }, 1000);
   };
 
   return (
