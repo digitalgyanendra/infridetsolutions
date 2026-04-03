@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Layout from "@/components/ui/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
+
 import { 
   Youtube, 
   LineChart, 
