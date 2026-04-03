@@ -27,30 +27,26 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    const { name, email, phone, subject, message } = formState;
+    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0APhone: ${phone}%0D%0ASubject: ${subject}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+    const mailtoLink = `mailto:Marketing@infridetsolutions.com?subject=${encodeURIComponent(subject || 'Contact Form Inquiry')}&body=${body}`;
     
-    // Simulate form submission
+    window.location.href = mailtoLink;
+
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      
       toast({
-        title: "Message Sent Successfully",
-        description: "We'll get back to you as soon as possible!",
+        title: "Email Client Opened",
+        description: "Please send the email from your mail app to complete your message!",
         duration: 5000,
       });
-      
-      // Reset form after 2 seconds
       setTimeout(() => {
-        setFormState({
-          name: "",
-          email: "",
-          phone: "",
-          subject: "",
-          message: "",
-        });
+        setFormState({ name: "", email: "", phone: "", subject: "", message: "" });
         setIsSubmitted(false);
       }, 2000);
-    }, 1500);
+    }, 1000);
   };
 
   return (
@@ -151,40 +147,6 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Form Integration Guide */}
-              <div className="glass-card p-6 relative overflow-hidden">
-                <h3 className="text-xl font-bold mb-4">Form Integration Options</h3>
-                <div className="space-y-4 text-sm text-muted-foreground">
-                  <div className="flex items-start">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground">Email Notifications</p>
-                      <p>Set up Marketing@infridetsolutions.com for instant alerts</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground">Auto-Reply Messages</p>
-                      <p>Custom thank you messages and response timeframes</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground">Form Embedding</p>
-                      <p>Easy integration with Lovable.dev or custom solutions</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground">Webhook Integration</p>
-                      <p>Connect to external APIs and automation tools</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </motion.div>
 
             <motion.div 
