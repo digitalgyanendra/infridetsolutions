@@ -11,7 +11,7 @@ import {
   Search,
   BarChart3
 } from "lucide-react";
-import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
+
 
 interface CourseCardProps {
   title: string;
