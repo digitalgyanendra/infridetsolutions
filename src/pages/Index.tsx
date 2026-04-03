@@ -6,7 +6,7 @@ import CertificationsSection from "@/components/home/CertificationsSection";
 import TrustedBrandsSection from "@/components/home/TrustedBrandsSection";
 import SEOHead from "@/components/seo/SEOHead";
 import SchemaData, { getOrganizationSchema, getWebsiteSchema } from "@/components/seo/SchemaData";
-import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
+
 
 // Lazy load non-critical components
 const ServicesSection = lazy(() => import("@/components/home/ServicesSection"));
