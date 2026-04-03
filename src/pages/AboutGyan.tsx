@@ -4,7 +4,7 @@ import Layout from "@/components/ui/layout/Layout";
 import SEOHead from "@/components/seo/SEOHead";
 import SchemaData from "@/components/seo/SchemaData";
 import { Youtube, Linkedin, Instagram, Brain, Code, TrendingUp, Users, Target, Lightbulb } from "lucide-react";
-import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
+
 
 const AboutGyan = () => {
   const personSchema = {
