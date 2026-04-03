@@ -6,7 +6,7 @@ import HeroSection from "@/components/about/HeroSection";
 import CoreValuesSection from "@/components/about/CoreValuesSection";
 import WhyChooseUsSection from "@/components/about/WhyChooseUsSection";
 import OwnerSection from "@/components/about/OwnerSection";
-import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
+
 
 const About = () => {
   return (
