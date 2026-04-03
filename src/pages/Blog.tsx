@@ -15,7 +15,7 @@ import {
 import SEOHead from "@/components/seo/SEOHead";
 import SchemaData from "@/components/seo/SchemaData";
 import { useGetPosts, useGetCategories } from "@/hooks/useBlogData";
-import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
+
 
 interface BlogPost {
   id: string | number;
