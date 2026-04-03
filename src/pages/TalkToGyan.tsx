@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, Mail, Youtube, SendIcon, CheckCircle2, Users, TrendingUp, Award, Calendar } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import SEOHead from "@/components/seo/SEOHead";
-import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
+
 
 const TalkToGyan = () => {
   const { toast } = useToast();
@@ -371,8 +371,6 @@ const TalkToGyan = () => {
         </div>
       </section>
 
-      {/* Hydra Automation Form */}
-      <HydraAutomationForm />
 
       {/* Contact Information */}
       <section className="py-16 bg-muted">

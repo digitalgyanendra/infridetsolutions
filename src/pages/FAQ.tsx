@@ -8,7 +8,7 @@ import {
   HelpCircle
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
+
 
 interface FAQItemProps {
   question: string;
@@ -283,8 +283,6 @@ const FAQ = () => {
             </Link>
           </motion.div>
 
-          {/* Hydra Automation Form */}
-          <HydraAutomationForm />
         </div>
       </section>
     </Layout>

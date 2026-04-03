@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Layout from "@/components/ui/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import HydraAutomationForm from "@/components/shared/HydraAutomationForm";
+
 import { 
   Youtube, 
   LineChart, 
@@ -317,8 +317,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Hydra Automation Form */}
-      <HydraAutomationForm />
 
       {/* CTA Section */}
       <section className="py-16 bg-silver-100 relative overflow-hidden">
