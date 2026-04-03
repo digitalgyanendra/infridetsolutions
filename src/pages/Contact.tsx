@@ -147,40 +147,6 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Form Integration Guide */}
-              <div className="glass-card p-6 relative overflow-hidden">
-                <h3 className="text-xl font-bold mb-4">Form Integration Options</h3>
-                <div className="space-y-4 text-sm text-muted-foreground">
-                  <div className="flex items-start">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground">Email Notifications</p>
-                      <p>Set up Marketing@infridetsolutions.com for instant alerts</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground">Auto-Reply Messages</p>
-                      <p>Custom thank you messages and response timeframes</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground">Form Embedding</p>
-                      <p>Easy integration with Lovable.dev or custom solutions</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground">Webhook Integration</p>
-                      <p>Connect to external APIs and automation tools</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </motion.div>
 
             <motion.div 
