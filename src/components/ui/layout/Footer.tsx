@@ -1,163 +1,135 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Phone, MapPin, Mail, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Phone, MapPin, Mail, Linkedin, Youtube, Instagram, ArrowRight, MessageCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t border-gray-200/40">
-      <div className="container px-4 md:px-6 py-12 mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-foreground text-white/80">
+      {/* CTA Strip */}
+      <div className="bg-primary">
+        <div className="container px-4 md:px-6 py-6 mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h3 className="text-lg font-bold text-primary-foreground">Ready to Grow Your Business?</h3>
+            <p className="text-primary-foreground/80 text-sm">Get a free consultation with our experts today.</p>
+          </div>
+          <div className="flex gap-3">
+            <a href="https://wa.me/919517459072" target="_blank" rel="noopener noreferrer">
+              <Button className="bg-[hsl(142,70%,45%)] hover:bg-[hsl(142,70%,38%)] text-white">
+                <MessageCircle size={16} className="mr-2" />
+                WhatsApp Us
+              </Button>
+            </a>
+            <Link to="/contact">
+              <Button variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+                Contact Us
+                <ArrowRight size={14} className="ml-2" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="container px-4 md:px-6 py-14 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="space-y-4">
-            <h3 className="text-xl font-bold gradient-text">INFRIDET SOLUTIONS PRIVATE LIMITED</h3>
-            <p className="text-gray-600">
-              Empowering digital creators and businesses with expert consultation and growth strategies.
+            <h3 className="text-lg font-bold text-white">INFRIDET SOLUTIONS</h3>
+            <p className="text-sm leading-relaxed text-white/60">
+              Empowering digital creators and businesses with expert YouTube growth strategies, SEO, AI automation, and product growth solutions.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-500 hover:text-primary">
-                <Facebook size={20} />
+            <div className="flex space-x-3 pt-2">
+              <a href="https://www.linkedin.com/company/infridet-solutions-private-limited" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/10 hover:bg-primary/80 flex items-center justify-center transition-colors">
+                <Linkedin size={16} />
               </a>
-              <a href="#" className="text-gray-500 hover:text-primary">
-                <Twitter size={20} />
+              <a href="https://www.youtube.com/@Core-Gyan" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/10 hover:bg-red-600 flex items-center justify-center transition-colors">
+                <Youtube size={16} />
               </a>
-              <a href="#" className="text-gray-500 hover:text-primary">
-                <Instagram size={20} />
-              </a>
-              <a 
-                href="https://www.linkedin.com/company/infridet-solutions-private-limited" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-500 hover:text-primary"
-              >
-                <Linkedin size={20} />
+              <a href="https://www.instagram.com/thegyanendradwivedi/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/10 hover:bg-pink-600 flex items-center justify-center transition-colors">
+                <Instagram size={16} />
               </a>
             </div>
           </div>
-          
+
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-gray-800">Quick Links</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/" className="text-gray-600 hover:text-primary transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-gray-600 hover:text-primary transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/about-gyan" className="text-gray-600 hover:text-primary transition-colors">
-                  About Gyan Dwivedi
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-gray-600 hover:text-primary transition-colors">
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link to="/portfolio" className="text-gray-600 hover:text-primary transition-colors">
-                  Portfolio
-                </Link>
-              </li>
-              <li>
-                <Link to="/blog" className="text-gray-600 hover:text-primary transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link to="/courses" className="text-gray-600 hover:text-primary transition-colors">
-                  Courses
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-gray-600 hover:text-primary transition-colors">
-                  Contact
-                </Link>
-              </li>
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">Quick Links</h4>
+            <ul className="space-y-2.5">
+              {[
+                { to: "/", label: "Home" },
+                { to: "/about", label: "About Us" },
+                { to: "/about-gyan", label: "About Gyan Dwivedi" },
+                { to: "/services", label: "Services" },
+                { to: "/portfolio", label: "Portfolio" },
+                { to: "/blog", label: "Blog" },
+                { to: "/courses", label: "Courses" },
+                { to: "/contact", label: "Contact" },
+              ].map(link => (
+                <li key={link.to}>
+                  <Link to={link.to} className="text-sm text-white/60 hover:text-white transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
-          
+
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-gray-800">Legal</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/policy" className="text-gray-600 hover:text-primary transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/terms" className="text-gray-600 hover:text-primary transition-colors">
-                  Terms & Conditions
-                </Link>
-              </li>
-              <li>
-                <Link to="/refund-policy" className="text-gray-600 hover:text-primary transition-colors">
-                  Refund Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/disclaimer" className="text-gray-600 hover:text-primary transition-colors">
-                  Disclaimer
-                </Link>
-              </li>
-              <li>
-                <Link to="/faq" className="text-gray-600 hover:text-primary transition-colors">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link to="/sitemap" className="text-gray-600 hover:text-primary transition-colors">
-                  Sitemap
-                </Link>
-              </li>
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">Legal</h4>
+            <ul className="space-y-2.5">
+              {[
+                { to: "/policy", label: "Privacy Policy" },
+                { to: "/terms", label: "Terms & Conditions" },
+                { to: "/refund-policy", label: "Refund Policy" },
+                { to: "/disclaimer", label: "Disclaimer" },
+                { to: "/faq", label: "FAQ" },
+                { to: "/sitemap", label: "Sitemap" },
+              ].map(link => (
+                <li key={link.to}>
+                  <Link to={link.to} className="text-sm text-white/60 hover:text-white transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
-          
+
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-gray-800">Contact Us</h4>
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">Contact Us</h4>
             <ul className="space-y-3">
-              <li className="flex items-start">
-                <MapPin size={20} className="mr-2 text-orange-500 shrink-0 mt-0.5" />
-                <span className="text-gray-600">
-                  Mahagun Mantra 1, Sector 10, Noida, UP
-                </span>
+              <li className="flex items-start gap-3">
+                <MapPin size={16} className="text-primary shrink-0 mt-0.5" />
+                <span className="text-sm text-white/60">Mahagun Mantra 1, Sector 10, Noida, UP</span>
               </li>
-              <li className="flex items-center">
-                <Phone size={20} className="mr-2 text-orange-500 shrink-0" />
-                <a 
-                  href="https://wa.me/918853354829" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-primary transition-colors"
-                >
-                  +91 8853354829
+              <li className="flex items-center gap-3">
+                <Phone size={16} className="text-primary shrink-0" />
+                <a href="https://wa.me/919517459072" target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-white transition-colors">
+                  +91 9517459072
                 </a>
               </li>
-              <li className="flex items-center">
-                <Mail size={20} className="mr-2 text-orange-500 shrink-0" />
-                <span className="text-gray-600">Marketing@infridetsolutions.com</span>
+              <li className="flex items-center gap-3">
+                <Mail size={16} className="text-primary shrink-0" />
+                <a href="mailto:Marketing@infridetsolutions.com" className="text-sm text-white/60 hover:text-white transition-colors">
+                  Marketing@infridetsolutions.com
+                </a>
               </li>
             </ul>
           </div>
         </div>
-        
-        <div className="border-t border-gray-200/40 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-600 text-sm">
+
+        <div className="border-t border-white/10 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-white/40 text-sm">
             &copy; {new Date().getFullYear()} INFRIDET SOLUTIONS PRIVATE LIMITED. All rights reserved.
           </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link to="/policy" className="text-gray-600 hover:text-primary text-sm transition-colors">
-              Privacy Policy
-            </Link>
-            <Link to="/terms" className="text-gray-600 hover:text-primary text-sm transition-colors">
-              Terms & Conditions
-            </Link>
-            <Link to="/refund-policy" className="text-gray-600 hover:text-primary text-sm transition-colors">
-              Refund Policy
-            </Link>
+          <div className="flex flex-wrap gap-4">
+            {[
+              { to: "/policy", label: "Privacy" },
+              { to: "/terms", label: "Terms" },
+              { to: "/refund-policy", label: "Refund Policy" },
+            ].map(link => (
+              <Link key={link.to} to={link.to} className="text-white/40 hover:text-white/70 text-sm transition-colors">
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
