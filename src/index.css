@@ -63,11 +63,21 @@
   .gradient-text {
     @apply text-transparent bg-clip-text;
     background: linear-gradient(135deg, hsl(220 70% 45%), hsl(220 75% 25%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
 
   .gradient-text-accent {
     @apply text-transparent bg-clip-text;
     background: linear-gradient(135deg, hsl(145 65% 42%), hsl(145 70% 32%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
 
   .glass-card {
