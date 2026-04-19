@@ -1,241 +1,194 @@
-
 import React from "react";
 import Layout from "@/components/ui/layout/Layout";
 import SEOHead from "@/components/seo/SEOHead";
 import SchemaData from "@/components/seo/SchemaData";
-import { Youtube, Linkedin, Instagram, Brain, Code, TrendingUp, Users, Target, Lightbulb } from "lucide-react";
+import { motion } from "framer-motion";
+import { Youtube, Linkedin, Instagram, Brain, Code, TrendingUp, Users, ArrowUpRight, MessageCircle } from "lucide-react";
 
+const WHATSAPP_URL =
+  "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20want%20my%20FREE%2015-min%20YouTube%20strategy%20call.";
 
 const AboutGyan = () => {
   const personSchema = {
     name: "Gyan Dwivedi",
-    alternateName: "Gyanendra Dwivedi", 
+    alternateName: "Gyanendra Dwivedi",
     jobTitle: "Founder & CEO",
-    worksFor: {
-      "@type": "Organization",
-      name: "Infridet Solutions Private Limited"
-    },
-    description: "Indian digital entrepreneur and founder of Infridet Solutions. Expert in web automation, SEO growth, and digital consulting. Trusted by influencers, educators, and content creators across India.",
+    worksFor: { "@type": "Organization", name: "Infridet Solutions Private Limited" },
+    description:
+      "Indian digital entrepreneur and founder of Infridet Solutions. Expert in YouTube growth, SEO, and digital consulting.",
     url: "https://infridetsolutions.com/about-gyan",
     sameAs: [
       "https://in.linkedin.com/in/gyanendradwivedi",
       "https://www.youtube.com/@Core-Gyan",
-      "https://www.instagram.com/thegyanendradwivedi/"
-    ]
+      "https://www.instagram.com/thegyanendradwivedi/",
+    ],
   };
 
   const services = [
-    {
-      icon: Youtube,
-      title: "YouTube SEO & Growth Strategy",
-      description: "Helping creators scale their channels with data-driven optimization"
-    },
-    {
-      icon: Brain,
-      title: "SaaS & AI Automations", 
-      description: "Building intelligent systems that streamline business operations"
-    },
-    {
-      icon: Code,
-      title: "Web Development",
-      description: "Full-stack development with Next.js, PHP, MySQL, and Tailwind"
-    },
-    {
-      icon: TrendingUp,
-      title: "Brand Positioning",
-      description: "Strategic positioning for digital creators and businesses"
-    },
-    {
-      icon: Users,
-      title: "Influencer Portfolio Management",
-      description: "Managing high-level influencer and consultant portfolios"
-    }
+    { icon: Youtube, t: "YouTube Growth", d: "Channels scaled to 1M+ subs with engineered strategy." },
+    { icon: Brain, t: "AI Automations", d: "Intelligent systems that streamline creator workflows." },
+    { icon: Code, t: "Web & Product", d: "Full-stack platforms — Next.js, Tailwind, modern tooling." },
+    { icon: TrendingUp, t: "Brand Positioning", d: "Strategic narrative for creators and operators." },
+    { icon: Users, t: "Portfolio Mgmt", d: "End-to-end creator and influencer portfolio management." },
   ];
 
   return (
     <Layout>
-      <SEOHead 
-        title="Who is Gyan Dwivedi? – Meet the Visionary Behind Infridet Solutions"
-        description="Gyan Dwivedi is an Indian digital entrepreneur and founder of Infridet Solutions. Expert in web automation, SEO growth, and digital consulting. Trusted by influencers, educators, and content creators across India."
-        keywords={["Who is Gyan Dwivedi", "Gyan Dwivedi Founder", "Gyan Infridet Solutions", "Digital Growth Expert India", "Gyanendra Dwivedi", "YouTube SEO expert"]}
+      <SEOHead
+        title="Gyan Dwivedi — Founder, Infridet Solutions"
+        description="Meet Gyan Dwivedi: 12+ years building YouTube empires, 43M+ subs scaled, 500+ creators coached. Founder of Infridet Solutions."
+        keywords={["Gyan Dwivedi", "Gyanendra Dwivedi", "Infridet Founder", "YouTube growth expert India"]}
         ogType="article"
       />
-      
       <SchemaData type="Person" data={personSchema} />
-      
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-        {/* Hero Section */}
-        <section className="py-20 relative overflow-hidden">
-          <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
-          <div className="container px-4 md:px-6 mx-auto relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-8">
-                <div>
-                  <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-6">
-                    Hi, I'm Gyan Dwivedi
-                  </h1>
-                  <p className="text-xl text-gray-700 leading-relaxed">
-                    I'm the founder and digital brain behind <strong>Infridet Solutions Private Limited</strong> – a company focused on helping creators, businesses, and entrepreneurs grow through high-quality web development, automation, and digital marketing services.
-                  </p>
-                </div>
-                
-                <div className="flex space-x-4">
-                  <a 
-                    href="https://in.linkedin.com/in/gyanendradwivedi" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
-                  >
-                    <Linkedin size={24} />
-                  </a>
-                  <a 
-                    href="https://www.youtube.com/@Core-Gyan" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center w-12 h-12 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors"
-                  >
-                    <Youtube size={24} />
-                  </a>
-                  <a 
-                    href="https://www.instagram.com/thegyanendradwivedi/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full hover:from-purple-600 hover:to-pink-600 transition-colors"
-                  >
-                    <Instagram size={24} />
-                  </a>
-                </div>
-              </div>
-              
-              <div className="flex justify-center">
-                <div className="relative">
-                  <img
-                    src="/lovable-uploads/3a1238bf-43d7-4308-b873-3d789a424e88.png"
-                    alt="Gyan Dwivedi - Founder of Infridet Solutions"
-                    className="w-96 h-96 object-cover rounded-2xl shadow-2xl"
-                  />
-                  <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
-                    <Brain className="w-12 h-12 text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* What I Do Section */}
-        <section className="py-20 bg-white">
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                🧠 What I Do
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                I specialize in building digital ecosystems that drive real growth and results
+      {/* Hero — editorial portrait */}
+      <section className="relative bg-background border-b border-foreground/10 overflow-hidden">
+        <div className="absolute inset-0 grid-bg opacity-50" />
+        <div className="absolute -top-32 right-0 w-[460px] h-[460px] rounded-full bg-coral/15 blur-3xl pointer-events-none" />
+
+        <div className="container relative z-10 px-6 pt-24 pb-20 md:pt-32 md:pb-28">
+          <div className="flex items-center justify-between mb-16 pb-6 border-b border-foreground/15">
+            <span className="eyebrow">Plate 01 — Founder Portrait</span>
+            <span className="eyebrow">12+ years on YouTube</span>
+          </div>
+
+          <div className="grid lg:grid-cols-12 gap-12 items-end">
+            <div className="lg:col-span-7">
+              <motion.h1
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
+                className="headline-xl text-foreground text-balance"
+              >
+                Hi, I'm
+                <br />
+                <em className="italic font-light text-coral">Gyan.</em>
+              </motion.h1>
+              <p className="mt-10 text-xl md:text-2xl text-foreground/80 font-serif italic leading-snug max-w-2xl">
+                I build YouTube empires for a living. 43M+ subscribers grown,
+                500+ creators trained, and one studio born from it all — Infridet Solutions.
               </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <div key={index} className="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                  <service.icon className="w-12 h-12 text-orange-500 mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">{service.title}</h3>
-                  <p className="text-gray-600">{service.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* Why People Search For Me */}
-        <section className="py-20 bg-gradient-to-r from-orange-50 to-orange-100">
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                🏆 Why People Search for Me
-              </h2>
-            </div>
-            
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-white rounded-lg shadow-lg p-8">
-                <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                  Whether it's helping scale YouTube channels, automating service workflows, or building full-stack platforms from scratch, people know me as a <strong>problem-solver and growth enabler</strong>.
-                </p>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  I don't just build websites – <strong>I build digital ecosystems</strong> that transform how businesses operate and grow in the digital space.
-                </p>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                  <button className="btn-coral h-14 px-7">
+                    <MessageCircle className="h-5 w-5" />
+                    Talk to me directly
+                    <ArrowUpRight className="h-5 w-5" />
+                  </button>
+                </a>
+                {[
+                  { Icon: Linkedin, href: "https://in.linkedin.com/in/gyanendradwivedi" },
+                  { Icon: Youtube, href: "https://www.youtube.com/@Core-Gyan" },
+                  { Icon: Instagram, href: "https://www.instagram.com/thegyanendradwivedi/" },
+                ].map(({ Icon, href }, i) => (
+                  <a
+                    key={i}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-14 h-14 rounded-full border border-foreground/20 hover:border-coral hover:bg-coral hover:text-background flex items-center justify-center transition-all"
+                  >
+                    <Icon size={20} />
+                  </a>
+                ))}
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Vision Section */}
-        <section className="py-20 bg-white">
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="max-w-4xl mx-auto text-center">
-              <Lightbulb className="w-16 h-16 text-orange-500 mx-auto mb-6" />
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-                💡 My Vision
-              </h2>
-              <p className="text-xl text-gray-700 leading-relaxed mb-8">
-                At Infridet, my mission is to bring <strong>enterprise-level solutions</strong> to creators and businesses of all sizes. I believe in empowering India's digital talent pool with cutting-edge tech and zero-fluff strategies.
-              </p>
-              
-              <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg p-8">
-                <h3 className="text-2xl font-bold mb-4">🔍 For Search Snippets (SEO)</h3>
-                <div className="space-y-2 text-left max-w-2xl mx-auto">
-                  <p>• Gyan Dwivedi is an Indian digital entrepreneur and founder of Infridet Solutions.</p>
-                  <p>• Expert in web automation, SEO growth, and digital consulting.</p>
-                  <p>• Trusted by influencers, educators, and content creators across India.</p>
-                </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="lg:col-span-5"
+            >
+              <div className="relative">
+                <div className="absolute -inset-4 bg-coral/20 blur-2xl rounded-full" />
+                <img
+                  src="/lovable-uploads/3a1238bf-43d7-4308-b873-3d789a424e88.png"
+                  alt="Gyan Dwivedi"
+                  className="relative w-full h-auto object-cover rounded-2xl border border-foreground/10"
+                  loading="eager"
+                />
               </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* What I do */}
+      <section className="py-24 md:py-32 bg-background border-t border-foreground/10">
+        <div className="container px-6">
+          <div className="grid md:grid-cols-12 gap-8 mb-16">
+            <div className="md:col-span-4"><span className="eyebrow">§ What I do</span></div>
+            <div className="md:col-span-8">
+              <h2 className="display-serif text-4xl md:text-6xl text-foreground leading-[0.95] tracking-tight">
+                Five disciplines.
+                <br />
+                <em className="italic font-light text-coral">One outcome:</em> growth.
+              </h2>
             </div>
           </div>
-        </section>
 
-
-        {/* Connect Section */}
-        <section className="py-20 bg-gray-50">
-          <div className="container px-4 md:px-6 mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-              📲 Let's Connect
-            </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Ready to transform your digital presence? Let's discuss how we can work together to achieve your goals.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a 
-                href="https://in.linkedin.com/in/gyanendradwivedi" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/15 border border-foreground/15 rounded-2xl overflow-hidden">
+            {services.map((s, i) => (
+              <motion.div
+                key={s.t}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="bg-background p-8 flex flex-col"
               >
-                <Linkedin className="w-5 h-5 mr-2" />
-                LinkedIn
-              </a>
-              <a 
-                href="https://www.youtube.com/@Core-Gyan" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md transition-colors"
-              >
-                <Youtube className="w-5 h-5 mr-2" />
-                YouTube
-              </a>
-              <a 
-                href="https://www.instagram.com/thegyanendradwivedi/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium rounded-md transition-colors"
-              >
-                <Instagram className="w-5 h-5 mr-2" />
-                Instagram
-              </a>
-            </div>
+                <s.icon className="h-7 w-7 text-coral mb-6" strokeWidth={1.5} />
+                <h3 className="display-serif text-2xl text-foreground mb-2">{s.t}</h3>
+                <p className="text-muted-foreground leading-relaxed">{s.d}</p>
+              </motion.div>
+            ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      {/* Vision pull-quote */}
+      <section className="py-24 md:py-36 bg-foreground text-background relative overflow-hidden">
+        <div className="absolute inset-0 dot-bg opacity-[0.08]" />
+        <div className="container relative z-10 px-6">
+          <span className="mono text-[11px] uppercase tracking-[0.2em] text-background/50">
+            § My vision
+          </span>
+          <h2 className="display-serif text-4xl md:text-7xl mt-6 leading-[0.95] tracking-tight max-w-5xl">
+            Bring <em className="italic font-light text-coral">enterprise-grade</em> growth
+            to every Indian creator —
+            <br />
+            no fluff, no gatekeeping.
+          </h2>
+          <p className="mt-12 text-lg md:text-xl text-background/70 max-w-2xl font-serif italic leading-relaxed">
+            "Most agencies sell theory. We sell what we've already shipped.
+            Every framework was tested on our own channels first."
+          </p>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 bg-background border-t border-foreground/10">
+        <div className="container px-6 max-w-4xl">
+          <h2 className="display-serif text-4xl md:text-6xl text-foreground leading-[0.95] tracking-tight">
+            Let's <em className="italic font-light text-coral">talk.</em>
+          </h2>
+          <p className="mt-6 text-lg text-muted-foreground max-w-xl">
+            15 minutes. Zero cost. Real strategy — even if you decide not to work with us.
+          </p>
+          <div className="mt-10">
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              <button className="btn-coral h-16 px-10 text-base">
+                <MessageCircle className="h-5 w-5" />
+                Free 15-Min Strategy Call
+                <ArrowUpRight className="h-5 w-5" />
+              </button>
+            </a>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 };

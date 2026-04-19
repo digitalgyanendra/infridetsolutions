@@ -1,235 +1,66 @@
+import React from "react";
 
-import React, { useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+const logos = [
+  { name: "Josh Talks", imgSrc: "/lovable-uploads/325d2d7a-2a49-4220-8cc1-150319570c01.png" },
+  { name: "PharmEasy", imgSrc: "/lovable-uploads/192a9d94-67c9-40ad-b0b4-e12aaac8ce93.png" },
+  { name: "MPL", imgSrc: "/lovable-uploads/7b907a0d-539e-432d-bef2-9f0b3c5e9149.png" },
+  { name: "Vmart", imgSrc: "/lovable-uploads/b6fd9020-9cfe-4d9b-92a9-bc7fd9dc3f13.png" },
+  { name: "Meesho", imgSrc: "/lovable-uploads/bd4ba683-8219-4087-9708-0ef157a6cb71.png" },
+  { name: "Confirmtkt", imgSrc: "/lovable-uploads/3683885c-5b52-4464-87e1-25c19d49f75c.png" },
+  { name: "Dream11", imgSrc: "/lovable-uploads/f0247702-91e6-4dd7-8ca6-550b78fab2e6.png" },
+  { name: "Airtel", imgSrc: "/lovable-uploads/198368ec-73cb-47ce-892a-f0d7620fae08.png" },
+  { name: "OYO", imgSrc: "/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png" },
+  { name: "Physics Wallah", imgSrc: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgYXrdQffKHm97oCHSFyLupNJPe0wE9Nm_sHp5NLuCUK7GD_UxZnuoFt5PRRv0r27V9kjjsKh8K3u87DAKJRTatfJwK4D9PcHksspdkfK79cFXN6QbEBNMTXw4PPorKRhtiyxi4GmqMvNe5vrvH_cSbElVyKYHJfnX0_ErM0raAbZ2T-XhvGlNNLL6uM4Lb/w319-h320/physics-wallah-seeklogo.png" },
+  { name: "Kuku FM", imgSrc: "https://d1l07mcd18xic4.cloudfront.net/static/KukuFM-logos/KukuFM144-144.png" },
+];
 
 const TrustedBrandsSection = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-    
-    const scrollWidth = scrollContainer.scrollWidth;
-    const clientWidth = scrollContainer.clientWidth;
-    
-    let scrollPos = 0;
-    const scrollSpeed = 0.5;
-    
-    const scroll = () => {
-      if (!scrollContainer) return;
-      
-      scrollPos += scrollSpeed;
-      if (scrollPos >= scrollWidth / 2) {
-        scrollPos = 0;
-      }
-      
-      scrollContainer.scrollLeft = scrollPos;
-      requestAnimationFrame(scroll);
-    };
-    
-    // Use requestAnimationFrame for smoother animation
-    let animationId: number;
-    
-    // Only start animation when element is in viewport
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animationId = requestAnimationFrame(scroll);
-        } else {
-          cancelAnimationFrame(animationId);
-        }
-      });
-    }, { threshold: 0.1 });
-    
-    observer.observe(scrollContainer);
-    
-    return () => {
-      cancelAnimationFrame(animationId);
-      observer.disconnect();
-    };
-  }, []);
-
-  // Updated logo URLs with proper logos for all companies
-  const companyLogos = [
-    { 
-      name: "Josh Talks", 
-      highlight: true,
-      imgSrc: "/lovable-uploads/325d2d7a-2a49-4220-8cc1-150319570c01.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "PharmEasy", 
-      highlight: false, 
-      imgSrc: "/lovable-uploads/192a9d94-67c9-40ad-b0b4-e12aaac8ce93.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "MPL", 
-      highlight: false,
-      imgSrc: "/lovable-uploads/7b907a0d-539e-432d-bef2-9f0b3c5e9149.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "Vmart", 
-      highlight: true,
-      imgSrc: "/lovable-uploads/b6fd9020-9cfe-4d9b-92a9-bc7fd9dc3f13.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "Meesho", 
-      highlight: false,
-      imgSrc: "/lovable-uploads/bd4ba683-8219-4087-9708-0ef157a6cb71.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "Confirmtkt", 
-      highlight: true,
-      imgSrc: "/lovable-uploads/3683885c-5b52-4464-87e1-25c19d49f75c.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "Dream11", 
-      highlight: false,
-      imgSrc: "/lovable-uploads/f0247702-91e6-4dd7-8ca6-550b78fab2e6.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "Airtel", 
-      highlight: true,
-      imgSrc: "/lovable-uploads/198368ec-73cb-47ce-892a-f0d7620fae08.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "OYO", 
-      highlight: false,
-      imgSrc: "/lovable-uploads/35311a15-9e05-4d4a-bf6e-6b9a7fc6b8b5.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "Physics Wallah", 
-      highlight: true,
-      imgSrc: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgYXrdQffKHm97oCHSFyLupNJPe0wE9Nm_sHp5NLuCUK7GD_UxZnuoFt5PRRv0r27V9kjjsKh8K3u87DAKJRTatfJwK4D9PcHksspdkfK79cFXN6QbEBNMTXw4PPorKRhtiyxi4GmqMvNe5vrvH_cSbElVyKYHJfnX0_ErM0raAbZ2T-XhvGlNNLL6uM4Lb/w319-h320/physics-wallah-seeklogo.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "Seekho", 
-      highlight: true,
-      imgSrc: "https://s3-us-west-2.amazonaws.com/cbi-image-service-prd/original/ce2cd7f1-2145-4aea-92d7-a141af587318.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "Big Bazaar", 
-      highlight: true,
-      imgSrc: "https://bigbazaar.com.co/wp-content/uploads/2023/06/Big-Bazaar-Grocery-Store.png.webp",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "Kuku FM", 
-      highlight: false,
-      imgSrc: "https://d1l07mcd18xic4.cloudfront.net/static/KukuFM-logos/KukuFM144-144.png",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "Pocket FM", 
-      highlight: true,
-      imgSrc: "https://dzh2zima160vx.cloudfront.net/logo/657914371c5b6d3a474b0c53d58dc68f_332_160?Expires=1861920000&Signature=UAvK9ruE~mLLHjDCRUunStanZIA8vXApByGf7mUExKcAfTf-Twlz7Qr~PY~WfCPHpdrifB0-9ukXqDhKtpa4unFQScOecRATUXmnSSGnydY9OggwE478RR~-9gLj7n2FDDWO7dJGophSziSnKsQBfhw0fhlXlPbfNhvAxo7669PHgdx4OB1Wgr7gKgy94RhyxrDwQB32UKlcOrpjyBj7A2UIvU2fjlB0huxUU6ng3BVxNGFxlOHht0E0Si1cgQ1RzxZCX8Nh-xVDqWKM3~GiPDB~7a3Q4nYvyXsKgrts2C48oRHUnLsxlU6vbGxcdW1bF8m4SLWWYfgp4KM30~N-vg__&Key-Pair-Id=APKAII5OVX4LZ3WT422Q",
-      width: 100,
-      height: 64
-    },
-    { 
-      name: "SuperIndia", 
-      highlight: false,
-      imgSrc: "https://yt3.googleusercontent.com/x_NgpbaqE2Z0gMORl3hmeYQQT4PepNVqEIJMa3OL8AS_KYI_JD0Z7ZhKz_C69gkweOJNupb4yA=s900-c-k-c0x00ffffff-no-rj",
-      width: 100,
-      height: 64
-    }
-  ];
+  const loop = [...logos, ...logos];
 
   return (
-    <motion.section 
-      className="py-12 bg-white overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay: 0.8 }}
-    >
-      <div className="container px-4 md:px-6">
-        <div className="text-center mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-2">Trusted by Brands Worldwide</h2>
-          <p className="text-gray-600 text-sm uppercase tracking-wider font-medium">
-            Partnering with industry leaders to drive growth
-          </p>
-        </div>
-        
-        <div 
-          ref={scrollRef}
-          className="flex overflow-x-auto pb-4 scrollbar-hide" 
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          <div className="flex flex-nowrap gap-8 min-w-max">
-            {companyLogos.map((company, index) => (
-              <div 
-                key={index} 
-                className={`h-16 shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-110 ${
-                  company.highlight ? 'opacity-90' : 'opacity-70'
-                }`}
-              >
-                <img 
-                  src={company.imgSrc} 
-                  alt={company.name} 
-                  className="h-full w-auto object-contain"
-                  loading="lazy"
-                  width={company.width || 100}
-                  height={company.height || 64}
-                  decoding="async"
-                />
-              </div>
-            ))}
+    <section className="py-20 bg-background border-y border-foreground/10">
+      <div className="container px-6 mb-10">
+        <div className="grid md:grid-cols-12 gap-6 items-end">
+          <div className="md:col-span-5">
+            <span className="eyebrow">§ Trusted across India</span>
+            <h2 className="display-serif text-3xl md:text-5xl mt-3 text-foreground leading-[0.95] tracking-tight">
+              Built with{" "}
+              <em className="italic font-light text-coral">brands you know.</em>
+            </h2>
           </div>
-          {/* Duplicate the logos for continuous scrolling effect */}
-          <div className="flex flex-nowrap gap-8 min-w-max ml-8">
-            {companyLogos.map((company, index) => (
-              <div 
-                key={`duplicate-${index}`} 
-                className={`h-16 shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-110 ${
-                  company.highlight ? 'opacity-90' : 'opacity-70'
-                }`}
-              >
-                <img 
-                  src={company.imgSrc} 
-                  alt={company.name} 
-                  className="h-full w-auto object-contain"
-                  loading="lazy"
-                  width={company.width || 100}
-                  height={company.height || 64}
-                  decoding="async"
-                />
-              </div>
-            ))}
+          <div className="md:col-span-7 md:text-right">
+            <p className="text-base md:text-lg text-muted-foreground font-serif italic">
+              From unicorn startups to legacy retail — same playbook, same results.
+            </p>
           </div>
-        </div>
-        
-        <div className="mt-8 text-center">
-          <p className="text-gray-700">
-            <span className="text-orange-500 font-bold">43+ Million</span> Subscribers | 
-            <span className="text-deepBlue-500 font-bold"> 6.5+ Billion</span> Views | 
-            <span className="text-orange-500 font-bold"> Billions</span> of Impressions
-          </p>
         </div>
       </div>
-    </motion.section>
+
+      <div className="marquee">
+        <div className="marquee-track items-center">
+          {loop.map((c, i) => (
+            <img
+              key={i}
+              src={c.imgSrc}
+              alt={c.name}
+              className="h-10 md:h-12 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="container px-6 mt-10">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+          <span><span className="text-coral font-bold">43M+</span> subscribers</span>
+          <span className="opacity-30">·</span>
+          <span><span className="text-coral font-bold">6.5B+</span> views</span>
+          <span className="opacity-30">·</span>
+          <span><span className="text-coral font-bold">500+</span> creators</span>
+        </div>
+      </div>
+    </section>
   );
 };
 

@@ -1,59 +1,59 @@
-
 import React from "react";
 import { motion } from "framer-motion";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
+
+const WHATSAPP_URL =
+  "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20want%20my%20FREE%2015-min%20YouTube%20strategy%20call.";
 
 const HeroSection = () => {
   return (
-    <section className="relative py-20 overflow-hidden bg-white">
-      <div className="absolute inset-0 network-bg opacity-5 z-0"></div>
-      <div className="container px-4 md:px-6 mx-auto relative z-10">
-        <div className="grid grid-cols-1 gap-12 items-center justify-center text-center">
-          <div className="mx-auto mb-8 w-48">
-            <img 
-              src="/lovable-uploads/5b95ed65-a685-40e7-a150-14769fcefd1b.png" 
-              alt="Infridet Solutions Logo" 
-              className="w-full h-auto"
-              width="192"
-              height="192"
-              decoding="async"
-              loading="eager"
-            />
-          </div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="space-y-6"
-          >
-            <h1 className="text-5xl md:text-6xl font-bold gradient-text">
-              About Infridet Solutions
-            </h1>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-              Infridet Solutions Private Limited is a premier technology and digital marketing consultancy specializing in AI automation, YouTube growth strategies, and comprehensive digital presence optimization for creators and businesses.
-            </p>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-              Founded by AI automation expert Gyanendra Dwivedi, we combine cutting-edge technological solutions with strategic marketing expertise to help our clients achieve sustainable growth in the digital landscape.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a
-                href="/contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-medium rounded-md transition-all"
-              >
-                Contact Us
-              </motion.a>
-              <motion.a
-                href="/services"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center justify-center px-6 py-3 bg-transparent border border-orange-500/50 hover:bg-orange-500/10 text-gray-800 font-medium rounded-md transition-all"
-              >
-                Our Services
-              </motion.a>
-            </div>
-          </motion.div>
+    <section className="relative bg-background overflow-hidden border-b border-foreground/10">
+      <div className="absolute inset-0 grid-bg opacity-50" />
+      <div className="absolute -top-32 right-1/3 w-[420px] h-[420px] rounded-full bg-coral/15 blur-3xl pointer-events-none" />
+
+      <div className="container relative z-10 px-6 pt-24 pb-20 md:pt-32 md:pb-28">
+        <div className="flex items-center justify-between mb-16 pb-6 border-b border-foreground/15">
+          <span className="eyebrow">Vol. 02 — About the Studio</span>
+          <span className="eyebrow">Est. 2014 · Noida, India</span>
         </div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="headline-xl text-foreground text-balance max-w-5xl"
+        >
+          A studio of <em className="italic font-light text-coral">operators</em>
+          <br />
+          — not consultants.
+        </motion.h1>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-12 grid md:grid-cols-12 gap-8 items-end"
+        >
+          <p className="md:col-span-7 text-xl md:text-2xl text-foreground/80 font-serif italic leading-snug">
+            Infridet Solutions is a creator-first growth studio led by Gyan Dwivedi.
+            We build YouTube channels, brands, and product audiences from zero — and
+            scale them past every plateau.
+          </p>
+          <div className="md:col-span-5 flex flex-col gap-3">
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              <button className="btn-coral w-full h-14 text-base">
+                <MessageCircle className="h-5 w-5" />
+                Talk to Gyan
+                <ArrowUpRight className="h-5 w-5" />
+              </button>
+            </a>
+            <a href="/services">
+              <button className="btn-ghost-ink w-full h-14 text-base">
+                See what we do →
+              </button>
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

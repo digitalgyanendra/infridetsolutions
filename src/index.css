@@ -1,46 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 220 25% 10%;
+    /* Editorial Cream + Deep Navy + Coral palette */
+    --background: 36 33% 96%;            /* warm cream */
+    --foreground: 220 50% 12%;           /* deep navy ink */
 
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
+    --card-foreground: 220 50% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
+    --popover-foreground: 220 50% 12%;
 
-    --primary: 220 70% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 220 60% 16%;              /* deep navy authority */
+    --primary-foreground: 36 33% 96%;
 
-    --secondary: 215 20% 95%;
-    --secondary-foreground: 220 25% 20%;
+    --secondary: 36 25% 92%;             /* soft cream tint */
+    --secondary-foreground: 220 50% 12%;
 
-    --muted: 215 20% 95%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 36 20% 90%;
+    --muted-foreground: 220 15% 38%;
 
-    --accent: 145 65% 42%;
+    --accent: 8 78% 62%;                 /* coral — the Purple Cow */
     --accent-foreground: 0 0% 100%;
+    --accent-soft: 8 78% 95%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 220 70% 45%;
+    --border: 36 20% 86%;
+    --input: 36 20% 86%;
+    --ring: 220 60% 16%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --whatsapp: 142 70% 45%;
-    --navy: 220 70% 45%;
-    --navy-dark: 220 75% 20%;
-    --slate-warm: 215 20% 95%;
+    /* Brand semantic */
+    --whatsapp: 142 70% 38%;
+    --ink: 220 50% 12%;
+    --cream: 36 33% 96%;
+    --coral: 8 78% 62%;
+    --coral-deep: 8 70% 50%;
+    --navy: 220 60% 16%;
+    --navy-deep: 220 70% 8%;
+
+    /* Sidebar (admin) */
+    --sidebar-background: 220 60% 16%;
+    --sidebar-foreground: 36 33% 96%;
+    --sidebar-primary: 8 78% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 50% 22%;
+    --sidebar-accent-foreground: 36 33% 96%;
+    --sidebar-border: 220 40% 24%;
+    --sidebar-ring: 8 78% 62%;
   }
 }
 
@@ -49,90 +64,110 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    font-family: 'Fraunces', 'Times New Roman', serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
   }
 }
 
 @layer components {
-  .gradient-text {
-    @apply text-transparent bg-clip-text;
-    background: linear-gradient(135deg, hsl(220 70% 45%), hsl(220 75% 25%));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+  /* Editorial display typography */
+  .display-serif {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "opsz" 144;
   }
 
-  .gradient-text-accent {
-    @apply text-transparent bg-clip-text;
-    background: linear-gradient(135deg, hsl(145 65% 42%), hsl(145 70% 32%));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+  .mono {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
   }
 
-  .glass-card {
-    @apply bg-white/80 backdrop-blur-xl border border-border rounded-xl;
-    box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  /* Ink underline on hover (Apple-link style) */
+  .ink-link {
+    @apply relative inline-block text-foreground;
+  }
+  .ink-link::after {
+    content: '';
+    @apply absolute left-0 -bottom-0.5 h-px w-full bg-current origin-right scale-x-0 transition-transform duration-500;
+  }
+  .ink-link:hover::after {
+    @apply origin-left scale-x-100;
   }
 
-  .glass-card-primary {
-    @apply bg-white backdrop-blur-xl border border-border rounded-xl;
-    box-shadow: 0 4px 24px -4px hsla(220, 70%, 45%, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  /* Eyebrow label — editorial */
+  .eyebrow {
+    @apply mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground;
   }
 
-  .glass-card-secondary {
-    @apply bg-white backdrop-blur-xl border border-border rounded-xl;
-    box-shadow: 0 4px 24px -4px hsla(145, 65%, 42%, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  /* Coral CTA — the Purple Cow */
+  .btn-coral {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))] font-semibold transition-all hover:bg-[hsl(var(--coral-deep))] hover:scale-[1.02] active:scale-[0.98];
+    box-shadow: 0 8px 24px -8px hsl(var(--accent) / 0.5);
   }
 
-  .corporate-shadow {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
+  .btn-ink {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-foreground text-background font-semibold transition-all hover:bg-[hsl(var(--navy-deep))] hover:scale-[1.02] active:scale-[0.98];
   }
 
-  .corporate-shadow-lg {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04), 0 16px 48px rgba(0, 0, 0, 0.08);
+  .btn-ghost-ink {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-foreground text-foreground font-semibold transition-all hover:bg-foreground hover:text-background;
   }
 
-  .hero-bg {
-    @apply relative overflow-hidden;
-    background: linear-gradient(135deg, hsl(220 70% 45% / 0.03), hsl(215 20% 95%), hsl(145 65% 42% / 0.03));
+  /* Editorial card */
+  .editorial-card {
+    @apply bg-card border border-border rounded-2xl transition-all;
+  }
+  .editorial-card:hover {
+    box-shadow: 0 24px 48px -16px hsl(var(--foreground) / 0.12);
+    transform: translateY(-2px);
   }
 
-  .hero-bg::before {
-    @apply content-[""] absolute inset-0 z-0;
-    background: radial-gradient(ellipse at 30% 20%, hsl(220 70% 45% / 0.06) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 80%, hsl(145 65% 42% / 0.04) 0%, transparent 60%);
+  /* Marquee */
+  .marquee {
+    @apply flex overflow-hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+  .marquee-track {
+    @apply flex shrink-0 gap-16 pr-16 animate-marquee;
   }
 
-  .network-bg {
-    @apply bg-network-pattern bg-[length:60px_60px] animate-network-lines;
+  /* Grid background */
+  .grid-bg {
+    background-image:
+      linear-gradient(hsl(var(--foreground) / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.06) 1px, transparent 1px);
+    background-size: 80px 80px;
   }
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  .dot-bg {
+    background-image: radial-gradient(circle at 1px 1px, hsl(var(--foreground) / 0.12) 1px, transparent 0);
+    background-size: 28px 28px;
   }
 
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Big headline utility */
+  .headline-xl {
+    @apply display-serif text-[3rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[7.5rem] leading-[0.9] tracking-[-0.04em];
   }
 
-  .glowing-border {
-    @apply relative z-0;
-  }
-
-  .glowing-border::after {
-    @apply content-[""] absolute inset-0 rounded-xl -z-10 opacity-30 blur-md;
-    background: linear-gradient(45deg, hsl(220 70% 45%), hsl(145 65% 42%));
-  }
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
 }
