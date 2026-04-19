@@ -1,65 +1,99 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { MessageCircle, Clock, Shield, Zap } from "lucide-react";
+
+const WHATSAPP_URL =
+  "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20want%20my%20FREE%2015-min%20YouTube%20strategy%20call.%20Please%20share%20a%20slot.";
 
 const CTASection = () => {
   return (
-    <section className="py-20 relative overflow-hidden bg-white">
-      {/* Background with gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-deepBlue-500/10 z-0"></div>
-      <div className="absolute inset-0 network-bg opacity-20 z-0"></div>
-      
-      <div className="container px-4 md:px-6 relative z-10">
-        <div className="glass-card max-w-4xl mx-auto p-8 md:p-12 text-center">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold gradient-text mb-6"
+    <section className="py-24 md:py-32 bg-foreground text-background relative overflow-hidden">
+      {/* Subtle pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.05]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, hsl(var(--background)) 1px, transparent 0)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      <div className="container relative z-10 px-4 md:px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.span
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="inline-block px-4 py-1.5 rounded-full bg-background/10 border border-background/20 text-xs font-semibold uppercase tracking-wider mb-8"
+          >
+            Limited Slots This Week
+          </motion.span>
+
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-8"
           >
-            Ready to Transform Your Digital Presence?
+            Stop guessing.
+            <br />
+            Start growing —{" "}
+            <span className="italic font-serif text-[hsl(var(--accent))]">
+              today.
+            </span>
           </motion.h2>
-          
-          <motion.p 
-            className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
+            className="text-lg md:text-xl text-background/70 max-w-2xl mx-auto mb-10"
           >
-            Join our network of successful clients and take your digital journey to the next level. 
-            Our consultants are ready to help you achieve extraordinary growth.
+            Book a free 15-minute call with Gyan. Walk away with a clear
+            roadmap — even if you decide not to work with us.
           </motion.p>
-          
-          <motion.div 
-            className="flex flex-col sm:flex-row justify-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex justify-center mb-12"
           >
-            <Link to="/contact">
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-8"
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              <Button
+                size="lg"
+                className="h-16 px-10 text-lg font-bold bg-[hsl(var(--whatsapp))] hover:bg-[hsl(var(--whatsapp))]/90 text-white shadow-2xl hover:scale-105 transition-all"
               >
-                Get Started
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <MessageCircle className="mr-2 h-6 w-6" />
+                Message Gyan on WhatsApp
               </Button>
-            </Link>
-            <Link to="/services">
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="text-gray-800 border-gray-300 hover:bg-gray-100 px-8"
-              >
-                Explore Services
-              </Button>
-            </Link>
+            </a>
+          </motion.div>
+
+          {/* Guarantees row */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto pt-8 border-t border-background/10"
+          >
+            {[
+              { icon: Clock, t: "15 minutes", s: "Quick & focused" },
+              { icon: Shield, t: "100% Free", s: "Zero obligation" },
+              { icon: Zap, t: "Real strategy", s: "Not a sales pitch" },
+            ].map((item) => (
+              <div key={item.t} className="flex flex-col items-center gap-2">
+                <item.icon className="h-6 w-6 text-[hsl(var(--accent))]" />
+                <div className="font-bold text-base">{item.t}</div>
+                <div className="text-sm text-background/60">{item.s}</div>
+              </div>
+            ))}
           </motion.div>
         </div>
       </div>
