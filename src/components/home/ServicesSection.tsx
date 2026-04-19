@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Youtube, LineChart, Layers, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const WHATSAPP_URL =
@@ -10,132 +10,117 @@ const services = [
   {
     num: "01",
     title: "YouTube Growth",
-    short: "Channels that actually scale",
+    short: "Channels that actually scale.",
     description:
-      "From 0 to 1M+ subscribers — we engineer your content strategy, thumbnails, retention, and algorithm-fit. Same system that built 43M+ subs.",
-    icon: Youtube,
-    outcome: "Avg 3.2x growth in 90 days",
+      "From 0 to 1M+ subscribers. We engineer your content strategy, thumbnails, retention curves, and algorithm-fit — the same system that built 43M+ subs.",
+    outcome: "Avg 3.2× growth in 90 days",
   },
   {
     num: "02",
     title: "SEO & Discoverability",
-    short: "Get found on Search & YouTube",
+    short: "Get found on Search & YouTube.",
     description:
       "Rank for what your audience is actually searching. Keyword research, on-page SEO, and content briefs that bring qualified traffic on autopilot.",
-    icon: LineChart,
-    outcome: "Avg 5x organic reach",
+    outcome: "Avg 5× organic reach",
   },
   {
     num: "03",
     title: "Brand & Monetization",
-    short: "Turn views into revenue",
+    short: "Turn views into revenue.",
     description:
-      "Brand deals, sponsorships, course launches, and product growth playbooks. We've helped creators cross ₹1Cr+ years.",
-    icon: Layers,
+      "Brand deals, sponsorships, course launches, product growth playbooks. We've helped creators cross ₹1Cr+ years.",
     outcome: "Multiple 7-figure exits",
   },
 ];
 
 const ServicesSection = () => {
   return (
-    <section className="py-24 md:py-32 bg-white">
-      <div className="container px-4 md:px-6">
-        {/* Section header — editorial */}
-        <div className="max-w-3xl mb-16 md:mb-20">
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(var(--primary))]"
-          >
-            What we do
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]"
-          >
-            Three things we do
-            <br />
-            <span className="italic font-serif text-muted-foreground">
-              better than anyone.
-            </span>
-          </motion.h2>
+    <section className="py-24 md:py-36 bg-background border-t border-foreground/10">
+      <div className="container px-6">
+        {/* Section masthead */}
+        <div className="grid md:grid-cols-12 gap-8 mb-20 md:mb-28">
+          <div className="md:col-span-4">
+            <span className="eyebrow">§ What we do</span>
+          </div>
+          <div className="md:col-span-8">
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="display-serif text-4xl md:text-6xl lg:text-7xl text-foreground leading-[0.95] tracking-tight"
+            >
+              Three things.
+              <br />
+              <em className="italic font-light text-coral">Done</em> better than anyone.
+            </motion.h2>
+          </div>
         </div>
 
-        {/* Services list — magazine columns */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border rounded-2xl overflow-hidden border border-border">
+        {/* Services — full-width editorial rows */}
+        <div className="border-t border-foreground/15">
           {services.map((s, i) => (
             <motion.div
               key={s.num}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group bg-white p-8 md:p-10 hover:bg-secondary/40 transition-colors flex flex-col"
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="group grid md:grid-cols-12 gap-8 py-12 md:py-16 border-b border-foreground/15 hover:bg-secondary/30 transition-colors px-2 md:px-4 -mx-2 md:-mx-4 rounded-lg"
             >
-              <div className="flex items-start justify-between mb-8">
-                <span className="text-sm font-mono font-semibold text-muted-foreground">
-                  {s.num}
-                </span>
-                <s.icon className="h-7 w-7 text-foreground" strokeWidth={1.5} />
+              <div className="md:col-span-2">
+                <span className="mono text-sm text-muted-foreground">{s.num}</span>
               </div>
-
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 leading-tight">
-                {s.title}
-              </h3>
-              <p className="text-base font-medium text-[hsl(var(--primary))] mb-4">
-                {s.short}
-              </p>
-              <p className="text-muted-foreground leading-relaxed mb-8 flex-1">
-                {s.description}
-              </p>
-
-              <div className="pt-6 border-t border-border">
-                <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">
-                  Typical outcome
+              <div className="md:col-span-6">
+                <h3 className="display-serif text-3xl md:text-5xl text-foreground leading-[1] tracking-tight mb-4">
+                  {s.title}
+                </h3>
+                <p className="text-base md:text-lg text-foreground/70 italic font-serif mb-6">
+                  {s.short}
+                </p>
+                <p className="text-base text-muted-foreground leading-relaxed max-w-prose">
+                  {s.description}
+                </p>
+              </div>
+              <div className="md:col-span-4 flex md:flex-col md:items-end justify-between md:justify-start gap-4">
+                <div className="md:text-right">
+                  <div className="eyebrow mb-1">Typical outcome</div>
+                  <div className="display-serif text-xl md:text-2xl text-coral italic">
+                    {s.outcome}
+                  </div>
                 </div>
-                <div className="font-bold text-foreground">{s.outcome}</div>
+                <ArrowUpRight className="h-6 w-6 text-foreground/40 group-hover:text-coral group-hover:rotate-12 transition-all" />
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Bottom CTA strip */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 p-6 md:p-8 bg-secondary rounded-2xl border border-border"
+          className="mt-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
         >
-          <div>
-            <h3 className="text-xl md:text-2xl font-bold text-foreground">
+          <div className="max-w-xl">
+            <h3 className="display-serif text-2xl md:text-3xl text-foreground italic">
               Not sure which one you need?
             </h3>
-            <p className="text-muted-foreground mt-1">
-              Tell Gyan your channel — he'll tell you exactly what to fix first.
+            <p className="text-muted-foreground mt-2">
+              Tell Gyan about your channel — he'll tell you exactly what to fix first. Free.
             </p>
           </div>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[hsl(var(--whatsapp))] hover:bg-[hsl(var(--whatsapp))]/90 text-white font-bold shadow-md hover:shadow-lg transition-all whitespace-nowrap"
-          >
-            WhatsApp Gyan Now
-            <ArrowUpRight className="h-5 w-5" />
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+            <button className="btn-coral h-14 px-7 text-base whitespace-nowrap">
+              WhatsApp Gyan Now
+              <ArrowUpRight className="h-5 w-5" />
+            </button>
           </a>
         </motion.div>
 
-        <div className="mt-6 text-center">
-          <Link
-            to="/services"
-            className="text-sm font-semibold text-muted-foreground hover:text-foreground underline underline-offset-4"
-          >
-            See full service list →
+        <div className="mt-8">
+          <Link to="/services" className="ink-link mono text-xs uppercase tracking-[0.2em]">
+            See full service catalogue →
           </Link>
         </div>
       </div>

@@ -1,157 +1,108 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { MessageCircle, Star, TrendingUp, ArrowRight } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 
 const WHATSAPP_URL =
   "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20want%20my%20FREE%2015-min%20YouTube%20strategy%20call.%20Please%20share%20a%20slot.";
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-white overflow-hidden border-b border-border">
-      {/* Subtle grid background */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-        }}
-      />
+    <section className="relative bg-background overflow-hidden">
+      {/* Editorial grid */}
+      <div className="absolute inset-0 grid-bg opacity-60" />
 
-      <div className="container relative z-10 px-4 md:px-6 pt-20 pb-24 md:pt-28 md:pb-32">
-        <div className="max-w-5xl mx-auto">
-          {/* Eyebrow */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="flex items-center gap-2 mb-8"
-          >
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary border border-border text-xs font-semibold uppercase tracking-wider text-foreground">
-              <span className="w-2 h-2 rounded-full bg-[hsl(var(--accent))] animate-pulse" />
-              Trusted by 500+ Creators & Brands
-            </span>
-          </motion.div>
+      {/* Coral accent blob */}
+      <div className="absolute -top-32 -right-32 w-[420px] h-[420px] rounded-full bg-coral/20 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 -left-32 w-[380px] h-[380px] rounded-full bg-navy/10 blur-3xl pointer-events-none" />
 
-          {/* Headline — magazine style */}
+      <div className="container relative z-10 px-6 pt-24 pb-20 md:pt-32 md:pb-28">
+        {/* Top bar — issue / date / status */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="flex items-center justify-between mb-16 md:mb-20 pb-6 border-b border-foreground/15"
+        >
+          <span className="eyebrow">Vol. 01 — The Growth Issue</span>
+          <span className="eyebrow flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-coral animate-pulse" />
+            Booking April 2026
+          </span>
+        </motion.div>
+
+        {/* THE MANIFESTO */}
+        <div className="max-w-[1200px]">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            className="text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-[0.95] text-foreground mb-8"
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="headline-xl text-foreground text-balance"
           >
-            Your YouTube
+            We don't <em className="italic font-light text-coral">grow</em> channels.
             <br />
-            channel deserves
-            <br />
-            <span className="italic font-serif text-[hsl(var(--primary))]">
-              real growth.
-            </span>
+            We build <em className="italic font-light">empires.</em>
           </motion.h1>
 
-          {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed"
-          >
-            We've grown channels to{" "}
-            <span className="font-bold text-foreground">43M+ subscribers</span>{" "}
-            and <span className="font-bold text-foreground">6.5B+ views</span>.
-            Now it's your turn. Get a{" "}
-            <span className="font-bold text-foreground">
-              free 15-minute strategy call
-            </span>{" "}
-            with Gyan — no fluff, just a clear next step.
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="flex flex-col sm:flex-row gap-3 mb-10"
-          >
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-              <Button
-                size="lg"
-                className="h-14 px-8 text-base font-bold bg-[hsl(var(--whatsapp))] hover:bg-[hsl(var(--whatsapp))]/90 text-white shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
-              >
-                <MessageCircle className="mr-2 h-5 w-5" />
-                Get My Free 15-Min Call
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </a>
-            <a href="tel:+919517459072">
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-14 px-8 text-base font-semibold border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
-              >
-                Call Gyan: +91 95174 59072
-              </Button>
-            </a>
-          </motion.div>
-
-          {/* Trust signals row */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted-foreground"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-12 md:mt-16 grid md:grid-cols-12 gap-8 md:gap-12 items-end"
           >
-            <div className="flex items-center gap-1.5">
-              <div className="flex">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <Star
-                    key={i}
-                    className="h-4 w-4 fill-[hsl(var(--accent))] text-[hsl(var(--accent))]"
-                  />
-                ))}
-              </div>
-              <span className="font-semibold text-foreground">4.9/5</span>
-              <span>from 200+ creators</span>
+            <p className="md:col-span-7 text-xl md:text-2xl text-foreground/80 leading-snug font-medium text-pretty">
+              43 million subscribers. 6.5 billion views. 500+ creators.
+              <br className="hidden md:block" />
+              Built by one team — led by{" "}
+              <span className="ink-link font-serif italic">Gyan Dwivedi</span>.
+              <br />
+              Now it's your turn.
+            </p>
+
+            <div className="md:col-span-5 flex flex-col gap-4">
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                <button className="btn-coral w-full h-16 px-8 text-base group">
+                  <MessageCircle className="h-5 w-5" />
+                  Free 15-Min Strategy Call
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </button>
+              </a>
+              <a href="tel:+919517459072" className="text-center">
+                <button className="btn-ghost-ink w-full h-14 px-8 text-sm">
+                  Or call directly: +91 95174 59072
+                </button>
+              </a>
+              <p className="text-center mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mt-1">
+                No credit card · No commitment · 15 minutes
+              </p>
             </div>
-            <div className="hidden sm:block w-px h-4 bg-border" />
-            <div className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-[hsl(var(--accent))]" />
-              <span>
-                <span className="font-semibold text-foreground">Avg 3.2x</span>{" "}
-                channel growth in 90 days
-              </span>
-            </div>
-            <div className="hidden sm:block w-px h-4 bg-border" />
-            <span>
-              <span className="font-semibold text-foreground">No credit card</span>{" "}
-              — strategy call is free
-            </span>
           </motion.div>
         </div>
 
-        {/* Big stat strip */}
+        {/* Editorial stat strip */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-20 md:mt-28 grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-2xl overflow-hidden border border-border"
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-24 md:mt-32 border-t border-foreground/15 pt-10"
         >
-          {[
-            { v: "43M+", l: "Subscribers Generated" },
-            { v: "6.5B+", l: "Views Delivered" },
-            { v: "500+", l: "Creators Coached" },
-            { v: "₹0", l: "Cost of First Call" },
-          ].map((s) => (
-            <div key={s.l} className="bg-white p-6 md:p-8 text-center">
-              <div className="text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
-                {s.v}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { v: "43M+", l: "Subscribers generated", k: "01" },
+              { v: "6.5B+", l: "Views delivered", k: "02" },
+              { v: "500+", l: "Creators coached", k: "03" },
+              { v: "₹0", l: "Cost of first call", k: "04" },
+            ].map((s) => (
+              <div key={s.k} className="flex flex-col">
+                <span className="mono text-[11px] text-muted-foreground tracking-widest mb-3">
+                  {s.k}
+                </span>
+                <span className="display-serif text-5xl md:text-6xl text-foreground leading-none">
+                  {s.v}
+                </span>
+                <span className="mt-3 text-sm text-muted-foreground">{s.l}</span>
               </div>
-              <div className="mt-2 text-xs md:text-sm uppercase tracking-wider text-muted-foreground font-medium">
-                {s.l}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
