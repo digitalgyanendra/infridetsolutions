@@ -28,50 +28,67 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Check for existing session on load
+  // Check for existing session on load.
+  // SECURITY: Never grant admin from localStorage alone — always verify with the
+  // server first, and fail closed (sign out) on any error or missing token.
   useEffect(() => {
     const storedUser = localStorage.getItem('admin_user');
     const storedToken = localStorage.getItem('admin_token');
-    
-    if (storedUser && storedToken) {
-      try {
-        const userData = JSON.parse(storedUser);
-        setUser(userData);
-        setIsAdmin(true);
-        // Optionally verify token with backend
-        verifyToken(storedToken);
-      } catch (error) {
-        console.error("Error parsing stored user data:", error);
-        localStorage.removeItem('admin_user');
-        localStorage.removeItem('admin_token');
-      }
-    }
-    
-    setIsLoading(false);
-  }, []);
 
-  // Verify token with backend
-  const verifyToken = async (token: string) => {
-    try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.VERIFY_TOKEN}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      
-      const data = await response.json();
-      
-      if (!data.success) {
-        // Token is invalid, clear session
-        signOut();
-      }
-    } catch (error) {
-      console.error("Token verification failed:", error);
-      // Don't sign out on network errors, let user continue
+    if (!storedUser || !storedToken) {
+      setIsLoading(false);
+      return;
     }
-  };
+
+    let cancelled = false;
+
+    const clearSession = () => {
+      localStorage.removeItem('admin_user');
+      localStorage.removeItem('admin_token');
+      if (!cancelled) {
+        setUser(null);
+        setIsAdmin(false);
+      }
+    };
+
+    (async () => {
+      try {
+        const response = await fetch(
+          `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.VERIFY_TOKEN}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${storedToken}`,
+            },
+          }
+        );
+
+        const data = await response.json().catch(() => null);
+
+        if (!response.ok || !data?.success) {
+          clearSession();
+          return;
+        }
+
+        // Only now do we trust the stored user data.
+        const userData = JSON.parse(storedUser);
+        if (!cancelled) {
+          setUser(userData);
+          setIsAdmin(userData?.role === 'admin');
+        }
+      } catch (error) {
+        // Fail closed on network/parse errors — do not silently keep admin access.
+        clearSession();
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Direct admin access with username and password
   const adminDirectAccess = async (username: string, password: string): Promise<boolean> => {

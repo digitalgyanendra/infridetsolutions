@@ -1,35 +1,34 @@
-
 <?php
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-$headers = getallheaders();
-$authHeader = $headers['Authorization'] ?? '';
+require_once 'config/auth.php';
 
-if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
+$headers = function_exists('getallheaders') ? getallheaders() : [];
+$authHeader = $headers['Authorization'] ?? ($headers['authorization'] ?? '');
+
+if (!$authHeader || stripos($authHeader, 'Bearer ') !== 0) {
+    http_response_code(401);
     echo json_encode(["success" => false, "message" => "No token provided"]);
     exit;
 }
 
-$token = str_replace('Bearer ', '', $authHeader);
+$token = trim(substr($authHeader, 7));
+$payload = auth_verify_token($token);
 
-// Simple token validation (in production, use proper JWT validation)
-$decoded = base64_decode($token);
-$parts = explode(':', $decoded);
-
-if (count($parts) === 2) {
-    $userId = $parts[0];
-    $timestamp = $parts[1];
-    
-    // Check if token is not older than 24 hours
-    if ((time() - $timestamp) < 86400) {
-        echo json_encode(["success" => true]);
-    } else {
-        echo json_encode(["success" => false, "message" => "Token expired"]);
-    }
-} else {
-    echo json_encode(["success" => false, "message" => "Invalid token"]);
+if (!$payload) {
+    http_response_code(401);
+    echo json_encode(["success" => false, "message" => "Invalid or expired token"]);
+    exit;
 }
+
+echo json_encode([
+    "success" => true,
+    "user" => [
+        "id"   => $payload['uid'] ?? null,
+        "role" => $payload['role'] ?? null,
+    ]
+]);
 ?>

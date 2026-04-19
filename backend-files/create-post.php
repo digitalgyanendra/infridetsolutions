@@ -1,4 +1,3 @@
-
 <?php
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
@@ -6,18 +5,19 @@ header("Access-Control-Allow-Methods: POST, PUT");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 require_once 'config/database.php';
+require_once 'config/auth.php';
 
-// Verify token (simplified version)
-$headers = getallheaders();
-$authHeader = $headers['Authorization'] ?? '';
-
-if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
-    echo json_encode(["success" => false, "message" => "Unauthorized"]);
-    exit;
-}
+// Require a verified admin token.
+auth_require_admin();
 
 $database = new Database();
 $conn = $database->getConnection();
+
+if (!$conn) {
+    http_response_code(503);
+    echo json_encode(["success" => false, "message" => "Service unavailable"]);
+    exit;
+}
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -38,11 +38,9 @@ $meta_title = $data->meta_title ?? $title;
 $meta_description = $data->meta_description ?? $excerpt;
 
 if (isset($data->id)) {
-    // Update existing post
     $stmt = $conn->prepare("UPDATE blog_posts SET title=?, content=?, excerpt=?, slug=?, status=?, category=?, author=?, featured_image=?, meta_title=?, meta_description=?, updated_at=NOW() WHERE id=?");
     $stmt->bind_param("ssssssssssi", $title, $content, $excerpt, $slug, $status, $category, $author, $featured_image, $meta_title, $meta_description, $data->id);
 } else {
-    // Create new post
     $stmt = $conn->prepare("INSERT INTO blog_posts (title, content, excerpt, slug, status, category, author, featured_image, meta_title, meta_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssssssss", $title, $content, $excerpt, $slug, $status, $category, $author, $featured_image, $meta_title, $meta_description);
 }
