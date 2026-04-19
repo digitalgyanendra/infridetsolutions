@@ -1,75 +1,46 @@
-
 import React from "react";
 import { motion } from "framer-motion";
-import { LineChart, TrendingUp, Users, Award, Clock, HeartHandshake } from "lucide-react";
+import { TrendingUp, Users, Award, LineChart, Clock, HeartHandshake } from "lucide-react";
+
+const reasons = [
+  { icon: TrendingUp, t: "Data-driven", d: "Every decision backed by analytics. We measure what moves the needle." },
+  { icon: Users, t: "Operator team", d: "Practitioners who run channels — not theorists with a slide deck." },
+  { icon: Award, t: "Proven results", d: "43M+ subs, 6.5B+ views. Auditable receipts on every claim." },
+  { icon: LineChart, t: "Custom strategy", d: "No templates. Your audience, your voice, your unique playbook." },
+  { icon: Clock, t: "On-time, every time", d: "Deadlines are sacred. We ship when we say we'll ship." },
+  { icon: HeartHandshake, t: "Long partnerships", d: "Average client tenure: 26 months. We're in it for the long game." },
+];
 
 const WhyChooseUsSection = () => {
-  const reasons = [
-    {
-      icon: <TrendingUp className="h-8 w-8 text-orange-500" />,
-      title: "Data-Driven Approach",
-      description: "We make decisions based on data and analytics to optimize performance and maximize results."
-    },
-    {
-      icon: <Users className="h-8 w-8 text-orange-500" />,
-      title: "Expert Team",
-      description: "Our team of specialists brings years of experience in digital marketing across various industries."
-    },
-    {
-      icon: <Award className="h-8 w-8 text-orange-500" />,
-      title: "Proven Results",
-      description: "We have a track record of driving growth and delivering outstanding outcomes for our clients."
-    },
-    {
-      icon: <LineChart className="h-8 w-8 text-orange-500" />,
-      title: "Customized Strategies",
-      description: "We develop tailored strategies that align with your unique goals and target audience."
-    },
-    {
-      icon: <Clock className="h-8 w-8 text-orange-500" />,
-      title: "Timely Delivery",
-      description: "We understand the importance of time and commit to delivering projects within agreed timelines."
-    },
-    {
-      icon: <HeartHandshake className="h-8 w-8 text-orange-500" />,
-      title: "Long-term Relationships",
-      description: "We focus on building lasting partnerships with our clients through trust and exceptional service."
-    }
-  ];
-
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-100 to-white">
-      <div className="container px-4 md:px-6 mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl font-bold gradient-text mb-4">Why Choose Us</h2>
-          <p className="text-gray-700 text-lg max-w-2xl mx-auto">
-            Discover the advantages of partnering with Infridet Solutions for your digital marketing needs.
-          </p>
-        </motion.div>
+    <section className="py-24 md:py-32 bg-secondary/40 border-t border-foreground/10">
+      <div className="container px-6">
+        <div className="grid md:grid-cols-12 gap-8 mb-16">
+          <div className="md:col-span-4">
+            <span className="eyebrow">§ Why us</span>
+          </div>
+          <div className="md:col-span-8">
+            <h2 className="display-serif text-4xl md:text-6xl text-foreground leading-[0.95] tracking-tight">
+              Six reasons creators
+              <br />
+              keep <em className="italic font-light text-coral">coming back.</em>
+            </h2>
+          </div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {reasons.map((reason, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {reasons.map((r, i) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
+              key={r.t}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="glass-card p-6 rounded-lg"
+              transition={{ duration: 0.4, delay: i * 0.06 }}
+              className="editorial-card p-8 flex flex-col"
             >
-              <div className="flex flex-col items-center text-center">
-                <div className="mb-4">
-                  {reason.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-800">{reason.title}</h3>
-                <p className="text-gray-600">{reason.description}</p>
-              </div>
+              <r.icon className="h-7 w-7 text-coral mb-6" strokeWidth={1.5} />
+              <h3 className="display-serif text-xl text-foreground mb-2">{r.t}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{r.d}</p>
             </motion.div>
           ))}
         </div>
