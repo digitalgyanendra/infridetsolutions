@@ -1,400 +1,257 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import Layout from "@/components/ui/layout/Layout";
-import { Button } from "@/components/ui/button";
-import { Phone, Mail, Youtube, SendIcon, CheckCircle2, Users, TrendingUp, Award, Calendar } from "lucide-react";
+import { Phone, Mail, Youtube, SendIcon, CheckCircle2, MessageCircle, ArrowUpRight } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import SEOHead from "@/components/seo/SEOHead";
 
+const WHATSAPP_URL =
+  "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20want%20my%20FREE%2015-min%20YouTube%20strategy%20call.";
 
 const TalkToGyan = () => {
   const { toast } = useToast();
   const [formState, setFormState] = React.useState({
-    name: "",
-    email: "",
-    phone: "",
-    channelName: "",
-    currentSubscribers: "",
-    mainGoal: "",
-    message: "",
+    name: "", email: "", phone: "", channelName: "", currentSubscribers: "", mainGoal: "", message: "",
   });
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormState((prev) => ({ ...prev, [name]: value }));
+    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      
-      toast({
-        title: "Consultation Request Sent!",
-        description: "Gyan will review your channel and get back to you within 24 hours.",
-        duration: 5000,
-      });
-      
-      // Reset form after 2 seconds
+      toast({ title: "Request sent!", description: "Gyan will review and respond within 24 hours." });
       setTimeout(() => {
-        setFormState({
-          name: "",
-          email: "",
-          phone: "",
-          channelName: "",
-          currentSubscribers: "",
-          mainGoal: "",
-          message: "",
-        });
+        setFormState({ name: "", email: "", phone: "", channelName: "", currentSubscribers: "", mainGoal: "", message: "" });
         setIsSubmitted(false);
       }, 2000);
-    }, 1500);
+    }, 1200);
   };
 
-  const achievements = [
-    { icon: Users, number: "500K+", label: "Subscribers Grown" },
-    { icon: TrendingUp, number: "200%", label: "Average Growth Rate" },
-    { icon: Award, number: "50+", label: "Channels Optimized" },
-    { icon: Calendar, number: "5+", label: "Years Experience" },
-  ];
-
-  const services = [
-    "Channel Audit & Strategy",
-    "SEO Optimization",
-    "Thumbnail Design Strategy",
-    "Content Planning",
-    "Monetization Strategies",
-    "Analytics & Growth Tracking"
-  ];
+  const inputCls = "w-full bg-background border border-foreground/20 rounded-xl py-3.5 px-4 text-foreground focus:outline-none focus:border-coral focus:ring-2 focus:ring-coral/20 transition-all";
 
   return (
     <Layout>
-      <SEOHead 
-        title="Talk to YouTube Expert Gyan Dwivedi - Free Channel Consultation"
-        description="Get expert YouTube growth advice from Gyan Dwivedi. Free consultation for channel optimization, SEO, and monetization strategies. Book your session today!"
-        keywords={["YouTube expert consultation", "Gyan Dwivedi YouTube", "channel growth expert", "YouTube SEO consultation", "YouTube strategy session"]}
-        ogType="website"
+      <SEOHead
+        title="Talk to Gyan — Free YouTube Strategy Call"
+        description="15-minute free strategy call with Gyan Dwivedi. Channel audit, growth roadmap, monetization advice."
+        keywords={["Gyan Dwivedi consultation", "YouTube expert call", "free YouTube audit"]}
       />
 
-      {/* Hero Section */}
-      <section className="py-20 md:py-28 relative overflow-hidden hero-bg">
-        <div className="container px-4 md:px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div 
-              className="space-y-8"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div>
-                <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-6">
-                  Talk to YouTube Expert Gyan
-                </h1>
-                <p className="text-xl text-muted-foreground mb-8">
-                  Get personalized YouTube growth strategies from Gyan Dwivedi. Transform your channel with proven techniques that have helped 50+ creators achieve exponential growth.
-                </p>
+      {/* Hero */}
+      <section className="relative bg-background border-b border-foreground/10 overflow-hidden">
+        <div className="absolute inset-0 grid-bg opacity-50" />
+        <div className="absolute -top-32 right-0 w-[480px] h-[480px] rounded-full bg-coral/15 blur-3xl pointer-events-none" />
+
+        <div className="container relative z-10 px-6 pt-24 pb-20 md:pt-32 md:pb-24">
+          <div className="flex items-center justify-between mb-16 pb-6 border-b border-foreground/15">
+            <span className="eyebrow flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-coral animate-pulse" />
+              Booking calls this week
+            </span>
+            <span className="eyebrow">15 min · Zero cost</span>
+          </div>
+
+          <div className="grid lg:grid-cols-12 gap-12 items-end">
+            <div className="lg:col-span-7">
+              <motion.h1
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
+                className="headline-xl text-foreground text-balance"
+              >
+                15 minutes.
+                <br />
+                Your <em className="italic font-light text-coral">growth roadmap.</em>
+              </motion.h1>
+              <p className="mt-10 text-xl md:text-2xl text-foreground/80 font-serif italic max-w-2xl leading-snug">
+                Tell Gyan about your channel. He'll audit it on the call and hand
+                you a clear next step. Free — even if you decide not to work with us.
+              </p>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                  <button className="btn-coral h-14 px-7">
+                    <MessageCircle className="h-5 w-5" />
+                    WhatsApp Gyan Now
+                    <ArrowUpRight className="h-5 w-5" />
+                  </button>
+                </a>
+                <a href="https://www.youtube.com/@Core-Gyan" target="_blank" rel="noopener noreferrer">
+                  <button className="btn-ghost-ink h-14 px-7">
+                    <Youtube className="h-5 w-5" />
+                    Visit Channel
+                  </button>
+                </a>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {achievements.map((achievement, index) => (
-                  <motion.div 
-                    key={index}
-                    className="text-center"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  >
-                    <achievement.icon className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-foreground">{achievement.number}</div>
-                    <div className="text-sm text-muted-foreground">{achievement.label}</div>
-                  </motion.div>
+              <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-foreground/15 pt-10">
+                {[
+                  { v: "43M+", l: "Subscribers" },
+                  { v: "6.5B+", l: "Views" },
+                  { v: "500+", l: "Creators" },
+                  { v: "24h", l: "Reply time" },
+                ].map((s) => (
+                  <div key={s.l}>
+                    <div className="display-serif text-3xl md:text-4xl text-foreground leading-none">{s.v}</div>
+                    <div className="text-xs text-muted-foreground mt-2">{s.l}</div>
+                  </div>
                 ))}
               </div>
+            </div>
 
-              <div className="flex flex-wrap gap-4">
-                <a 
-                  href="https://www.youtube.com/@Core-Gyan" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"
-                >
-                  <Youtube className="w-5 h-5 mr-2" />
-                  Visit My Channel
-                </a>
-                <a 
-                  href="tel:+918853354829"
-                  className="inline-flex items-center px-6 py-3 border border-border hover:bg-muted text-foreground rounded-md transition-colors"
-                >
-                  <Phone className="w-5 h-5 mr-2" />
-                  Call Now
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className="flex justify-center"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="lg:col-span-5"
             >
               <div className="relative">
+                <div className="absolute -inset-4 bg-coral/20 blur-2xl rounded-full" />
                 <img
                   src="/lovable-uploads/3a1238bf-43d7-4308-b873-3d789a424e88.png"
-                  alt="Gyan Dwivedi - YouTube Growth Expert"
-                  className="w-80 h-80 object-cover rounded-2xl shadow-2xl"
+                  alt="Gyan Dwivedi"
+                  className="relative w-full h-auto object-cover rounded-2xl border border-foreground/10"
                 />
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
-                  <Youtube className="w-12 h-12 text-white" />
-                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-20 bg-muted/50">
-        <div className="container px-4 md:px-6">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold gradient-text mb-4">What You'll Get</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive YouTube growth consultation tailored to your channel's specific needs and goals.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => (
-              <motion.div 
-                key={index}
-                className="glass-card p-6 text-center"
-                initial={{ opacity: 0, y: 20 }}
+      {/* What you'll get */}
+      <section className="py-24 bg-background border-t border-foreground/10">
+        <div className="container px-6">
+          <div className="grid md:grid-cols-12 gap-8 mb-12">
+            <div className="md:col-span-4"><span className="eyebrow">§ On the call</span></div>
+            <div className="md:col-span-8">
+              <h2 className="display-serif text-4xl md:text-5xl text-foreground leading-[0.95]">
+                Six things you'll
+                <br />
+                <em className="italic font-light text-coral">walk away with.</em>
+              </h2>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/15 border border-foreground/15 rounded-2xl overflow-hidden">
+            {[
+              "Live channel audit",
+              "SEO optimization plan",
+              "Thumbnail strategy",
+              "Content roadmap",
+              "Monetization path",
+              "Growth tracking system",
+            ].map((s, i) => (
+              <motion.div
+                key={s}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="bg-background p-6 flex items-center gap-4"
               >
-                <CheckCircle2 className="w-8 h-8 text-green-500 mx-auto mb-3" />
-                <h3 className="font-semibold">{service}</h3>
+                <CheckCircle2 className="h-5 w-5 text-coral shrink-0" />
+                <span className="display-serif text-lg text-foreground">{s}</span>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contact Form Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-muted/30">
-        <div className="container px-4 md:px-6">
-          <div className="max-w-2xl mx-auto">
-            <motion.div 
-              className="text-center mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl font-bold gradient-text mb-4">
-                Book Your Free Consultation
-              </h2>
-              <p className="text-muted-foreground">
-                Fill out the form below and Gyan will personally review your channel and provide customized growth strategies.
-              </p>
-            </motion.div>
+      {/* Form */}
+      <section className="py-24 bg-secondary/40 border-t border-foreground/10">
+        <div className="container px-6 max-w-3xl">
+          <div className="text-center mb-10">
+            <span className="eyebrow">§ Or fill the form</span>
+            <h2 className="display-serif text-4xl md:text-5xl mt-4 text-foreground leading-[0.95]">
+              Tell us about your <em className="italic font-light text-coral">channel.</em>
+            </h2>
+          </div>
 
-            <motion.div 
-              className="glass-card p-8"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <form onSubmit={handleSubmit}>
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="name" className="text-sm font-medium">
-                        Your Name *
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formState.name}
-                        onChange={handleChange}
-                        required
-                        className="w-full bg-background/50 border border-border rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formState.email}
-                        onChange={handleChange}
-                        required
-                        className="w-full bg-background/50 border border-border rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="phone" className="text-sm font-medium">
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formState.phone}
-                        onChange={handleChange}
-                        className="w-full bg-background/50 border border-border rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="channelName" className="text-sm font-medium">
-                        YouTube Channel Name *
-                      </label>
-                      <input
-                        type="text"
-                        id="channelName"
-                        name="channelName"
-                        value={formState.channelName}
-                        onChange={handleChange}
-                        required
-                        className="w-full bg-background/50 border border-border rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="currentSubscribers" className="text-sm font-medium">
-                        Current Subscribers
-                      </label>
-                      <select
-                        id="currentSubscribers"
-                        name="currentSubscribers"
-                        value={formState.currentSubscribers}
-                        onChange={handleChange}
-                        className="w-full bg-background/50 border border-border rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                      >
-                        <option value="">Select range</option>
-                        <option value="0-100">0 - 100</option>
-                        <option value="100-1k">100 - 1K</option>
-                        <option value="1k-10k">1K - 10K</option>
-                        <option value="10k-100k">10K - 100K</option>
-                        <option value="100k+">100K+</option>
-                      </select>
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="mainGoal" className="text-sm font-medium">
-                        Main Goal *
-                      </label>
-                      <select
-                        id="mainGoal"
-                        name="mainGoal"
-                        value={formState.mainGoal}
-                        onChange={handleChange}
-                        required
-                        className="w-full bg-background/50 border border-border rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                      >
-                        <option value="">Select your goal</option>
-                        <option value="grow-subscribers">Grow Subscribers</option>
-                        <option value="increase-views">Increase Views</option>
-                        <option value="monetization">Monetization</option>
-                        <option value="seo-optimization">SEO Optimization</option>
-                        <option value="content-strategy">Content Strategy</option>
-                        <option value="other">Other</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium">
-                      Tell me about your channel and specific challenges *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      value={formState.message}
-                      onChange={handleChange}
-                      required
-                      placeholder="Describe your channel niche, current challenges, and what you'd like to achieve..."
-                      className="w-full bg-background/50 border border-border rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                    />
-                  </div>
-
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-3"
-                    disabled={isSubmitting || isSubmitted}
-                  >
-                    {isSubmitting ? (
-                      <>Sending Request...</>
-                    ) : isSubmitted ? (
-                      <>
-                        <CheckCircle2 className="mr-2 h-5 w-5" />
-                        Request Sent Successfully!
-                      </>
-                    ) : (
-                      <>
-                        <SendIcon className="mr-2 h-5 w-5" />
-                        Book Free Consultation
-                      </>
-                    )}
-                  </Button>
-
-                  <p className="text-sm text-muted-foreground text-center">
-                    * Response time: Within 24 hours | Free consultation includes channel audit and growth roadmap
-                  </p>
+          <div className="editorial-card p-8 md:p-10">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid md:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="name" className="mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground block mb-2">Name *</label>
+                  <input id="name" name="name" type="text" required value={formState.name} onChange={handleChange} className={inputCls} />
                 </div>
-              </form>
-            </motion.div>
+                <div>
+                  <label htmlFor="email" className="mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground block mb-2">Email *</label>
+                  <input id="email" name="email" type="email" required value={formState.email} onChange={handleChange} className={inputCls} />
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="phone" className="mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground block mb-2">Phone</label>
+                  <input id="phone" name="phone" type="tel" value={formState.phone} onChange={handleChange} className={inputCls} />
+                </div>
+                <div>
+                  <label htmlFor="channelName" className="mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground block mb-2">Channel Name *</label>
+                  <input id="channelName" name="channelName" type="text" required value={formState.channelName} onChange={handleChange} className={inputCls} />
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="currentSubscribers" className="mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground block mb-2">Current subscribers</label>
+                  <select id="currentSubscribers" name="currentSubscribers" value={formState.currentSubscribers} onChange={handleChange} className={inputCls}>
+                    <option value="">Select…</option>
+                    <option value="0-100">0 – 100</option>
+                    <option value="100-1k">100 – 1K</option>
+                    <option value="1k-10k">1K – 10K</option>
+                    <option value="10k-100k">10K – 100K</option>
+                    <option value="100k+">100K+</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="mainGoal" className="mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground block mb-2">Main goal *</label>
+                  <select id="mainGoal" name="mainGoal" required value={formState.mainGoal} onChange={handleChange} className={inputCls}>
+                    <option value="">Select…</option>
+                    <option value="grow-subs">Grow Subscribers</option>
+                    <option value="views">Increase Views</option>
+                    <option value="monetization">Monetization</option>
+                    <option value="seo">SEO Optimization</option>
+                    <option value="strategy">Content Strategy</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label htmlFor="message" className="mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground block mb-2">Tell us more *</label>
+                <textarea id="message" name="message" rows={5} required value={formState.message} onChange={handleChange} className={inputCls} placeholder="Niche, current challenges, what you want to achieve…" />
+              </div>
+              <button type="submit" disabled={isSubmitting || isSubmitted} className="btn-coral w-full h-14 text-base">
+                {isSubmitting ? "Sending…" : isSubmitted ? (<><CheckCircle2 className="h-5 w-5" /> Request Sent</>) : (<><SendIcon className="h-5 w-5" /> Book Free Consultation <ArrowUpRight className="h-5 w-5" /></>)}
+              </button>
+              <p className="mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground text-center">
+                Reply within 24 hours · Includes channel audit
+              </p>
+            </form>
           </div>
         </div>
       </section>
 
-
-      {/* Contact Information */}
-      <section className="py-16 bg-muted">
-        <div className="container px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="glass-card p-6 flex items-center">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center mr-4 flex-shrink-0">
-                <Phone size={24} className="text-orange-500" />
-              </div>
+      {/* Direct contact */}
+      <section className="py-20 bg-background border-t border-foreground/10">
+        <div className="container px-6 max-w-4xl">
+          <div className="grid md:grid-cols-2 gap-px bg-foreground/15 border border-foreground/15 rounded-2xl overflow-hidden">
+            <a href="tel:+919517459072" className="bg-background p-8 flex items-center gap-5 hover:bg-secondary/40 transition-colors">
+              <Phone className="h-7 w-7 text-coral" strokeWidth={1.5} />
               <div>
-                <h3 className="text-lg font-semibold mb-1">Direct Call</h3>
-                <p className="text-muted-foreground">+91 8853354829</p>
+                <div className="mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Direct call</div>
+                <div className="display-serif text-xl text-foreground mt-1">+91 95174 59072</div>
               </div>
-            </div>
-
-            <div className="glass-card p-6 flex items-center">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center mr-4 flex-shrink-0">
-                <Mail size={24} className="text-red-500" />
-              </div>
+            </a>
+            <a href="mailto:Marketing@infridetsolutions.com" className="bg-background p-8 flex items-center gap-5 hover:bg-secondary/40 transition-colors">
+              <Mail className="h-7 w-7 text-coral" strokeWidth={1.5} />
               <div>
-                <h3 className="text-lg font-semibold mb-1">Email</h3>
-                <p className="text-muted-foreground">Marketing@infridetsolutions.com</p>
+                <div className="mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Email</div>
+                <div className="display-serif text-base text-foreground mt-1">Marketing@infridetsolutions.com</div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </section>
