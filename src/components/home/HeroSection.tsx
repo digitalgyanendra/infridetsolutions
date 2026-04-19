@@ -1,226 +1,160 @@
-
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { UserPlus, Search } from "lucide-react";
+import { MessageCircle, Star, TrendingUp, ArrowRight } from "lucide-react";
+
+const WHATSAPP_URL =
+  "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20want%20my%20FREE%2015-min%20YouTube%20strategy%20call.%20Please%20share%20a%20slot.";
 
 const HeroSection = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  
-  useEffect(() => {
-    if (!canvasRef.current) return;
-    
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    
-    // Set canvas dimensions
-    const setCanvasDimensions = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    
-    setCanvasDimensions();
-    window.addEventListener('resize', setCanvasDimensions);
-    
-    // Node class for network visualization
-    class Node {
-      x: number;
-      y: number;
-      radius: number;
-      color: string;
-      velocity: { x: number; y: number };
-      
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.radius = Math.random() * 2 + 1;
-        this.color = Math.random() > 0.5 ? '#f97316' : '#0ea5e9';
-        this.velocity = {
-          x: (Math.random() - 0.5) * 0.5,
-          y: (Math.random() - 0.5) * 0.5
-        };
-      }
-      
-      update() {
-        // Boundary check
-        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-          this.velocity.x = -this.velocity.x;
-        }
-        
-        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-          this.velocity.y = -this.velocity.y;
-        }
-        
-        // Update position
-        this.x += this.velocity.x;
-        this.y += this.velocity.y;
-      }
-      
-      draw() {
-        if (!ctx) return;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-      }
-    }
-    
-    // Create nodes
-    const nodes: Node[] = [];
-    const nodeCount = Math.min(Math.floor(window.innerWidth / 15), 100);
-    
-    for (let i = 0; i < nodeCount; i++) {
-      nodes.push(new Node());
-    }
-    
-    // Draw connections between nodes
-    const drawConnections = () => {
-      if (!ctx) return;
-      
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          // Only draw connections if nodes are close enough
-          if (distance < 100) {
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            
-            // Gradient line based on node colors
-            const gradient = ctx.createLinearGradient(
-              nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y
-            );
-            gradient.addColorStop(0, nodes[i].color);
-            gradient.addColorStop(1, nodes[j].color);
-            
-            ctx.strokeStyle = gradient;
-            ctx.lineWidth = 0.2;
-            ctx.globalAlpha = 1 - (distance / 100); // Fade out with distance
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-          }
-        }
-      }
-    };
-    
-    // Animation loop
-    const animate = () => {
-      if (!ctx) return;
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Update and draw nodes
-      nodes.forEach(node => {
-        node.update();
-        node.draw();
-      });
-      
-      drawConnections();
-      
-      requestAnimationFrame(animate);
-    };
-    
-    animate();
-    
-    return () => window.removeEventListener('resize', setCanvasDimensions);
-  }, []);
-  
   return (
-    <div className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Network background animation */}
-      <canvas 
-        ref={canvasRef} 
-        className="absolute inset-0 z-0 bg-white"
+    <section className="relative bg-white overflow-hidden border-b border-border">
+      {/* Subtle grid background */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+        }}
       />
-      
-      {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-radial from-transparent to-white z-10"></div>
-      
-      {/* Content */}
-      <div className="container px-4 md:px-6 relative z-20">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-8">
-          <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold gradient-text leading-tight"
-            initial={{ opacity: 0, y: 20 }}
+
+      <div className="container relative z-10 px-4 md:px-6 pt-20 pb-24 md:pt-28 md:pb-32">
+        <div className="max-w-5xl mx-auto">
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
+            className="flex items-center gap-2 mb-8"
           >
-            Empowering Digital Creators and Businesses
-          </motion.h1>
-          
-          <motion.p 
-            className="text-lg md:text-xl text-gray-700 max-w-3xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Connect with expert consultants to accelerate your digital growth. 
-            Specialized in YouTube growth, SEO, and brand development.
-          </motion.p>
-          
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 mt-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <Link to="/register">
-              <Button 
-                size="lg" 
-                className="text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-orange-500/25 transition-all px-8"
-              >
-                <UserPlus className="mr-2 h-5 w-5" />
-                Become a Consultant
-              </Button>
-            </Link>
-            <Link to="/services">
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="text-gray-800 border-deepBlue-500 hover:bg-deepBlue-500/10 shadow-lg hover:shadow-deepBlue-500/25 transition-all px-8"
-              >
-                <Search className="mr-2 h-5 w-5" />
-                Find a Consultant
-              </Button>
-            </Link>
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary border border-border text-xs font-semibold uppercase tracking-wider text-foreground">
+              <span className="w-2 h-2 rounded-full bg-[hsl(var(--accent))] animate-pulse" />
+              Trusted by 500+ Creators & Brands
+            </span>
           </motion.div>
-          
-          <motion.div 
-            className="flex items-center gap-3 mt-16"
+
+          {/* Headline — magazine style */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-[0.95] text-foreground mb-8"
+          >
+            Your YouTube
+            <br />
+            channel deserves
+            <br />
+            <span className="italic font-serif text-[hsl(var(--primary))]">
+              real growth.
+            </span>
+          </motion.h1>
+
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed"
+          >
+            We've grown channels to{" "}
+            <span className="font-bold text-foreground">43M+ subscribers</span>{" "}
+            and <span className="font-bold text-foreground">6.5B+ views</span>.
+            Now it's your turn. Get a{" "}
+            <span className="font-bold text-foreground">
+              free 15-minute strategy call
+            </span>{" "}
+            with Gyan — no fluff, just a clear next step.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="flex flex-col sm:flex-row gap-3 mb-10"
+          >
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              <Button
+                size="lg"
+                className="h-14 px-8 text-base font-bold bg-[hsl(var(--whatsapp))] hover:bg-[hsl(var(--whatsapp))]/90 text-white shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
+              >
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Get My Free 15-Min Call
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </a>
+            <a href="tel:+919517459072">
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-14 px-8 text-base font-semibold border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
+              >
+                Call Gyan: +91 95174 59072
+              </Button>
+            </a>
+          </motion.div>
+
+          {/* Trust signals row */}
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted-foreground"
           >
-            <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 border-2 border-white flex items-center justify-center shadow-lg">
-                  <span className="text-xs font-medium">🧑‍💼</span>
-                </div>
-              ))}
+            <div className="flex items-center gap-1.5">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star
+                    key={i}
+                    className="h-4 w-4 fill-[hsl(var(--accent))] text-[hsl(var(--accent))]"
+                  />
+                ))}
+              </div>
+              <span className="font-semibold text-foreground">4.9/5</span>
+              <span>from 200+ creators</span>
             </div>
-            <p className="text-sm text-gray-600">
-              Join <span className="text-primary font-medium">25 experts</span> already on our platform
-            </p>
+            <div className="hidden sm:block w-px h-4 bg-border" />
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-[hsl(var(--accent))]" />
+              <span>
+                <span className="font-semibold text-foreground">Avg 3.2x</span>{" "}
+                channel growth in 90 days
+              </span>
+            </div>
+            <div className="hidden sm:block w-px h-4 bg-border" />
+            <span>
+              <span className="font-semibold text-foreground">No credit card</span>{" "}
+              — strategy call is free
+            </span>
           </motion.div>
         </div>
+
+        {/* Big stat strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-20 md:mt-28 grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-2xl overflow-hidden border border-border"
+        >
+          {[
+            { v: "43M+", l: "Subscribers Generated" },
+            { v: "6.5B+", l: "Views Delivered" },
+            { v: "500+", l: "Creators Coached" },
+            { v: "₹0", l: "Cost of First Call" },
+          ].map((s) => (
+            <div key={s.l} className="bg-white p-6 md:p-8 text-center">
+              <div className="text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
+                {s.v}
+              </div>
+              <div className="mt-2 text-xs md:text-sm uppercase tracking-wider text-muted-foreground font-medium">
+                {s.l}
+              </div>
+            </div>
+          ))}
+        </motion.div>
       </div>
-      
-      {/* Bottom wave */}
-      <div className="absolute bottom-0 w-full z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" className="w-full">
-          <path 
-            fill="currentColor" 
-            className="text-background"
-            d="M0,96L60,80C120,64,240,32,360,32C480,32,600,64,720,69.3C840,75,960,53,1080,42.7C1200,32,1320,32,1380,32L1440,32L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"
-          ></path>
-        </svg>
-      </div>
-    </div>
+    </section>
   );
 };
 
