@@ -15,7 +15,7 @@ const principles = [
   {
     n: "III.",
     title: "Operator, not consultant.",
-    body: "Gyan still ships videos every week. We don't theorize from a slide deck — we build in public, then teach what worked yesterday.",
+    body: "Our team ships content every week. We don't theorize from a slide deck — we build in public, then teach what worked yesterday.",
   },
 ];
 

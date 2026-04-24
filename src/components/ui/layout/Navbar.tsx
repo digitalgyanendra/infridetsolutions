@@ -13,7 +13,7 @@ const navLinks = [
 ];
 
 const WHATSAPP_URL =
-  "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20want%20my%20FREE%2015-min%20YouTube%20strategy%20call.";
+  "https://wa.me/919517459072?text=Hi%20Infridet%20Team%2C%20I%20want%20to%20schedule%20my%20FREE%2015-min%20YouTube%20strategy%20call.";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

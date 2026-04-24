@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle } from "lucide-react";
 
 const WHATSAPP_URL =
-  "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20want%20my%20FREE%2015-min%20YouTube%20strategy%20call.%20Please%20share%20a%20slot.";
+  "https://wa.me/919517459072?text=Hi%20Infridet%20Team%2C%20I%20want%20to%20schedule%20my%20FREE%2015-min%20YouTube%20strategy%20call.%20Please%20share%20a%20slot.";
 
 const HeroSection = () => {
   return (
@@ -52,8 +52,8 @@ const HeroSection = () => {
             <p className="md:col-span-7 text-xl md:text-2xl text-foreground/80 leading-snug font-medium text-pretty">
               43 million subscribers. 6.5 billion views. 500+ creators.
               <br className="hidden md:block" />
-              Built by one team — led by{" "}
-              <span className="ink-link font-serif italic">Gyan Dwivedi</span>.
+              Engineered by the{" "}
+              <span className="ink-link font-serif italic">Infridet team</span>.
               <br />
               Now it's your turn.
             </p>

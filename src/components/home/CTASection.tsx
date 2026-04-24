@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { MessageCircle, Clock, Shield, Zap, ArrowRight } from "lucide-react";
 
 const WHATSAPP_URL =
-  "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20want%20my%20FREE%2015-min%20YouTube%20strategy%20call.%20Please%20share%20a%20slot.";
+  "https://wa.me/919517459072?text=Hi%20Infridet%20Team%2C%20I%20want%20to%20schedule%20my%20FREE%2015-min%20YouTube%20strategy%20call.%20Please%20share%20a%20slot.";
 
 const CTASection = () => {
   return (
@@ -44,8 +44,8 @@ const CTASection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-12 text-xl md:text-2xl text-foreground/75 max-w-2xl leading-snug font-serif italic"
           >
-            Book a free 15-minute call with Gyan. Walk away with a clear
-            roadmap — even if you decide not to work with us.
+            Schedule a free 15-minute call with our growth team. Walk away with a
+            clear roadmap — even if you decide not to work with us.
           </motion.p>
 
           <motion.div
