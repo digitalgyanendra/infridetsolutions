@@ -4,7 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const WHATSAPP_URL =
-  "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20need%20help%20with%20my%20YouTube%20channel.%20Can%20we%20talk%3F";
+  "https://wa.me/919517459072?text=Hi%20Infridet%20Team%2C%20I%20need%20help%20with%20my%20YouTube%20channel.%20Can%20we%20schedule%20a%20call%3F";
 
 const services = [
   {
@@ -107,12 +107,12 @@ const ServicesSection = () => {
               Not sure which one you need?
             </h3>
             <p className="text-muted-foreground mt-2">
-              Tell Gyan about your channel — he'll tell you exactly what to fix first. Free.
+              Tell our team about your channel — we'll tell you exactly what to fix first. Free.
             </p>
           </div>
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
             <button className="btn-coral h-14 px-7 text-base whitespace-nowrap">
-              WhatsApp Gyan Now
+              WhatsApp Our Team
               <ArrowUpRight className="h-5 w-5" />
             </button>
           </a>

@@ -10,6 +10,7 @@ const ServicesSection = lazy(() => import("@/components/home/ServicesSection"));
 const StatsSection = lazy(() => import("@/components/home/StatsSection"));
 const TestimonialsSection = lazy(() => import("@/components/home/TestimonialsSection"));
 const CertificationsSection = lazy(() => import("@/components/home/CertificationsSection"));
+const AwardsSection = lazy(() => import("@/components/home/AwardsSection"));
 const CTASection = lazy(() => import("@/components/home/CTASection"));
 
 const LoadingFallback = () => (
@@ -42,6 +43,9 @@ const Index = () => {
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <TestimonialsSection />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <AwardsSection />
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <CertificationsSection />

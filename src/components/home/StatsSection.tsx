@@ -38,11 +38,11 @@ const StatsSection = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg md:text-xl text-background/70 leading-relaxed font-serif italic"
             >
-              "Anyone can talk strategy. We've shipped it — at the scale of
-              nation-sized audiences. Every metric here is auditable."
+              Anyone can talk strategy. We've shipped it — at the scale of
+              nation-sized audiences. Every metric here is auditable.
             </motion.p>
             <p className="mt-4 mono text-xs uppercase tracking-[0.2em] text-background/50">
-              — Gyan Dwivedi, Founder
+              — Infridet Solutions · Growth Team
             </p>
           </div>
         </div>

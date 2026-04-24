@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Phone, MapPin, Mail, Linkedin, Youtube, Instagram, ArrowUpRight, MessageCircle } from "lucide-react";
 
 const WHATSAPP_URL =
-  "https://wa.me/919517459072?text=Hi%20Gyan%2C%20I%20want%20my%20FREE%2015-min%20YouTube%20strategy%20call.";
+  "https://wa.me/919517459072?text=Hi%20Infridet%20Team%2C%20I%20want%20to%20schedule%20my%20FREE%2015-min%20YouTube%20strategy%20call.";
 
 const Footer = () => {
   return (
@@ -19,7 +19,7 @@ const Footer = () => {
               <h3 className="display-serif text-4xl md:text-6xl mt-4 leading-[0.95] tracking-tight">
                 Your channel won't grow itself.
                 <br />
-                <em className="italic font-light text-coral">Talk to Gyan.</em>
+                <em className="italic font-light text-coral">Talk to our team.</em>
               </h3>
             </div>
             <div className="md:col-span-4 flex flex-col gap-3">
