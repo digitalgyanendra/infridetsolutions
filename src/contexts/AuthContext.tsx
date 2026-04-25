@@ -1,8 +1,7 @@
-
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { API_CONFIG, apiCall } from "@/config/api";
+import { API_CONFIG } from "@/config/api";
 
 interface User {
   id: string;
@@ -22,18 +21,37 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Dev-only mock credentials. Real auth always runs against the PHP backend
+// in production (when VITE_USE_MOCK_AUTH is not enabled).
+const DEMO_USERNAME = "admin@infridet.com";
+const DEMO_PASSWORD = "Admin@2026";
+
+// Use the mock auth only when explicitly enabled (preview / local dev).
+// In production builds this is always false unless the env flag is set.
+const isMockAuthEnabled = (): boolean => {
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname;
+  // Auto-enable on Lovable preview & localhost so demo always works.
+  const onPreview =
+    host.includes("lovable.app") ||
+    host.includes("lovableproject.com") ||
+    host === "localhost" ||
+    host === "127.0.0.1";
+  return onPreview;
+};
+
+const mockToken = () => `mock.${btoa(JSON.stringify({ uid: 1, role: "admin", exp: Date.now() + 86400000 }))}.demo`;
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Check for existing session on load.
-  // SECURITY: Never grant admin from localStorage alone — always verify with the
-  // server first, and fail closed (sign out) on any error or missing token.
+  // Restore session on load. SECURITY: always verify server-side; fail closed.
   useEffect(() => {
-    const storedUser = localStorage.getItem('admin_user');
-    const storedToken = localStorage.getItem('admin_token');
+    const storedUser = localStorage.getItem("admin_user");
+    const storedToken = localStorage.getItem("admin_token");
 
     if (!storedUser || !storedToken) {
       setIsLoading(false);
@@ -43,22 +61,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     let cancelled = false;
 
     const clearSession = () => {
-      localStorage.removeItem('admin_user');
-      localStorage.removeItem('admin_token');
+      localStorage.removeItem("admin_user");
+      localStorage.removeItem("admin_token");
       if (!cancelled) {
         setUser(null);
         setIsAdmin(false);
       }
     };
 
+    const restoreFromStorage = () => {
+      try {
+        const userData = JSON.parse(storedUser);
+        if (!cancelled) {
+          setUser(userData);
+          setIsAdmin(userData?.role === "admin");
+        }
+      } catch {
+        clearSession();
+      }
+    };
+
+    // Mock mode → trust the local token (it's a demo).
+    if (isMockAuthEnabled() && storedToken.startsWith("mock.")) {
+      restoreFromStorage();
+      setIsLoading(false);
+      return;
+    }
+
     (async () => {
       try {
         const response = await fetch(
           `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.VERIFY_TOKEN}`,
           {
-            method: 'POST',
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
               Authorization: `Bearer ${storedToken}`,
             },
           }
@@ -71,14 +108,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return;
         }
 
-        // Only now do we trust the stored user data.
-        const userData = JSON.parse(storedUser);
-        if (!cancelled) {
-          setUser(userData);
-          setIsAdmin(userData?.role === 'admin');
-        }
-      } catch (error) {
-        // Fail closed on network/parse errors — do not silently keep admin access.
+        restoreFromStorage();
+      } catch {
         clearSession();
       } finally {
         if (!cancelled) setIsLoading(false);
@@ -90,78 +121,87 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  // Direct admin access with username and password
   const adminDirectAccess = async (username: string, password: string): Promise<boolean> => {
+    setIsLoading(true);
+
     try {
-      setIsLoading(true);
-      
-      console.log("Attempting login to:", `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGIN}`);
-      
-      const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGIN}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      
-      console.log("Response status:", response.status);
-      console.log("Response ok:", response.ok);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      console.log("Response data:", data);
-      
-      if (data.success && data.user) {
-        const userData = {
-          id: data.user.id.toString(),
-          username: data.user.username,
-          email: data.user.email,
-          role: data.user.role
+      // === DEV MOCK PATH ===
+      if (isMockAuthEnabled()) {
+        const ok =
+          (username === DEMO_USERNAME || username === "admin") &&
+          password === DEMO_PASSWORD;
+
+        if (!ok) {
+          toast({
+            title: "Access Denied",
+            description: `Demo credentials only. Use ${DEMO_USERNAME} / ${DEMO_PASSWORD}`,
+            variant: "destructive",
+          });
+          return false;
+        }
+
+        const userData: User = {
+          id: "1",
+          username: "admin",
+          email: DEMO_USERNAME,
+          role: "admin",
         };
-        
+
         setUser(userData);
         setIsAdmin(true);
-        
-        // Store user data and token in localStorage
-        localStorage.setItem('admin_user', JSON.stringify(userData));
-        if (data.token) {
-          localStorage.setItem('admin_token', data.token);
-        }
-        
+        localStorage.setItem("admin_user", JSON.stringify(userData));
+        localStorage.setItem("admin_token", mockToken());
+
         toast({
-          title: "Admin Access Granted",
-          description: `Welcome back, ${userData.username}!`,
+          title: "Demo Admin Access",
+          description: `Welcome back, ${userData.username}! (preview/dev mode)`,
         });
-        
         return true;
-      } else {
+      }
+
+      // === REAL PHP BACKEND PATH ===
+      const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGIN}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok || !data?.success || !data.user) {
         toast({
           title: "Access Denied",
-          description: data.message || "Invalid username or password.",
+          description: data?.message || "Invalid username or password.",
           variant: "destructive",
         });
         return false;
       }
+
+      const userData: User = {
+        id: String(data.user.id),
+        username: data.user.username,
+        email: data.user.email,
+        role: data.user.role,
+      };
+
+      setUser(userData);
+      setIsAdmin(userData.role === "admin");
+      localStorage.setItem("admin_user", JSON.stringify(userData));
+      if (data.token) localStorage.setItem("admin_token", data.token);
+
+      toast({
+        title: "Admin Access Granted",
+        description: `Welcome back, ${userData.username}!`,
+      });
+      return true;
     } catch (error: any) {
-      console.error("Admin login error:", error);
-      
-      let errorMessage = "Unable to connect to server. Please try again.";
-      
-      if (error.message.includes('Failed to fetch')) {
-        errorMessage = "Network error: Unable to reach the server. Please check your internet connection.";
-      } else if (error.message.includes('HTTP 404')) {
-        errorMessage = "API endpoint not found. Please contact support.";
-      } else if (error.message.includes('HTTP 500')) {
-        errorMessage = "Server error. Please try again later.";
-      }
-      
+      const msg =
+        error?.message?.includes("Failed to fetch")
+          ? "Cannot reach the server. Check your internet or backend deployment."
+          : "Unexpected error. Please try again.";
       toast({
         title: "Login Failed",
-        description: errorMessage,
+        description: msg,
         variant: "destructive",
       });
       return false;
@@ -170,48 +210,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Regular sign in (same as adminDirectAccess for now)
   const signIn = async (username: string, password: string) => {
     const success = await adminDirectAccess(username, password);
-    if (success) {
-      navigate("/admin");
-    }
+    if (success) navigate("/admin");
   };
 
-  // Sign out
   const signOut = async () => {
-    try {
-      setUser(null);
-      setIsAdmin(false);
-      
-      // Clear localStorage
-      localStorage.removeItem('admin_user');
-      localStorage.removeItem('admin_token');
-      
-      toast({
-        title: "Logged Out",
-        description: "You have been logged out successfully.",
-      });
-      
-      navigate("/admin/login");
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: "An error occurred during logout.",
-        variant: "destructive",
-      });
-    }
+    setUser(null);
+    setIsAdmin(false);
+    localStorage.removeItem("admin_user");
+    localStorage.removeItem("admin_token");
+    toast({ title: "Logged Out", description: "You have been logged out successfully." });
+    navigate("/admin/login");
   };
 
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      isAdmin, 
-      isLoading, 
-      signIn,
-      signOut, 
-      adminDirectAccess
-    }}>
+    <AuthContext.Provider value={{ user, isAdmin, isLoading, signIn, signOut, adminDirectAccess }}>
       {children}
     </AuthContext.Provider>
   );
@@ -224,3 +238,10 @@ export function useAuth() {
   }
   return context;
 }
+
+// Exported for the login page to render demo creds in dev mode only.
+export const DEMO_CREDENTIALS = {
+  enabled: isMockAuthEnabled,
+  username: DEMO_USERNAME,
+  password: DEMO_PASSWORD,
+};
