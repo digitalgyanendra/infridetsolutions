@@ -11,6 +11,7 @@ const StatsSection = lazy(() => import("@/components/home/StatsSection"));
 const TestimonialsSection = lazy(() => import("@/components/home/TestimonialsSection"));
 const CertificationsSection = lazy(() => import("@/components/home/CertificationsSection"));
 const AwardsSection = lazy(() => import("@/components/home/AwardsSection"));
+const CreatorsSection = lazy(() => import("@/components/home/CreatorsSection"));
 const CTASection = lazy(() => import("@/components/home/CTASection"));
 
 const LoadingFallback = () => (
@@ -33,6 +34,9 @@ const Index = () => {
       <HeroSection />
       <TrustedBrandsSection />
       <Suspense fallback={<LoadingFallback />}>
+        <AwardsSection />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
         <ManifestoSection />
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
@@ -45,7 +49,7 @@ const Index = () => {
         <TestimonialsSection />
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
-        <AwardsSection />
+        <CreatorsSection />
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <CertificationsSection />
