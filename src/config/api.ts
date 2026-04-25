@@ -10,56 +10,28 @@ export const API_CONFIG = {
     GET_COURSES: "/get-courses.php",
     UPLOAD: "/upload.php",
     ADMIN_USERS: "/admin-users.php",
-    DASHBOARD_STATS: "/get-dashboard-stats.php"
-  }
+    DASHBOARD_STATS: "/get-dashboard-stats.php",
+  },
 };
 
-// Helper function to make API calls with authentication
+// Helper for authenticated API calls. No console logging in production.
 export const apiCall = async (endpoint: string, options: RequestInit = {}) => {
-  const token = localStorage.getItem('admin_token');
-  
-  const defaultHeaders: HeadersInit = {
-    'Content-Type': 'application/json',
-  };
-  
-  if (token) {
-    defaultHeaders['Authorization'] = `Bearer ${token}`;
-  }
-  
-  const config: RequestInit = {
-    ...options,
-    headers: {
-      ...defaultHeaders,
-      ...options.headers,
-    },
-  };
-  
-  console.log(`Making API call to: ${API_CONFIG.BASE_URL}${endpoint}`);
-  console.log('Request config:', config);
-  
-  const response = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`, config);
-  
-  console.log('Response status:', response.status);
-  console.log('Response headers:', response.headers);
-  
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  
-  const data = await response.json();
-  console.log('Response data:', data);
-  
-  return data;
-};
+  const token = localStorage.getItem("admin_token");
 
-// Test function to check if API is reachable
-export const testApiConnection = async () => {
-  try {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/ping.php`);
-    console.log('Ping test response:', response.status);
-    return response.ok;
-  } catch (error) {
-    console.error('API connection test failed:', error);
-    return false;
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
+  };
+  if (token) (headers as any).Authorization = `Bearer ${token}`;
+
+  const response = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`, {
+    ...options,
+    headers,
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
   }
+
+  return response.json();
 };

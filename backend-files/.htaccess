@@ -1,0 +1,35 @@
+# Hide PHP version
+ServerSignature Off
+Header unset X-Powered-By
+Header always unset X-Powered-By
+
+# Security headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "DENY"
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+
+# Disable directory listing
+Options -Indexes
+
+# Deny access to config + sensitive files
+<FilesMatch "\.(env|sql|md|txt|log|json|lock)$">
+  Require all denied
+</FilesMatch>
+
+<FilesMatch "^(setup-admin)\.php$">
+  # Allow but rate-limited via PHP — also delete after first use.
+</FilesMatch>
+
+# Block direct access to /config/
+RedirectMatch 404 /config/.*$
+
+# Hide PHP errors from clients (log them server-side)
+php_flag display_errors Off
+php_flag log_errors On
+
+# Force JSON content-type for .php API endpoints by default
+<FilesMatch "\.php$">
+  Header set X-Robots-Tag "noindex, nofollow"
+</FilesMatch>
