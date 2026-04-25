@@ -1,42 +1,98 @@
+================================================================================
+INFRIDET SOLUTIONS — cPanel DEPLOYMENT GUIDE
+================================================================================
 
-UPLOAD INSTRUCTIONS FOR YOUR PHP BACKEND
+STEP 1 — DATABASE
+─────────────────
+1. cPanel → MySQL Databases
+   - Create database:  infridet_db
+   - Create user:      infridet_user (strong password)
+   - Add user to database with ALL PRIVILEGES
+2. cPanel → phpMyAdmin → select infridet_db → SQL tab
+   - Paste the contents of database-setup.sql → Go
 
-1. Using FileZilla, connect to your server
-2. Navigate to /public_html/ directory
-3. Create a folder called "api"
-4. Upload these files to /public_html/api/:
+STEP 2 — ENVIRONMENT VARIABLES (cPanel)
+───────────────────────────────────────
+cPanel → "Setup Node.js / PHP App" or "Environment variables" or
+edit your /public_html/api/.user.ini and set:
 
-   - login.php
-   - verify-token.php
-   - get-posts.php
-   - create-post.php
-   - create-admin.php
+  DB_HOST=localhost
+  DB_USER=infridet_user
+  DB_PASS=YourStrongDbPassword
+  DB_NAME=infridet_db
+  AUTH_SECRET=GENERATE_A_64_CHAR_RANDOM_STRING_HERE
+  SETUP_KEY=ANOTHER_LONG_RANDOM_STRING_FOR_ONETIME_SETUP
 
-5. Create a subfolder /public_html/api/config/
-6. Upload database.php to /public_html/api/config/
+   ⚠ AUTH_SECRET MUST be ≥32 chars. Use: openssl rand -hex 32
+   ⚠ SETUP_KEY must be ≥16 chars. Used only once.
 
-7. In phpMyAdmin, run the SQL from database-setup.sql
+STEP 3 — UPLOAD FILES (FileZilla / cPanel File Manager)
+───────────────────────────────────────────────────────
+Target folder: /public_html/api/
 
-8. Visit https://infridetsolutions.com/api/create-admin.php ONCE to create admin user
+   ┌─ /public_html/api/
+   │   ├─ .htaccess                ← security headers
+   │   ├─ login.php
+   │   ├─ verify-token.php
+   │   ├─ get-posts.php
+   │   ├─ create-post.php
+   │   ├─ get-dashboard-stats.php
+   │   ├─ setup-admin.php          ← DELETE after step 5
+   │   └─ config/
+   │        ├─ database.php
+   │        ├─ auth.php
+   │        ├─ cors.php
+   │        └─ rate-limit.php
 
-9. DELETE create-admin.php immediately after use
+STEP 4 — REACT FRONTEND
+───────────────────────
+1. Locally: bun run build
+2. Upload everything inside /dist/ → /public_html/
+   (index.html, assets/, etc.)
+3. Add a /public_html/.htaccess so React Router works:
 
-10. Test login at https://infridetsolutions.com/api/login.php
-    (should show JSON error, not 404)
+   <IfModule mod_rewrite.c>
+     RewriteEngine On
+     RewriteBase /
+     RewriteCond %{REQUEST_FILENAME} !-f
+     RewriteCond %{REQUEST_FILENAME} !-d
+     RewriteCond %{REQUEST_URI} !^/api/
+     RewriteRule . /index.html [L]
+   </IfModule>
 
-DEFAULT ADMIN CREDENTIALS:
-Username: admin
-Password: admin123
+STEP 5 — CREATE FIRST ADMIN
+───────────────────────────
+In your browser, visit ONCE:
 
-Your folder structure should be:
-/public_html/
-├── api/
-│   ├── login.php
-│   ├── verify-token.php
-│   ├── get-posts.php
-│   ├── create-post.php
-│   ├── create-admin.php
-│   └── config/
-│       └── database.php
-└── dist/
-    └── (your React app files)
+  https://infridetsolutions.com/api/setup-admin.php?key=YOUR_SETUP_KEY&email=you@infridet.com&password=YourStrongPassword&username=admin
+
+Then immediately:
+  - Delete /public_html/api/setup-admin.php
+  - Optionally remove the SETUP_KEY env var
+
+STEP 6 — TEST
+─────────────
+1. Visit https://infridetsolutions.com/admin/login
+2. Sign in with the email + password from step 5
+3. Should land on /admin (dashboard)
+
+────────────────────────────────────────────────────────
+DEMO MODE (preview / localhost):
+   No backend required. Use:
+     Email/Username: admin@infridet.com  (or just "admin")
+     Password:       Admin@2026
+   Auto-detected on *.lovable.app and localhost.
+   Production builds always use the real PHP backend.
+────────────────────────────────────────────────────────
+
+TROUBLESHOOTING
+───────────────
+• 503 "Service unavailable" on login
+   → DB env vars wrong, or AUTH_SECRET missing/short
+• 401 on dashboard
+   → Token expired (24h). Sign in again.
+• CORS error in browser console
+   → Your frontend domain isn't in cors.php whitelist.
+     Edit /api/config/cors.php → $allowed = [...]
+• 429 Too Many Attempts
+   → Brute-force protection. Wait 5 min or clear /tmp/infridet_rl/
